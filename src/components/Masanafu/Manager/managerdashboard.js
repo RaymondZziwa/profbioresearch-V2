@@ -18,7 +18,7 @@ const Managerdashboard = () => {
                             </Link>
                             <Link className="tab_nav" to="#">
                                 <div className="mb-3 mclickable_option">
-                                    Product Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>99</p>
+                                    Product Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>0</p>
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="#">
@@ -36,7 +36,7 @@ const Managerdashboard = () => {
                                     Request for raw materials
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="#">
+                            <Link className="tab_nav" to="/accountsettings">
                                 <div className="mb-3 mclickable_option">
                                     Settings
                                 </div>

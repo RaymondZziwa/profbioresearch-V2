@@ -22,6 +22,8 @@ export const AuthContextProvider = (props) => {
         localStorage.removeItem('token')
         localStorage.removeItem('username')
         localStorage.removeItem('branch')
+        localStorage.removeItem('department')
+        localStorage.removeItem('role')
     }
     const contextValue ={
         token: token,

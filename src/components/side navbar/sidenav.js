@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import Editprofile from "../Namungoona/user profile/editprofile"
 import Logout from "../authentication/logout"
 import logo from "../../imgs/logo.png";
 import './sidenav.css'
@@ -38,6 +37,9 @@ const Navbar = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/stocktaking">Stock Taking</Link>
                   </li>
+                  <li className="nav-item">
+                    <Link className="nav-link "  to='/accountsettings'>Settings</Link>
+                  </li>
                 </>
               }
 
@@ -67,6 +69,9 @@ const Navbar = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/stocktaking">Stock Taking</Link>
                   </li>
+                  <li className="nav-item">
+                    <Link className="nav-link"  to='/accountsettings'>Settings</Link>
+                  </li>
                 </>
               }
 
@@ -76,7 +81,7 @@ const Navbar = () => {
                     <Link className="nav-link active" aria-current="page" to='/custodiandashboard'>Dashboard</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link " aria-current="page" to=''>Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>99</p></Link>
+                    <Link className="nav-link " aria-current="page" to=''>Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>0</p></Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link " aria-current="page" to=''>Production Orders</Link>
@@ -91,7 +96,7 @@ const Navbar = () => {
                     <Link className="nav-link" to="/stocktaking">Stock Taking</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link " aria-current="page" to=''>Settings</Link>
+                    <Link className="nav-link " to='/accountsettings'>Settings</Link>
                   </li>
                 </>
               }

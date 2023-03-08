@@ -16,6 +16,7 @@ import AuthContext from './store/auth-context';
 import InventoryMenu from './components/Masanafu/Manager/inventorymenu';
 import CustodianDashboard from './components/Masanafu/Custodian/custodiandashboard';
 import Exhibitionmanagement from './components/Masanafu/Custodian/exhibition/exhibition';
+import AccountSettings from './components/settings/settings';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -28,9 +29,9 @@ function App() {
             <Login />
           </Route>
           )}
-          {!authCtx.isLoggedIn && (
+          {/* {!authCtx.isLoggedIn && (
             <Redirect to='/Login' />
-          )}
+          )} */}
 
           {authCtx.isLoggedIn && (
             <Route path="/namungoonadashboard">
@@ -65,22 +66,30 @@ function App() {
             <Redirect to='/Login' />
           </Route> */}
 
-          {authCtx.isLoggedIn && (<Route path="/managerdashboard">
+          {/* {authCtx.isLoggedIn && (
+          )} */}
+          <Route path="/managerdashboard">
             <Managerdashboard />
           </Route>
-          )}
-          {authCtx.isLoggedIn && (<Route path="/inventorymenu">
+          {/* {authCtx.isLoggedIn && (
+          )} */}
+          <Route path="/inventorymenu">
             <InventoryMenu />
           </Route>
-          )}
-          {authCtx.isLoggedIn && (<Route path="/custodiandashboard">
+          <Route path="/custodiandashboard">
             <CustodianDashboard />
           </Route>
-          )}
-          {authCtx.isLoggedIn && (<Route path="/exhibtionmanagement">
+          {/* {authCtx.isLoggedIn && (
+          )} */}
+          <Route path="/exhibtionmanagement">
             <Exhibitionmanagement />
           </Route>
-          )}
+          {/* {authCtx.isLoggedIn && (
+          )} */}
+
+          <Route path="/accountsettings">
+            <AccountSettings />
+          </Route>
         </QueryClientProvider>
       </BrowserRouter>
     </div>
