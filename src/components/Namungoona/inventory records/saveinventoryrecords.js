@@ -194,194 +194,194 @@ const Saveinventoryrecords = () => {
                             {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Transaction saved</span>}
                             {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Transaction was not saved</span>}
                             <div style={{ marginTop: '20px' }}>
-                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={categoryInput} required>
-                                        <option selected>Transaction Category</option>
-                                        <option value="incoming">Incoming</option>
-                                        <option value="outgoing">Outgoing</option>
-                                    </select>
-                                
-                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={itemNameInput} required>
-                                        <option selected>Item Name</option>
-                                        {isLoading ? <option>Loading Items From Database</option> :
-                                            itemList.map(item => (
-                                                <option>
-                                                    {item.name}
-                                                </option>
-                                            ))}
+                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={categoryInput} required>
+                                    <option selected>Transaction Category</option>
+                                    <option value="incoming">Incoming</option>
+                                    <option value="outgoing">Outgoing</option>
+                                </select>
+
+                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={itemNameInput} required>
+                                    <option selected>Item Name</option>
+                                    {isLoading ? <option>Loading Items From Database</option> :
+                                        itemList.map(item => (
+                                            <option>
+                                                {item.name}
+                                            </option>
+                                        ))}
+                                </select>
+
+                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={reasonInput} required>
+                                    <option selected>Reason</option>
+                                    <option value="restocking">Restocking</option>
+                                    <option value="manufacturing and packaging">Manufacturing and Packaging</option>
+                                    <option value="delivery">Delivery</option>
+                                    <option value="another reason">Another reason</option>
+                                </select>
+
+
+                                <div className="form-floating mb-3">
+                                    <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={notesInput} required />
+                                    <label for="floatingInput">Additional Notes</label>
+                                </div>
+
+                                {tCategory === 'incoming' &&
+
+                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
+                                        <option selected>Select Source Branch</option>
+                                        <option value="masanafu">Masanafu</option>
+                                        <option value="equatorial">Equatorial</option>
+                                        <option value="buwama">Buwama</option>
+                                        <option value="namungoona">Namungoona</option>
                                     </select>
 
-                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={reasonInput} required>
-                                        <option selected>Reason</option>
-                                        <option value="restocking">Restocking</option>
-                                        <option value="manufacturing and packaging">Manufacturing and Packaging</option>
-                                        <option value="delivery">Delivery</option>
-                                        <option value="another reason">Another reason</option>
-                                    </select>
-                                
-                                
-                                    <div className="form-floating mb-3">
-                                        <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={notesInput} required />
-                                        <label for="floatingInput">Additional Notes</label>
-                                    </div>
-                                
-                                {tCategory === 'incoming' &&
-                                    
-                                        <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
-                                            <option selected>Select Source Branch</option>
-                                            <option value="masanafu">Masanafu</option>
-                                            <option value="equatorial">Equatorial</option>
-                                            <option value="buwama">Buwama</option>
-                                            {/* <option value="namungoona">Namungoona</option> */}
-                                        </select>
-                                    
                                 }
                                 {tCategory === 'outgoing' &&
-                                    
-                                        <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
-                                            {/* <option selected>Select Source Branch</option>
+
+                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
+                                        {/* <option selected>Select Source Branch</option>
                                             <option value="masanafu">Masanafu</option>
                                             <option value="equatorial">Equatorial</option>
                                             <option value="buwama">Buwama</option> */}
-                                            <option value="namungoona">Namungoona</option>
-                                        </select>
-                                    
+                                        <option value={localStorage.getItem('branch')}>{localStorage.getItem('branch')}</option>
+                                    </select>
+
                                 }
-                                
-                                    <div className="form-floating mb-3">
-                                        <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={broughtByInput} required />
-                                        <label for="floatingInput">Delivered By</label>
-                                    </div>
-                                
+
+                                <div className="form-floating mb-3">
+                                    <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={broughtByInput} required />
+                                    <label for="floatingInput">Delivered By</label>
+                                </div>
+
                                 {tCategory === 'incoming' &&
-                                    
-                                        <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={dbranchInput} required>
-                                            {/*<option selected>Select Destination Branch</option>
+
+                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={dbranchInput} required>
+                                        {/*<option selected>Select Destination Branch</option>
                                              <option value="masanafu">Masanafu</option>
                                             <option value="equatorial">Equatorial</option>
                                             <option value="buwama">Buwama</option> */}
-                                            <option value="namungoona">Namungoona</option>
-                                        </select>
-                                    
+                                        <option value={localStorage.getItem('branch')}>{localStorage.getItem('branch')}</option>
+                                    </select>
+
                                 }
                                 {tCategory === 'outgoing' &&
-                                    
-                                        <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={dbranchInput} required>
-                                            <option selected>Select Destination Branch</option>
-                                            <option value="masanafu">Masanafu</option>
-                                            <option value="equatorial">Equatorial</option>
-                                            <option value="buwama">Buwama</option>
-                                            {/* <option value="namungoona">Namungoona</option> */}
-                                        </select>
-                                
-                                }
-                                
-                                    <div className="form-floating mb-3">
-                                        <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={recievedByInput} required />
-                                        <label for="floatingInput">Taken By</label>
-                                    </div>
-                                
-                                
-                                    <div className="form-floating mb-3">
-                                        <input className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={quantityInput} required />
-                                        <label for="floatingInput">Quantity</label>
-                                    </div>
-                                
-                                
-                                    <div className="form-floating mb-3">
-                                        <input className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={actualQuantityInput} required />
-                                        <label for="floatingInput">Actual Quantity</label>
-                                    </div>
-                                
-                                
-                                    <div className="form-floating mb-3">
-                                        <input className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE" }} ref={dmgsRef} required readOnly />
-                                        <label for="floatingInput">Damages</label>
-                                    </div>
-                                
-                                
-                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={unitInput} required>
-                                        <option selected>Measurement</option>
-                                        <option value="L">Litres</option>
-                                        <option value="KG">Kilograms</option>
-                                        <option value="MLS">Milliliters</option>
-                                        <option value="Pcs">Pcs</option>
-                                        <option disabled>---grams packaging sizes---</option>
-                                        <option value="10grampcs">10 grams Pcs</option>
-                                        <option value="20grampcs">20 grams Pcs</option>
-                                        <option value="50grampcs">50 grams Pcs</option>
-                                        <option value="100grampcs">100 grams Pcs</option>
-                                        <option value="250grampcs">250 grams Pcs</option>
-                                        <option value="350grampcs">350 grams Pcs</option>
-                                        <option value="400grampcs">400 grams Pcs</option>
-                                        <option value="450grampcs">450 grams Pcs</option>
-                                        <option value="500grampcs">500 grams Pcs</option>
-                                        <option value="700grampcs">700 grams Pcs</option>
-                                        <option value="750grampcs">750 grams Pcs</option>
-                                        <option disabled>---mls packaging sizes---</option>
-                                        <option value="10mlpcs">10 mls Pcs</option>
-                                        <option value="20mlpcs">20 mls Pcs</option>
-                                        <option value="50mlpcs">50 mls Pcs</option>
-                                        <option value="100mlpcs">100 mls Pcs</option>
-                                        <option value="250mlpcs">250 mls Pcs</option>
-                                        <option value="350mlpcs">350 mls Pcs</option>
-                                        <option value="500mlpcs">500 mls Pcs</option>
-                                        <option value="550mlpcs">550 mls Pcs</option>
-                                        <option value="600mlpcs">600 mls Pcs</option>
-                                        <option value="650mlpcs">650 mls Pcs</option>
-                                        <option value="700mlpcs">700 mls Pcs</option>
-                                        <option value="750mlpcs">750 mls Pcs</option>
+
+                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={dbranchInput} required>
+                                        <option selected>Select Destination Branch</option>
+                                        <option value="masanafu">Masanafu</option>
+                                        <option value="equatorial">Equatorial</option>
+                                        <option value="buwama">Buwama</option>
+                                        <option value="namungoona">Namungoona</option>
                                     </select>
-                                
+
+                                }
+
+                                <div className="form-floating mb-3">
+                                    <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={recievedByInput} required />
+                                    <label for="floatingInput">Taken By</label>
+                                </div>
+
+
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={quantityInput} required />
+                                    <label for="floatingInput">Quantity</label>
+                                </div>
+
+
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={actualQuantityInput} required />
+                                    <label for="floatingInput">Actual Quantity</label>
+                                </div>
+
+
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE" }} ref={dmgsRef} required readOnly />
+                                    <label for="floatingInput">Damages</label>
+                                </div>
+
+
+                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={unitInput} required>
+                                    <option selected>Measurement</option>
+                                    <option value="L">Litres</option>
+                                    <option value="KG">Kilograms</option>
+                                    <option value="MLS">Milliliters</option>
+                                    <option value="Pcs">Pcs</option>
+                                    <option disabled>---grams packaging sizes---</option>
+                                    <option value="10grampcs">10 grams Pcs</option>
+                                    <option value="20grampcs">20 grams Pcs</option>
+                                    <option value="50grampcs">50 grams Pcs</option>
+                                    <option value="100grampcs">100 grams Pcs</option>
+                                    <option value="250grampcs">250 grams Pcs</option>
+                                    <option value="350grampcs">350 grams Pcs</option>
+                                    <option value="400grampcs">400 grams Pcs</option>
+                                    <option value="450grampcs">450 grams Pcs</option>
+                                    <option value="500grampcs">500 grams Pcs</option>
+                                    <option value="700grampcs">700 grams Pcs</option>
+                                    <option value="750grampcs">750 grams Pcs</option>
+                                    <option disabled>---mls packaging sizes---</option>
+                                    <option value="10mlpcs">10 mls Pcs</option>
+                                    <option value="20mlpcs">20 mls Pcs</option>
+                                    <option value="50mlpcs">50 mls Pcs</option>
+                                    <option value="100mlpcs">100 mls Pcs</option>
+                                    <option value="250mlpcs">250 mls Pcs</option>
+                                    <option value="350mlpcs">350 mls Pcs</option>
+                                    <option value="500mlpcs">500 mls Pcs</option>
+                                    <option value="550mlpcs">550 mls Pcs</option>
+                                    <option value="600mlpcs">600 mls Pcs</option>
+                                    <option value="650mlpcs">650 mls Pcs</option>
+                                    <option value="700mlpcs">700 mls Pcs</option>
+                                    <option value="750mlpcs">750 mls Pcs</option>
+                                </select>
+
 
                                 {reason === 'manufacturing and packaging' &&
-                                    
-                                        <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={outputMUnintInput} required>
-                                            <option selected>Output Measurement</option>
-                                            {mUnit === 'L' &&
-                                                <>
-                                                    <option disabled>---mls packaging sizes---</option>
-                                                    <option value="10mlpcs">10 mls Pcs</option>
-                                                    <option value="20mlpcs">20 mls Pcs</option>
-                                                    <option value="50mlpcs">50 mls Pcs</option>
-                                                    <option value="100mlpcs">100 mls Pcs</option>
-                                                    <option value="250mlpcs">250 mls Pcs</option>
-                                                    <option value="350mlpcs">350 mls Pcs</option>
-                                                    <option value="400mlpcs">400 mls Pcs</option>
-                                                    <option value="450mlpcs">450 mls Pcs</option>
-                                                    <option value="500mlpcs">500 mls Pcs</option>
-                                                    <option value="700mlpcs">700 mls Pcs</option>
-                                                    <option value="750mlpcs">750 mls Pcs</option>
-                                                </>
-                                            }
-                                            {mUnit === 'KG' &&
-                                                <>
-                                                    <option disabled>---grams packaging sizes---</option>
-                                                    <option value="10grampcs">10 grams Pcs</option>
-                                                    <option value="20grampcs">20 grams Pcs</option>
-                                                    <option value="50grampcs">50 grams Pcs</option>
-                                                    <option value="100grampcs">100 grams Pcs</option>
-                                                    <option value="250grampcs">250 grams Pcs</option>
-                                                    <option value="350grampcs">350 grams Pcs</option>
-                                                    <option value="400grampcs">400 grams Pcs</option>
-                                                    <option value="450grampcs">450 grams Pcs</option>
-                                                    <option value="500grampcs">500 grams Pcs</option>
-                                                    <option value="700grampcs">700 grams Pcs</option>
-                                                    <option value="750grampcs">750 grams Pcs</option>
-                                                </>
-                                            }
-                                        </select>
-                                    
+
+                                    <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={outputMUnintInput} required>
+                                        <option selected>Output Measurement</option>
+                                        {mUnit === 'L' &&
+                                            <>
+                                                <option disabled>---mls packaging sizes---</option>
+                                                <option value="10mlpcs">10 mls Pcs</option>
+                                                <option value="20mlpcs">20 mls Pcs</option>
+                                                <option value="50mlpcs">50 mls Pcs</option>
+                                                <option value="100mlpcs">100 mls Pcs</option>
+                                                <option value="250mlpcs">250 mls Pcs</option>
+                                                <option value="350mlpcs">350 mls Pcs</option>
+                                                <option value="400mlpcs">400 mls Pcs</option>
+                                                <option value="450mlpcs">450 mls Pcs</option>
+                                                <option value="500mlpcs">500 mls Pcs</option>
+                                                <option value="700mlpcs">700 mls Pcs</option>
+                                                <option value="750mlpcs">750 mls Pcs</option>
+                                            </>
+                                        }
+                                        {mUnit === 'KG' &&
+                                            <>
+                                                <option disabled>---grams packaging sizes---</option>
+                                                <option value="10grampcs">10 grams Pcs</option>
+                                                <option value="20grampcs">20 grams Pcs</option>
+                                                <option value="50grampcs">50 grams Pcs</option>
+                                                <option value="100grampcs">100 grams Pcs</option>
+                                                <option value="250grampcs">250 grams Pcs</option>
+                                                <option value="350grampcs">350 grams Pcs</option>
+                                                <option value="400grampcs">400 grams Pcs</option>
+                                                <option value="450grampcs">450 grams Pcs</option>
+                                                <option value="500grampcs">500 grams Pcs</option>
+                                                <option value="700grampcs">700 grams Pcs</option>
+                                                <option value="750grampcs">750 grams Pcs</option>
+                                            </>
+                                        }
+                                    </select>
+
                                 }
                                 {reason === 'manufacturing and packaging' &&
-                                    
-                                        <div className="form-floating mb-3">
-                                            <input type="number" className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE;" }} ref={expectedOutputRef} readOnly />
-                                            <label for="floatingInput">Expected number of packed pieces</label>
-                                        </div>
-                                    
+
+                                    <div className="form-floating mb-3">
+                                        <input type="number" className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE;" }} ref={expectedOutputRef} readOnly />
+                                        <label for="floatingInput">Expected number of packed pieces</label>
+                                    </div>
+
                                 }
-                                <div className="mb-3" style={{textAlign:'center'}}>
-                                    <button style={{width:"50%",border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop:'10px' }} onClick={saveDataHandler}>SAVE</button>
+                                <div className="mb-3" style={{ textAlign: 'center' }}>
+                                    <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={saveDataHandler}>SAVE</button>
                                 </div>
                             </div>
                         </Form>

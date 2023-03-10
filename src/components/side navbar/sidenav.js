@@ -29,7 +29,7 @@ const Navbar = () => {
                     <Link className="nav-link" to="/saveinventoryrecords">Save Inventory Records</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="#">Place Order</Link>
+                    <Link className="nav-link" to="#">Place Order - Coming Soon</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/viewinventoryrecords">View Inventory Records</Link>
@@ -61,10 +61,13 @@ const Navbar = () => {
                     </ul>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/saveinventoryrecords">Inventory Records</Link>
+                    <Link className="nav-link" to="/productorders">Product Orders</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/viewinventoryrecords">View Inventory Records</Link>
+                    <Link className="nav-link" to="#">Production Records</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/requestrawmaterials">Request For Raw Materials</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/stocktaking">Stock Taking</Link>

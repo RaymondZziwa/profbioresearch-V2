@@ -17,6 +17,8 @@ import InventoryMenu from './components/Masanafu/Manager/inventorymenu';
 import CustodianDashboard from './components/Masanafu/Custodian/custodiandashboard';
 import Exhibitionmanagement from './components/Masanafu/Custodian/exhibition/exhibition';
 import AccountSettings from './components/settings/settings';
+import ProductOrders from './components/Masanafu/Manager/productorders';
+import RequestRawMaterialsForm from './components/Masanafu/Manager/requestrawmaterials';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -89,6 +91,14 @@ function App() {
 
           <Route path="/accountsettings">
             <AccountSettings />
+          </Route>
+
+          <Route path="/productorders">
+            <ProductOrders />
+          </Route>
+
+          <Route path="/requestrawmaterials">
+            <RequestRawMaterialsForm />
           </Route>
         </QueryClientProvider>
       </BrowserRouter>

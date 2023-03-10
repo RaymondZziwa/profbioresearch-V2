@@ -18,8 +18,8 @@ const Viewinventoryrecords = () => {
     const [recordsPerPage] = useState(12);
 
     const indexOfLastPost = currentPage * recordsPerPage;
-   const indexOfFirstPost = indexOfLastPost - recordsPerPage;
-   const currentrecords = Data.slice(indexOfFirstPost, indexOfLastPost);
+    const indexOfFirstPost = indexOfLastPost - recordsPerPage;
+    const currentrecords = Data.slice(indexOfFirstPost, indexOfLastPost);
 
     const fetchItems = async () => {
         const res = await axios.post('http://82.180.136.230:3005/itemlist', {
