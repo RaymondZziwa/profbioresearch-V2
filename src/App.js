@@ -31,9 +31,9 @@ function App() {
             <Login />
           </Route>
           )}
-          {/* {!authCtx.isLoggedIn && (
+          {!authCtx.isLoggedIn && (
             <Redirect to='/Login' />
-          )} */}
+          )}
 
           {authCtx.isLoggedIn && (
             <Route path="/namungoonadashboard">
@@ -64,42 +64,44 @@ function App() {
             <Admindashboard />
           </Route>
           )}
-          {/* <Route path="*">
-            <Redirect to='/Login' />
-          </Route> */}
 
-          {/* {authCtx.isLoggedIn && (
-          )} */}
-          <Route path="/managerdashboard">
-            <Managerdashboard />
-          </Route>
-          {/* {authCtx.isLoggedIn && (
-          )} */}
-          <Route path="/inventorymenu">
-            <InventoryMenu />
-          </Route>
-          <Route path="/custodiandashboard">
-            <CustodianDashboard />
-          </Route>
-          {/* {authCtx.isLoggedIn && (
-          )} */}
-          <Route path="/exhibtionmanagement">
-            <Exhibitionmanagement />
-          </Route>
-          {/* {authCtx.isLoggedIn && (
-          )} */}
+          {authCtx.isLoggedIn && (
+            <Route path="/managerdashboard">
+              <Managerdashboard />
+            </Route>
+          )}
 
-          <Route path="/accountsettings">
+          {authCtx.isLoggedIn && (
+            <Route path="/inventorymenu">
+              <InventoryMenu />
+            </Route>
+          )}
+
+
+          {authCtx.isLoggedIn && (
+            <Route path="/custodiandashboard">
+              <CustodianDashboard />
+            </Route>
+          )}
+
+
+          {authCtx.isLoggedIn && (
+            <Route path="/exhibtionmanagement">
+              <Exhibitionmanagement />
+            </Route>
+          )}
+
+          {authCtx.isLoggedIn && (<Route path="/accountsettings">
             <AccountSettings />
-          </Route>
+          </Route>)}
 
-          <Route path="/productorders">
+          {authCtx.isLoggedIn && (<Route path="/productorders">
             <ProductOrders />
-          </Route>
+          </Route>)}
 
-          <Route path="/requestrawmaterials">
+          {authCtx.isLoggedIn && (<Route path="/requestrawmaterials">
             <RequestRawMaterialsForm />
-          </Route>
+          </Route>)}
         </QueryClientProvider>
       </BrowserRouter>
     </div>

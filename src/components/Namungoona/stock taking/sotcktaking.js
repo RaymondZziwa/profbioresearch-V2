@@ -15,6 +15,9 @@ const Stocktaking = () => {
         setData()
         let stockFilter = "outofstock";
         let res = await axios.post('http://82.180.136.230:3005/stocktaking', {
+            branch: localStorage.getItem('branch'),
+            department: localStorage.getItem('department'),
+            role: localStorage.getItem('role'),
             stockFilter: stockFilter,
             token: localStorage.getItem("token")
         })
@@ -27,6 +30,9 @@ const Stocktaking = () => {
         setData()
         let stockFilter = "runningoutofstock";
         let res = await axios.post('http://82.180.136.230:3005/stocktaking', {
+            branch: localStorage.getItem('branch'),
+            department: localStorage.getItem('department'),
+            role: localStorage.getItem('role'),
             stockFilter: stockFilter,
             token: localStorage.getItem("token")
         })
@@ -39,6 +45,9 @@ const Stocktaking = () => {
         setData()
         let stockFilter = "instock";
         let res = await axios.post('http://82.180.136.230:3005/stocktaking', {
+            branch: localStorage.getItem('branch'),
+            department: localStorage.getItem('department'),
+            role: localStorage.getItem('role'),
             stockFilter: stockFilter,
             token: localStorage.getItem("token")
         })

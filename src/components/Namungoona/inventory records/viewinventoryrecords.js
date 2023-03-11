@@ -39,9 +39,25 @@ const Viewinventoryrecords = () => {
         return () => clearInterval(interval)
     }, [])
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (Filter === 'incoming') {
+                setdestBranch(localStorage.getItem('branch'))
+            } else if (Filter === 'outgoing') {
+                setsourceBranch(localStorage.getItem('branch'))
+            }
+        }, 1000)
+
+
+        return () => clearInterval(interval)
+    }, [Filter])
+
     const fetchData = async event => {
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/inventoryrecords', {
+            branch : localStorage.getItem('branch'),
+            role : localStorage.getItem('role'),
+            department : localStorage.getItem('department'),
             itemName: itemName,
             filter: Filter,
             sourceBranch: sourceBranch,
