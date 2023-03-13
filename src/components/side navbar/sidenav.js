@@ -29,7 +29,7 @@ const Navbar = () => {
                     <Link className="nav-link" to="/saveinventoryrecords">Save Inventory Records</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="#">Place Order - Coming Soon</Link>
+                    <Link className="nav-link" to="/placeproductorder">Order Products</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/viewinventoryrecords">View Inventory Records</Link>

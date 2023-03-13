@@ -2,8 +2,35 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import '../../Namungoona/supervisor dashboard/namungoona.css'
 import Navbar from "../../side navbar/sidenav";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Managerdashboard = () => {
+    const [OrdersList, setOrdersList] = useState()
+    const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
+    const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
+
+    const fetchOrders = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
+            token: localStorage.getItem("token")
+        })
+        setOrdersList(res.data)
+        setTotalNumberOfPendingOrders(OrdersList.length)
+        setisOrdersListLoading(false)
+        console.log(OrdersList)
+    }
+
+    useEffect(() => {
+        fetchOrders()
+        const interval = setInterval(() => {
+            fetchOrders()
+        }, 3000)
+
+
+        return () => clearInterval(interval)
+    })
+
+
     return (
         <div className='container-fluid'>
             <Row>
@@ -18,7 +45,7 @@ const Managerdashboard = () => {
                             </Link>
                             <Link className="tab_nav" to="/productorders">
                                 <div className="mb-3 mclickable_option">
-                                    Product Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>0</p>
+                                    Product Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingOrders}</p>
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="#">

@@ -55,9 +55,9 @@ const Viewinventoryrecords = () => {
     const fetchData = async event => {
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/inventoryrecords', {
-            branch : localStorage.getItem('branch'),
-            role : localStorage.getItem('role'),
-            department : localStorage.getItem('department'),
+            branch: localStorage.getItem('branch'),
+            role: localStorage.getItem('role'),
+            department: localStorage.getItem('department'),
             itemName: itemName,
             filter: Filter,
             sourceBranch: sourceBranch,

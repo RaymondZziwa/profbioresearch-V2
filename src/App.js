@@ -19,6 +19,7 @@ import Exhibitionmanagement from './components/Masanafu/Custodian/exhibition/exh
 import AccountSettings from './components/settings/settings';
 import ProductOrders from './components/Masanafu/Manager/productorders';
 import RequestRawMaterialsForm from './components/Masanafu/Manager/requestrawmaterials';
+import PlaceOrderForm from './components/Namungoona/place order/placeorder';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -31,9 +32,9 @@ function App() {
             <Login />
           </Route>
           )}
-          {!authCtx.isLoggedIn && (
+          {/* {!authCtx.isLoggedIn && (
             <Redirect to='/Login' />
-          )}
+          )} */}
 
           {authCtx.isLoggedIn && (
             <Route path="/namungoonadashboard">
@@ -101,6 +102,10 @@ function App() {
 
           {authCtx.isLoggedIn && (<Route path="/requestrawmaterials">
             <RequestRawMaterialsForm />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/placeproductorder">
+            <PlaceOrderForm />
           </Route>)}
         </QueryClientProvider>
       </BrowserRouter>
