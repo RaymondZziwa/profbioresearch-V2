@@ -32,9 +32,9 @@ function App() {
             <Login />
           </Route>
           )}
-          {/* {!authCtx.isLoggedIn && (
+          {!authCtx.isLoggedIn && (
             <Redirect to='/Login' />
-          )} */}
+          )}
 
           {authCtx.isLoggedIn && (
             <Route path="/namungoonadashboard">
