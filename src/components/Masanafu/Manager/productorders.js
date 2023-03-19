@@ -8,6 +8,7 @@ const ProductOrders = () => {
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
+            branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
         setOrdersList(res.data)
@@ -24,15 +25,25 @@ const ProductOrders = () => {
         return () => clearInterval(interval)
     })
 
-     const rejectOrder = event => {
+    const rejectOrder = async event => {
         event.preventDefault()
-        let orderId = event.currentTarget.id
-     }
+        await axios.post('http://82.180.136.230:3005/updateorderstatus', {
+            orderId: event.currentTarget.id,
+            branch: localStorage.getItem("branch"),
+            newStatus: 'rejected',
+            token: localStorage.getItem("token")
+        })
+    }
 
-     const approveOrder = event => {
+    const approveOrder = async event => {
         event.preventDefault()
-        let orderId = event.currentTarget.id
-     }
+        await axios.post('http://82.180.136.230:3005/confirmorder', {
+            orderId: event.currentTarget.id,
+            newStatus: 'sent to the production unit',
+            branch: localStorage.getItem("branch"),
+            token: localStorage.getItem("token")
+        })
+    }
     return (
         <>
             <div className='container-fluid'>
@@ -72,13 +83,13 @@ const ProductOrders = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody style={{ textAlign: 'center' }}>
-                                                        {JSON.parse(item.itemsordered).map(itemordered => 
-                                                            <tr>
-                                                                <td>{itemordered.itemName}</td>
-                                                                <td>{itemordered.itemQuantity}</td>
-                                                                <td>{itemordered.mUnits}</td>
-                                                            </tr>
-                                                        )}
+                                                    {JSON.parse(item.itemsordered).map(itemordered =>
+                                                        <tr>
+                                                            <td>{itemordered.itemName}</td>
+                                                            <td>{itemordered.itemQuantity}</td>
+                                                            <td>{itemordered.mUnits}</td>
+                                                        </tr>
+                                                    )}
                                                 </tbody>
                                             </table>
                                         </td>
