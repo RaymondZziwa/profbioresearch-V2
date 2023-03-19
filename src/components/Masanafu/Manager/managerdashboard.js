@@ -2,8 +2,9 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import '../../Namungoona/supervisor dashboard/namungoona.css'
 import Navbar from "../../side navbar/sidenav";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import productOrdersContext from '../../../store/productOrders-context';
 
 const Managerdashboard = () => {
     const [OrdersList, setOrdersList] = useState()
@@ -17,7 +18,6 @@ const Managerdashboard = () => {
         setOrdersList(res.data)
         setTotalNumberOfPendingOrders(OrdersList.length)
         setisOrdersListLoading(false)
-        console.log(OrdersList)
     }
 
     useEffect(() => {

@@ -52,15 +52,15 @@ const Login = () => {
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/login', {
             branch: branch,
-            department : department,
-            role : role,
+            department: department,
+            role: role,
             username: username,
             password: pwd
         })
         if (typeof res.data === "string") {
             setloginStatus(res.data)
         } else {
-            const { redirectPath, token, user , department, role} = res.data;
+            const { redirectPath, token, user, department, role } = res.data;
             authCtx.login(token)
             localStorage.setItem("username", user);
             localStorage.setItem("branch", branch);

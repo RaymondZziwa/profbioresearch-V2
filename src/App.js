@@ -8,7 +8,6 @@ import Manageinventory from './components/Namungoona/inventory crud/manageinvent
 import Viewinventoryrecords from './components/Namungoona/inventory records/viewinventoryrecords';
 import Registerpersonnel from './components/Admin/personnel registration/registerpersonnel';
 import Admindashboard from './components/Admin/admin dashboard/adminDashboard';
-
 import Managerdashboard from './components/Masanafu/Manager/managerdashboard';
 
 import { useContext } from 'react';
@@ -20,10 +19,13 @@ import AccountSettings from './components/settings/settings';
 import ProductOrders from './components/Masanafu/Manager/productorders';
 import RequestRawMaterialsForm from './components/Masanafu/Manager/requestrawmaterials';
 import PlaceOrderForm from './components/Namungoona/place order/placeorder';
+import productOrdersContext from './store/productOrders-context';
+import { useState } from 'react';
 
 function App() {
   const authCtx = useContext(AuthContext);
   const client = new QueryClient()
+  const [productOrders, setProductOrders] = useState()
   return (
     <div className="App">
       <BrowserRouter>
@@ -65,12 +67,18 @@ function App() {
             <Admindashboard />
           </Route>
           )}
+          <productOrdersContext.Provider value={{ productOrders, setProductOrders }}>
+            {authCtx.isLoggedIn && (
+              <Route path="/managerdashboard">
+                <Managerdashboard />
+              </Route>
+            )}
 
-          {authCtx.isLoggedIn && (
-            <Route path="/managerdashboard">
-              <Managerdashboard />
+            {authCtx.isLoggedIn && (<Route path="/productorders">
+              <ProductOrders />
             </Route>
-          )}
+            )}
+          </productOrdersContext.Provider>
 
           {authCtx.isLoggedIn && (
             <Route path="/inventorymenu">
@@ -96,9 +104,7 @@ function App() {
             <AccountSettings />
           </Route>)}
 
-          {authCtx.isLoggedIn && (<Route path="/productorders">
-            <ProductOrders />
-          </Route>)}
+
 
           {authCtx.isLoggedIn && (<Route path="/requestrawmaterials">
             <RequestRawMaterialsForm />
