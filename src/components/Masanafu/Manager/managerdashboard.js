@@ -12,7 +12,7 @@ const Managerdashboard = () => {
     const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
 
     const fetchOrders = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
+        const res = await axios.post('http://82.180.136.230:3005/pendingproductionorders', {
             token: localStorage.getItem("token")
         })
         setOrdersList(res.data)

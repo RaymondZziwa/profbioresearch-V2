@@ -3,11 +3,11 @@ import Navbar from "../../side navbar/sidenav";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const ProductOrders = () => {
+const OrderRecords = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const fetchOrders = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
+        const res = await axios.post('http://82.180.136.230:3005/orderrecords', {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
@@ -19,32 +19,12 @@ const ProductOrders = () => {
         fetchOrders()
         const interval = setInterval(() => {
             fetchOrders()
-        }, 50000)
+        }, 5000)
 
 
         return () => clearInterval(interval)
     })
-
-    const rejectOrder =  event => {
-        event.preventDefault()
-            axios.post('http://82.180.136.230:3005/rejectorder', {
-            orderId: event.currentTarget.id,
-            branch: localStorage.getItem("branch"),
-            newStatus: 'rejected',
-            token: localStorage.getItem("token")
-        })
-    }
-
-    const approveOrder =  event => {
-        event.preventDefault()
-            axios.post('http://82.180.136.230:3005/confirmorder', {
-            orderId: event.currentTarget.id,
-            newStatus: 'sent to the production unit',
-            branch: localStorage.getItem("branch"),
-            token: localStorage.getItem("token")
-        })
-    }
-    return (
+    return(
         <>
             <div className='container-fluid'>
                 <Row>
@@ -57,10 +37,10 @@ const ProductOrders = () => {
                                     <th scope="col">Date</th>
                                     <th scope="col">Source Branch</th>
                                     <th scope="col">Order By</th>
+                                    <th scope="col">Destination Branch</th>
                                     <th scope="col">Delivered To</th>
                                     <th scope="col">Items Ordered</th>
-                                    <th scope="col">Current Order Status</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Order Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,6 +50,7 @@ const ProductOrders = () => {
                                         <td>{item.date}</td>
                                         <td>{item.sourcebranch}</td>
                                         <td>{item.orderby}</td>
+                                        <td>{item.destinationbranch}</td>
                                         <td>{item.deliveredto}</td>
                                         <td>
                                             <table className="table table-dark" style={{ marginTop: '2px' }}>
@@ -92,10 +73,7 @@ const ProductOrders = () => {
                                             </table>
                                         </td>
                                         <td>{item.status}</td>
-                                        <td>
-                                            <button id={item.orderid} className="btn btn-outline-danger" style={{ display: 'inline-block', marginRight: '5px' }} onClick={rejectOrder}>Reject</button>
-                                            <button id={item.orderid} className="btn btn-outline-success" style={{ display: 'inline-block' }} onClick={approveOrder}>Approve</button>
-                                        </td>
+
                                     </tr>
                                 ))
                                 }
@@ -111,4 +89,4 @@ const ProductOrders = () => {
     )
 }
 
-export default ProductOrders
+export default OrderRecords

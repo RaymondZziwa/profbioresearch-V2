@@ -21,6 +21,7 @@ import RequestRawMaterialsForm from './components/Masanafu/Manager/requestrawmat
 import PlaceOrderForm from './components/Namungoona/place order/placeorder';
 import productOrdersContext from './store/productOrders-context';
 import { useState } from 'react';
+import OrderRecords from './components/Masanafu/Manager/orderRecords';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -112,6 +113,10 @@ function App() {
 
           {authCtx.isLoggedIn && (<Route path="/placeproductorder">
             <PlaceOrderForm />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/orderrecords">
+            <OrderRecords />
           </Route>)}
         </QueryClientProvider>
       </BrowserRouter>

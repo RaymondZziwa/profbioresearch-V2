@@ -61,7 +61,7 @@ const Navbar = () => {
                     </ul>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/productorders">Product Orders</Link>
+                    <Link className="nav-link" to="/productorders">Approved Orders</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="#">Production Records</Link>
@@ -87,10 +87,17 @@ const Navbar = () => {
                     <Link className="nav-link " aria-current="page" to=''>Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>0</p></Link>
                   </li>
                   <li className="nav-item">
+                    <Link className="nav-link" to="/placeproductorder">Order Products</Link>
+                  </li>
+
+                  <li className="nav-item">
                     <Link className="nav-link " aria-current="page" to=''>Production Orders</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link " aria-current="page" to=''>Orders Records</Link>
+                    <Link className="nav-link" to="/productorders">Product Orders</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link " aria-current="page" to='/orderrecords'>Orders Records</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link " aria-current="page" to='/exhibtionmanagement'>Exhibition Management</Link>

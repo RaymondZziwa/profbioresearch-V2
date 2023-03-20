@@ -2,8 +2,33 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import '../../Namungoona/supervisor dashboard/namungoona.css'
 import Navbar from "../../side navbar/sidenav";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const CustodianDashboard = () => {
+    const [OrdersList, setOrdersList] = useState()
+    const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
+    const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
+
+    const fetchOrders = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
+            branch: localStorage.getItem("branch"),
+            token: localStorage.getItem("token")
+        })
+        setOrdersList(res.data)
+        setTotalNumberOfPendingOrders(OrdersList.length)
+        setisOrdersListLoading(false)
+    }
+
+    useEffect(() => {
+        fetchOrders()
+        const interval = setInterval(() => {
+            fetchOrders()
+        }, 5000)
+
+
+        return () => clearInterval(interval)
+    })
     return (
         <div className='container-fluid'>
             <Row>
@@ -21,7 +46,12 @@ const CustodianDashboard = () => {
                                     Production Records
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="#">
+                            <Link className="tab_nav" to="/productorders">
+                                <div className="mb-3 mclickable_option">
+                                    Production Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingOrders}</p>
+                                </div>
+                            </Link>
+                            <Link className="tab_nav" to="/orderrecords">
                                 <div className="mb-3 mclickable_option">
                                     Orders Records
                                 </div>
