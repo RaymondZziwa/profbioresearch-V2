@@ -24,7 +24,7 @@ const OrderRecords = () => {
 
         return () => clearInterval(interval)
     })
-    return(
+    return (
         <>
             <div className='container-fluid'>
                 <Row>

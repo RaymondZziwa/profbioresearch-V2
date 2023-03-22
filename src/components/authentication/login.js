@@ -78,7 +78,6 @@ const Login = () => {
                 </div>
                 {loginStatus && <div style={{ margin: '20px' }} class="alert alert-danger" role="alert">{loginStatus}</div>}
                 <div style={{ backgroundColor: "#8CA6FE", padding: "30px", borderRadius: "10px" }}>
-                    {branch === 'namungoona'}
                     <div className="mb-3">
                         <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={handleBranchData}>
                             <option selected>Branch</option>
