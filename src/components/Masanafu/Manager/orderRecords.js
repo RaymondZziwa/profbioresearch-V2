@@ -6,6 +6,7 @@ import axios from "axios";
 const OrderRecords = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
+    
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/orderrecords', {
             branch: localStorage.getItem("branch"),
