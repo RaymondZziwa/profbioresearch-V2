@@ -21,6 +21,8 @@ const Exhibitionmanagement = () => {
     const [exhibitionName, setExhibitionName] = useState()
     const [exDate, setExDate] = useState()
 
+    const [exName, setExName] = useState()
+
     const handleFormType = event => {
         event.preventDefault()
         setFormType(event.target.value)
@@ -48,22 +50,31 @@ const Exhibitionmanagement = () => {
         setisItemListLoading(false)
     }
 
+    useEffect(() => {
+        fetchItems()
+        const interval = setInterval(() => {
+            fetchItems()
+        }, 5000)
+
+
+        return () => clearInterval(interval)
+    }, [])
+
+
 
     const fetchExhibitionList = async () => {
         const res = await axios.post('http://82.180.136.230:3005/exhibitionlist', {
             token: localStorage.getItem("token")
         })
         setExList(res.data)
-        console.log(exList)
         setIsExListLoading(false)
     }
 
     useEffect(() => {
         fetchItems()
         const interval = setInterval(() => {
-            fetchItems()
             fetchExhibitionList()
-        }, 5000)
+        }, 3000)
 
 
         return () => clearInterval(interval)
@@ -76,6 +87,17 @@ const Exhibitionmanagement = () => {
     const dateInput = event => {
         event.preventDefault()
         setExDate(event.target.value)
+    }
+
+    const fetchExhibitionData = async event => {
+        event.preventDefault()
+        setExName(event.target.value)
+
+        const res = await axios.post('http://82.180.136.230:3005/exhibitiondata', {
+            exhibitionName: exName,
+            token: localStorage.getItem("token")
+        })
+
     }
 
     const submitDataHandler = async event => {
@@ -247,12 +269,13 @@ const Exhibitionmanagement = () => {
                                                 name="itemName"
                                                 aria-label="Default select example"
                                                 placeholder="Item Name"
+                                                onChange={fetchExhibitionData}
                                                 required>
                                                 <option selected>Filter By Exhibition Name</option>
                                                 {isExListLoading ? <option>Loading Exhibition Data From Database</option> :
                                                     exList.map(exhibition => (
                                                         <option>
-                                                            {exhibition.name}
+                                                            {exhibition.exhibitionname}
                                                         </option>
                                                     ))}
                                             </select>
