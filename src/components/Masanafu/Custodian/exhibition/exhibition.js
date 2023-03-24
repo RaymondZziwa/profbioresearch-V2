@@ -2,7 +2,7 @@ import { Row, Col, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import '../../../Namungoona/supervisor dashboard/namungoona.css'
 import Navbar from "../../../side navbar/sidenav";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +22,16 @@ const Exhibitionmanagement = () => {
     const [exDate, setExDate] = useState()
 
     const [exName, setExName] = useState()
+
+    const [selectedExhibitionName, setSelectedExhibitionName] = useState()
+
+    const exhibitionDate = useRef()
+    const [fetchedData, setFetchedData] = useState()
+
+    const selectedExibitionInput = event => {
+        event.preventDefault()
+        setSelectedExhibitionName(event.target.value)
+    }
 
     const handleFormType = event => {
         event.preventDefault()
@@ -91,14 +101,17 @@ const Exhibitionmanagement = () => {
 
     const fetchExhibitionData = async event => {
         event.preventDefault()
-        setExName(event.target.value)
-
+        console.log(exhibitionDate.current.value)
         const res = await axios.post('http://82.180.136.230:3005/exhibitiondata', {
-            exhibitionName: exName,
+            exhibitionName: selectedExhibitionName,
+            exhibitionDate: exhibitionDate.current.value,
             token: localStorage.getItem("token")
         })
-
+        setFetchedData(res.data)
+        console.log(fetchedData)
     }
+
+
 
     const submitDataHandler = async event => {
         event.preventDefault()
@@ -269,7 +282,7 @@ const Exhibitionmanagement = () => {
                                                 name="itemName"
                                                 aria-label="Default select example"
                                                 placeholder="Item Name"
-                                                onChange={fetchExhibitionData}
+                                                onChange={selectedExibitionInput}
                                                 required>
                                                 <option selected>Filter By Exhibition Name</option>
                                                 {isExListLoading ? <option>Loading Exhibition Data From Database</option> :
@@ -281,9 +294,28 @@ const Exhibitionmanagement = () => {
                                             </select>
                                         </div><br></br>
                                         <div className="form-floating mb-3">
-                                            <input type='date' className="form-control" id="floatingInput" placeholder="Exhibition Date" style={{ color: "#8CA6FE" }} required readOnly />
+                                            <input type='date' className="form-control" id="floatingInput" placeholder="Exhibition Date" style={{ color: "#8CA6FE" }} ref={exhibitionDate}
+                                                onChange={fetchExhibitionData} required />
                                             <label for="floatingInput">Exhibition Date</label>
                                         </div><br></br>
+
+
+
+                                        <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Items Data</h3>
+                                        <table className="table" style={{ marginTop: '10px' }}>
+                                            <thead>
+                                                <tr style={{ textAlign: 'center' }}>
+                                                    <th scope="col">Item Name</th>
+                                                    <th scope="col">Quantity Taken</th>
+                                                    <th scope="col">Quantity Returned</th>
+                                                    <th scope="col">Unit Of Measurement</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
                                     </>
                                 }
                                 <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Official's Data</h3>
