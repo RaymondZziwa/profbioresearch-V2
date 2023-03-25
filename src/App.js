@@ -22,6 +22,7 @@ import PlaceOrderForm from './components/Namungoona/place order/placeorder';
 import productOrdersContext from './store/productOrders-context';
 import { useState } from 'react';
 import OrderRecords from './components/Masanafu/Manager/orderRecords';
+import ExhibitionRecords from './components/Masanafu/Custodian/exhibitionrecords';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -98,6 +99,12 @@ function App() {
           {authCtx.isLoggedIn && (
             <Route path="/exhibtionmanagement">
               <Exhibitionmanagement />
+            </Route>
+          )}
+
+          {authCtx.isLoggedIn && (
+            <Route path="/exhibtionrecords">
+              <ExhibitionRecords />
             </Route>
           )}
 

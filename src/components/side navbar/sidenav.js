@@ -103,6 +103,9 @@ const Navbar = () => {
                     <Link className="nav-link " aria-current="page" to='/exhibtionmanagement'>Exhibition Management</Link>
                   </li>
                   <li className="nav-item">
+                    <Link className="nav-link " aria-current="page" to='/exhibtionrecords'>Exhibition Records</Link>
+                  </li>
+                  <li className="nav-item">
                     <Link className="nav-link" to="/stocktaking">Stock Taking</Link>
                   </li>
                   <li className="nav-item">

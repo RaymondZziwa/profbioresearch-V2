@@ -72,6 +72,11 @@ const CustodianDashboard = () => {
                                     Exhibition Management
                                 </div>
                             </Link>
+                            <Link className="tab_nav" to="/exhibtionrecords">
+                                <div className="mb-3 mclickable_option">
+                                    Exhibition Records
+                                </div>
+                            </Link>
                             <Link className="tab_nav" to="/accountsettings">
                                 <div className="mb-3 mclickable_option">
                                     Settings
