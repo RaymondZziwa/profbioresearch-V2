@@ -8,7 +8,7 @@ import axios from "axios";
 const CustodianDashboard = () => {
     const [OrdersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
-    const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
+    const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState()
 
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
@@ -18,6 +18,8 @@ const CustodianDashboard = () => {
         setOrdersList(res.data)
         setTotalNumberOfPendingOrders(OrdersList.length)
         setisOrdersListLoading(false)
+
+        console.log(OrdersList.length)
     }
 
     useEffect(() => {
@@ -36,9 +38,19 @@ const CustodianDashboard = () => {
                 <Col sm='12' md='7' lg='7' xl='7'>
                     <div>
                         <div style={{ padding: "30px", borderRadius: "10px" }}>
+                            <Link className="tab_nav" to="/inventorymenu">
+                                <div className="mb-3 mclickable_option">
+                                    Inventory
+                                </div>
+                            </Link>
                             <Link className="tab_nav" to="#">
                                 <div className="mb-3 mclickable_option">
                                     Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>99</p>
+                                </div>
+                            </Link>
+                            <Link className="tab_nav" to="#">
+                                <div className="mb-3 mclickable_option">
+                                    Raw Material Requests Records
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="#">

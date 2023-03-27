@@ -3,11 +3,11 @@ import Navbar from "../../side navbar/sidenav";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const ProductOrders = () => {
+const ApprovedOrders = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const fetchOrders = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
+        const res = await axios.post('http://82.180.136.230:3005/approvedorders', {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
@@ -19,27 +19,17 @@ const ProductOrders = () => {
         fetchOrders()
         const interval = setInterval(() => {
             fetchOrders()
-        }, 50000)
+        }, 10000)
 
 
         return () => clearInterval(interval)
     })
 
-    const rejectOrder = event => {
+    const approveOrder =  event => {
         event.preventDefault()
-        axios.post('http://82.180.136.230:3005/rejectorder', {
+            axios.post('http://82.180.136.230:3005/ordercompleted', {
             orderId: event.currentTarget.id,
-            branch: localStorage.getItem("branch"),
-            newStatus: 'rejected',
-            token: localStorage.getItem("token")
-        })
-    }
-
-    const approveOrder = event => {
-        event.preventDefault()
-        axios.post('http://82.180.136.230:3005/confirmorder', {
-            orderId: event.currentTarget.id,
-            newStatus: 'sent to the production unit',
+            newStatus: 'completed',
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
@@ -93,8 +83,7 @@ const ProductOrders = () => {
                                         </td>
                                         <td>{item.status}</td>
                                         <td>
-                                            <button id={item.orderid} className="btn btn-outline-danger" style={{ display: 'inline-block', marginRight: '5px' }} onClick={rejectOrder}>Reject</button>
-                                            <button id={item.orderid} className="btn btn-outline-success" style={{ display: 'inline-block' }} onClick={approveOrder}>Approve</button>
+                                            <button id={item.orderid} className="btn btn-outline-success" style={{ display: 'inline-block' }} onClick={approveOrder}>Mark As Completed</button>
                                         </td>
                                     </tr>
                                 ))
@@ -111,4 +100,4 @@ const ProductOrders = () => {
     )
 }
 
-export default ProductOrders
+export default ApprovedOrders

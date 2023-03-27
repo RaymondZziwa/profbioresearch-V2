@@ -43,7 +43,7 @@ const Managerdashboard = () => {
                                     Inventory
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="/productorders">
+                            <Link className="tab_nav" to="/approvedorders">
                                 <div className="mb-3 mclickable_option">
                                     Pending Product Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingOrders}</p>
                                 </div>

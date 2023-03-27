@@ -123,9 +123,9 @@ const Saveinventoryrecords = () => {
                 let convertedLitres = actualQuantity * mls
                 expectedOutputRef.current.value = Math.round(convertedLitres / matches[0])
                 let res = await axios.post('http://82.180.136.230:3005/saveinventoryrecord', {
-                    branch : localStorage.getItem('branch'),
-                    role : localStorage.getItem('role'),
-                    department : localStorage.getItem('department'),
+                    branch: localStorage.getItem('branch'),
+                    role: localStorage.getItem('role'),
+                    department: localStorage.getItem('department'),
                     itemname: itemName,
                     reason: reason,
                     additionalinfo: additionalInfo,
@@ -148,9 +148,9 @@ const Saveinventoryrecords = () => {
                 let convertedKgs = actualQuantity * grams
                 expectedOutputRef.current.value = Math.round(convertedKgs / matches[0])
                 let res = await axios.post('http://82.180.136.230:3005/saveinventoryrecord', {
-                    branch : localStorage.getItem('branch'),
-                    role : localStorage.getItem('role'),
-                    department : localStorage.getItem('department'),
+                    branch: localStorage.getItem('branch'),
+                    role: localStorage.getItem('role'),
+                    department: localStorage.getItem('department'),
                     itemname: itemName,
                     reason: reason,
                     additionalinfo: additionalInfo,
@@ -171,9 +171,9 @@ const Saveinventoryrecords = () => {
             }
         } else {
             let res = await axios.post('http://82.180.136.230:3005/saveinventoryrecord', {
-                branch : localStorage.getItem('branch'),
-                role : localStorage.getItem('role'),
-                department : localStorage.getItem('department'),
+                branch: localStorage.getItem('branch'),
+                role: localStorage.getItem('role'),
+                department: localStorage.getItem('department'),
                 itemname: itemName,
                 reason: reason,
                 additionalinfo: additionalInfo,
@@ -286,7 +286,7 @@ const Saveinventoryrecords = () => {
 
                                 <div className="form-floating mb-3">
                                     <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={recievedByInput} required />
-                                    <label for="floatingInput">Taken By</label>
+                                    <label for="floatingInput">Recieved By</label>
                                 </div>
 
 

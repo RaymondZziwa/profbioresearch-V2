@@ -1,8 +1,182 @@
+// import { Row, Col, Form } from "react-bootstrap";
+// import '../../Namungoona/inventory records/forms.css'
+// import Navbar from "../../side navbar/sidenav";
+// import axios from "axios";
+// import { useState } from "react";
+// import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+// import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// const RequestRawMaterialsForm = () => {
+//     const [status, setStatus] = useState({})
+//     const [itemList, setitemList] = useState()
+//     const [isLoading, setisLoading] = useState(true)
+//     const [orderId, setOrderId] = useState('')
+//     const [sourceBranch, setsourceBranch] = useState('')
+//     const [recieversRole, setRecieversRole] = useState('')
+//     const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', mUnits: '' },])
+//     const [destinationBranch, setdestinationBranch] = useState('')
+//     const [recievedBy, setrecievedBy] = useState('')
+
+//     const removeInput = (index) => {
+//         const values = [...itemsRequested];
+//         values.splice(index, 1);
+//         setItemsRequested(values)
+//     }
+//     const addNewInput = () => {
+//         setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '', mUnits: '' }])
+//     }
+
+
+
+//     const fetchItems = async () => {
+//         const res = await axios.post('http://82.180.136.230:3005/itemlist', {
+//             token: localStorage.getItem("token")
+//         })
+//         setitemList(res.data)
+//         setisLoading(false)
+//     }
+
+//     const recievedByInput = event => {
+//         event.preventDefault()
+//         setrecievedBy(event.target.value)
+//     }
+
+//     const sourceBranchInput = event => {
+//         event.preventDefault()
+//         setsourceBranch(event.target.value)
+//     }
+//     const orderIdInput = event => {
+//         event.preventDefault()
+//         setOrderId(event.target.value)
+//     }
+
+//     const recieversroleInput = event => {
+//         event.preventDefault()
+//         setRecieversRole(event.target.value)
+//     }
+
+//     const handleChangeInput = (index, event) => {
+//         let values = [...itemsRequested];
+//         values[index][event.target.name] = event.target.value;
+//         setItemsRequested(values)
+//     }
+//     const saveDataHandler = async event => {
+//         event.preventDefault()
+//         let res = await axios.post('http://82.180.136.230:3005/requestrawmaterials', {
+//             orderId: orderId,
+//             requesterbranch: localStorage.getItem('branch'),
+//             requesterrole: localStorage.getItem('role'),
+//             requestedby: localStorage.getItem('username'),
+//             requestedfrombranch: sourceBranch,
+//             recieversRole: recieversRole,
+//             recievedBy: recievedBy,
+//             itemsrequested: JSON.stringify(itemsRequested),
+//             token: localStorage.getItem("token")
+//         }).then(() => setStatus({ type: 'success' }))
+//             .catch((err) => setStatus({ type: 'error', err }))
+//     }
+
+//     return (
+//         <div className='container-fluid'>
+//             <Row>
+//                 <Col sm='2' md='2' lg='2' xl='2'></Col>
+//                 <Col sm='12' md='8' lg='8' xl='8'>
+//                     <div className="container  d-flex align-items-center" style={{ marginTop: '50px' }}>
+//                         <Form>
+//                             {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Request Submitted.</span>}
+//                             {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Request was not submitted.</span>}
+//                             <div style={{ marginTop: '20px' }}>
+//                                 <div className="form-floating mb-3">
+//                                     <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} onChange={orderIdInput} required />
+//                                     <label for="floatingInput">Order-Id</label>
+//                                 </div><br></br>
+//                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
+//                                     <option selected>Select Branch To Request From</option>
+//                                     <option value="masanafu">Masanafu</option>
+//                                     <option value="equatorial">Equatorial</option>
+//                                     <option value="buwama">Buwama</option>
+//                                     <option value="namungoona">Namungoona</option>
+//                                 </select><br></br>
+//                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={recieversroleInput} required>
+//                                     <option selected>Reciever's Role</option>
+//                                     <option value="manager">Manager</option>
+//                                     <option value="custodian">Custodian</option>
+//                                 </select>
+//                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={recievedByInput} required>
+//                                     <option selected>Recieved By</option>
+//                                     <option value="demo">Roger</option>
+//                                     <option value="demo">Patrick</option>
+//                                 </select><br></br>
+//                                 {
+//                                     itemsRequested.map((itemRequested, index) => (
+//                                         <div key={index}>
+//                                             <div className="form-floating mb-3">
+//                                                 <input type="text"
+//                                                     className="form-control"
+//                                                     name="itemName"
+//                                                     id="floatingInput"
+//                                                     placeholder="Item Name"
+//                                                     style={{ color: "#8CA6FE" }}
+//                                                     value={itemRequested.itemName}
+//                                                     onChange={event => handleChangeInput(index, event)}
+//                                                     required />
+//                                                 <label for="floatingInput">Item Name</label>
+//                                             </div>
+
+//                                             <div className="form-floating mb-3">
+//                                                 <input type="text"
+//                                                     className="form-control"
+//                                                     id="floatingInput"
+//                                                     name="itemQuantity"
+//                                                     placeholder="Item Quantity"
+//                                                     style={{ color: "#8CA6FE" }}
+//                                                     value={itemRequested.itemQuantity}
+//                                                     onChange={event => handleChangeInput(index, event)}
+//                                                     required />
+//                                                 <label for="floatingInput">Item Quantity</label>
+//                                             </div>
+
+//                                             <div className="form-floating mb-3">
+//                                                 <input type="text"
+//                                                     className="form-control"
+//                                                     id="floatingInput"
+//                                                     placeholder="mUnits"
+//                                                     name="mUnits"
+//                                                     style={{ color: "#8CA6FE" }}
+//                                                     value={itemRequested.mUnits}
+//                                                     onChange={event => handleChangeInput(index, event)}
+//                                                     required />
+//                                                 <label for="floatingInput">measurement Units</label>
+//                                             </div>
+
+//                                             <FontAwesomeIcon onClick={addNewInput} icon={faPlusCircle} style={{ color: 'green', fontSize: '28px' }} />
+//                                             <FontAwesomeIcon onClick={() => removeInput(index)} icon={faMinusCircle} style={{ color: 'red', fontSize: '28px', marginLeft: '2px' }} />
+//                                         </div>
+//                                     ))
+//                                 }
+//                                 <div className="mb-3" style={{ textAlign: 'center' }}>
+//                                     <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={saveDataHandler}>SUBMIT REQUEST</button>
+//                                 </div>
+//                             </div>
+//                         </Form>
+//                     </div>
+//                 </Col>
+//                 <Col sm='12' md='2' lg='2' xl='2'>
+//                     <Navbar />
+//                 </Col>
+//             </Row>
+//         </div>
+//     )
+// }
+
+// export default 
+
 import { Row, Col, Form } from "react-bootstrap";
 import '../../Namungoona/inventory records/forms.css'
 import Navbar from "../../side navbar/sidenav";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,13 +184,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const RequestRawMaterialsForm = () => {
     const [status, setStatus] = useState({})
     const [itemList, setitemList] = useState()
-    const [isLoading, setisLoading] = useState(true)
+    const [isItemListLoading, setisItemListLoading] = useState(true)
     const [orderId, setOrderId] = useState('')
     const [sourceBranch, setsourceBranch] = useState('')
     const [recieversRole, setRecieversRole] = useState('')
     const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', mUnits: '' },])
-    const [destinationBranch, setdestinationBranch] = useState('')
     const [recievedBy, setrecievedBy] = useState('')
+    const [deptData, setDeptData] = useState()
+    const [roleData, setRoleData] = useState()
+    const [personnelData, setPersonnelData] = useState()
+
+    const branchRef = useRef()
+    const deptRef = useRef()
+    const roleRef = useRef()
 
     const removeInput = (index) => {
         const values = [...itemsRequested];
@@ -28,32 +208,9 @@ const RequestRawMaterialsForm = () => {
     }
 
 
-
-    const fetchItems = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/itemlist', {
-            token: localStorage.getItem("token")
-        })
-        setitemList(res.data)
-        setisLoading(false)
-    }
-
     const recievedByInput = event => {
         event.preventDefault()
         setrecievedBy(event.target.value)
-    }
-
-    const sourceBranchInput = event => {
-        event.preventDefault()
-        setsourceBranch(event.target.value)
-    }
-    const orderIdInput = event => {
-        event.preventDefault()
-        setOrderId(event.target.value)
-    }
-
-    const recieversroleInput = event => {
-        event.preventDefault()
-        setRecieversRole(event.target.value)
     }
 
     const handleChangeInput = (index, event) => {
@@ -61,16 +218,96 @@ const RequestRawMaterialsForm = () => {
         values[index][event.target.name] = event.target.value;
         setItemsRequested(values)
     }
-    const saveDataHandler = async event => {
+
+    const fetchDepartmentData = event => {
+        event.preventDefault()
+        try {
+            axios.post('http://82.180.136.230:3005/departmentData', {
+                branch: branchRef.current.value
+
+            }).then((res) => {
+                if (res.status === 200) {
+                    setDeptData(res.data)
+                } else {
+                    alert('Ooops! Something went wrong.Contact the technical team.')
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const fetchRoleData = event => {
+        event.preventDefault()
+        try {
+            axios.post('http://82.180.136.230:3005/roleData', {
+                department: deptRef.current.value
+            }).then((res) => {
+                if (res.status === 200) {
+                    setRoleData(res.data)
+                } else {
+                    alert('Ooops! Something went wrong.Contact the technical team.')
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const fetchPersonnelData = event => {
+        event.preventDefault()
+        console.log(roleRef.current.value)
+        try {
+            axios.post('http://82.180.136.230:3005/personnelData', {
+                role: roleRef.current.value
+            }).then((res) => {
+                if (res.status === 200) {
+                    setPersonnelData(res.data)
+                } else {
+                    alert('Ooops! Something went wrong.Contact the technical team.')
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
+    const fetchItems = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/itemlist', {
+            token: localStorage.getItem("token")
+        })
+        setitemList(res.data)
+        setisItemListLoading(false)
+    }
+
+    useEffect(() => {
+        fetchItems()
+        const interval = setInterval(() => {
+            fetchItems()
+        }, 5000)
+
+
+        return () => clearInterval(interval)
+    }, [])
+
+
+
+    const submitRequestHandler = async event => {
+        const OrderId = await `OR-${Math.floor(Math.random() * 1800000)}`
+        setOrderId(OrderId)
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/requestrawmaterials', {
             orderId: orderId,
-            requesterbranch: localStorage.getItem('branch'),
-            requesterrole: localStorage.getItem('role'),
-            requestedby: localStorage.getItem('username'),
-            requestedfrombranch: sourceBranch,
-            recieversRole: recieversRole,
-            recievedBy: recievedBy,
+            sourcebranch: localStorage.getItem('branch'),
+            orderedbydepartment: localStorage.getItem('department'),
+            orderedbyrole: localStorage.getItem('role'),
+            orderedby: localStorage.getItem('username'),
+            destinationbranch: branchRef.current.value,
+            recieverdepartment: deptRef.current.value,
+            recieverrole: roleRef.current.value,
+            deliveredto: recievedBy,
             itemsrequested: JSON.stringify(itemsRequested),
             token: localStorage.getItem("token")
         }).then(() => setStatus({ type: 'success' }))
@@ -83,80 +320,171 @@ const RequestRawMaterialsForm = () => {
                 <Col sm='2' md='2' lg='2' xl='2'></Col>
                 <Col sm='12' md='8' lg='8' xl='8'>
                     <div className="container  d-flex align-items-center" style={{ marginTop: '50px' }}>
+
                         <Form>
-                            {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Transaction saved</span>}
-                            {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Transaction was not saved</span>}
+                            <h2 style={{ marginTop: '10px', fontSize: '50px', textAlign: 'center' }}>Request Raw Materials</h2>
+                            {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Request successfully submitted</span>}
+                            {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Request was not submitted</span>}
                             <div style={{ marginTop: '20px' }}>
                                 <div className="form-floating mb-3">
-                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} onChange={orderIdInput} required />
-                                    <label for="floatingInput">Order-Id</label>
+                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={orderId} required readOnly />
+                                    <label for="floatingInput">Request-Id</label>
                                 </div><br></br>
-                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
-                                    <option selected>Select Branch To Request From</option>
+                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Request Reciever's Data</h3>
+                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={branchRef} onChange={fetchDepartmentData} required>
+                                    <option selected>Order To ( Branch )</option>
                                     <option value="masanafu">Masanafu</option>
                                     <option value="equatorial">Equatorial</option>
                                     <option value="buwama">Buwama</option>
                                     <option value="namungoona">Namungoona</option>
-                                </select><br></br>
-                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={recieversroleInput} required>
+                                </select>
+                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={deptRef} onChange={fetchRoleData} required>
+                                    <option selected>Select Department</option>
+                                    {deptData != null && deptData.map(dept => (
+                                        <option key={dept.department} value={dept.department}>{dept.department}</option>
+                                    ))}
+                                </select>
+                                <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={roleRef} onChange={fetchPersonnelData} required>
                                     <option selected>Reciever's Role</option>
-                                    <option value="manager">Manager</option>
-                                    <option value="custodian">Custodian</option>
+                                    {roleData != null && roleData.map(role => (
+                                        <option key={role.role} value={role.role}>{role.role}</option>
+                                    ))}
                                 </select>
                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={recievedByInput} required>
                                     <option selected>Recieved By</option>
-                                    <option value="demo">Roger</option>
-                                    <option value="demo">Patrick</option>
-                                </select><br></br>
-                                {
-                                    itemsRequested.map((itemRequested, index) => (
-                                        <div key={index}>
-                                            <div className="form-floating mb-3">
-                                                <input type="text"
-                                                    className="form-control"
-                                                    name="itemName"
-                                                    id="floatingInput"
-                                                    placeholder="Item Name"
-                                                    style={{ color: "#8CA6FE" }}
-                                                    value={itemRequested.itemName}
-                                                    onChange={event => handleChangeInput(index, event)}
-                                                    required />
-                                                <label for="floatingInput">Item Name</label>
-                                            </div>
+                                    {personnelData != null && personnelData.map(personnel => (
+                                        <option key={personnel.username} value={personnel.username}>{personnel.username}</option>
+                                    ))}
+                                </select>
+                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Items Being Requested</h3>
+                                <table className="table" style={{ marginTop: '10px' }}>
+                                    <thead>
+                                        <tr style={{ textAlign: 'center' }}>
+                                            <th scope="col">Item Name</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Unit Of Measurement</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
 
-                                            <div className="form-floating mb-3">
-                                                <input type="text"
-                                                    className="form-control"
-                                                    id="floatingInput"
-                                                    name="itemQuantity"
-                                                    placeholder="Item Quantity"
-                                                    style={{ color: "#8CA6FE" }}
-                                                    value={itemRequested.itemQuantity}
-                                                    onChange={event => handleChangeInput(index, event)}
-                                                    required />
-                                                <label for="floatingInput">Item Quantity</label>
-                                            </div>
+                                    <tbody>
 
-                                            <div className="form-floating mb-3">
-                                                <input type="text"
-                                                    className="form-control"
-                                                    id="floatingInput"
-                                                    placeholder="mUnits"
-                                                    name="mUnits"
-                                                    style={{ color: "#8CA6FE" }}
-                                                    value={itemRequested.mUnits}
-                                                    onChange={event => handleChangeInput(index, event)}
-                                                    required />
-                                                <label for="floatingInput">measurement Units</label>
-                                            </div>
+                                        {itemsRequested.map((itemRequested, index) => (
 
-                                            <FontAwesomeIcon onClick={addNewInput} icon={faPlusCircle} style={{ color: 'green', fontSize: '28px' }} />
-                                            <FontAwesomeIcon onClick={() => removeInput(index)} icon={faMinusCircle} style={{ color: 'red', fontSize: '28px', marginLeft: '2px' }} />
-                                        </div>
-                                    ))
-                                }
+                                            <tr key={index}>
+                                                <td>
+                                                    <div className="form-floating mb-3">
+                                                        <select class="form-select"
+                                                            name="itemName"
+                                                            aria-label="Default select example"
+                                                            placeholder="Item Name"
+                                                            onChange={event => handleChangeInput(index, event)}
+                                                            value={itemRequested.itemName}
+                                                            required>
+                                                            <option selected>Filter By Item Name</option>
+                                                            {isItemListLoading ? <option>Loading Items From Database</option> :
+                                                                itemList.map(item => (
+                                                                    <option>
+                                                                        {item.name}
+                                                                    </option>
+                                                                ))}
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+
+                                                <td>
+                                                    <div className="form-floating mb-3">
+                                                        <input type="text"
+                                                            className="form-control"
+                                                            id="floatingInput"
+                                                            name="itemQuantity"
+                                                            placeholder="Item Quantity"
+                                                            style={{ color: "#8CA6FE" }}
+                                                            value={itemRequested.itemQuantity}
+                                                            onChange={event => handleChangeInput(index, event)}
+                                                            required />
+                                                        <label for="floatingInput">Item Quantity</label>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+
+                                                    <div className="form-floating mb-3">
+                                                        <select
+                                                            class="form-select"
+                                                            aria-label="Default select example"
+                                                            style={{ height: "60px", color: "#8CA6FE" }}
+                                                            placeholder="mUnits"
+                                                            name="mUnits"
+                                                            value={itemRequested.mUnits}
+                                                            onChange={event => handleChangeInput(index, event)}
+                                                            required>
+
+                                                            <option selected>Measurement</option>
+                                                            <option value="L">Litres</option>
+                                                            <option value="KG">Kilograms</option>
+                                                            <option value="MLS">Milliliters</option>
+                                                            <option value="Pcs">Pcs</option>
+                                                            <option disabled>---grams packaging sizes---</option>
+                                                            <option value="10grampcs">10 grams Pcs</option>
+                                                            <option value="20grampcs">20 grams Pcs</option>
+                                                            <option value="50grampcs">50 grams Pcs</option>
+                                                            <option value="100grampcs">100 grams Pcs</option>
+                                                            <option value="250grampcs">250 grams Pcs</option>
+                                                            <option value="350grampcs">350 grams Pcs</option>
+                                                            <option value="400grampcs">400 grams Pcs</option>
+                                                            <option value="450grampcs">450 grams Pcs</option>
+                                                            <option value="500grampcs">500 grams Pcs</option>
+                                                            <option value="700grampcs">700 grams Pcs</option>
+                                                            <option value="750grampcs">750 grams Pcs</option>
+                                                            <option disabled>---mls packaging sizes---</option>
+                                                            <option value="10mlpcs">10 mls Pcs</option>
+                                                            <option value="20mlpcs">20 mls Pcs</option>
+                                                            <option value="50mlpcs">50 mls Pcs</option>
+                                                            <option value="100mlpcs">100 mls Pcs</option>
+                                                            <option value="250mlpcs">250 mls Pcs</option>
+                                                            <option value="350mlpcs">350 mls Pcs</option>
+                                                            <option value="500mlpcs">500 mls Pcs</option>
+                                                            <option value="550mlpcs">550 mls Pcs</option>
+                                                            <option value="600mlpcs">600 mls Pcs</option>
+                                                            <option value="650mlpcs">650 mls Pcs</option>
+                                                            <option value="700mlpcs">700 mls Pcs</option>
+                                                            <option value="750mlpcs">750 mls Pcs</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <FontAwesomeIcon onClick={addNewInput} icon={faPlusCircle} style={{ color: 'green', fontSize: '30px', cursor: 'pointer' }} />
+                                                    <FontAwesomeIcon onClick={() => removeInput(index)} icon={faMinusCircle} style={{ color: 'red', fontSize: '30px', marginLeft: '2px', cursor: 'pointer' }} />
+                                                </td>
+
+                                            </tr>
+
+                                        ))
+                                        }
+                                    </tbody>
+                                </table>
+                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Sender's Data</h3>
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('branch')} required readOnly />
+                                    <label for="floatingInput">Order From ( Branch )</label>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('department')} required readOnly />
+                                    <label for="floatingInput">Ordered By ( Department )</label>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('role')} required readOnly />
+                                    <label for="floatingInput">Ordered By ( Role )</label>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('username')} required readOnly />
+                                    <label for="floatingInput">Ordered By ( username )</label>
+                                </div>
                                 <div className="mb-3" style={{ textAlign: 'center' }}>
-                                    <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={saveDataHandler}>SUBMIT REQUEST</button>
+                                    <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={submitRequestHandler}>SUBMIT REQUEST</button>
                                 </div>
                             </div>
                         </Form>
