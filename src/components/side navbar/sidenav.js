@@ -84,7 +84,7 @@ const Navbar = () => {
                     <Link className="nav-link active" aria-current="page" to='/custodiandashboard'>Dashboard</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link " aria-current="page" to=''>Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>0</p></Link>
+                    <Link className="nav-link " aria-current="page" to='/rawmaterialrequests'>Raw Material Requests</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/placeproductorder">Order Products</Link>

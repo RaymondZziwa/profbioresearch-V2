@@ -186,8 +186,6 @@ const RequestRawMaterialsForm = () => {
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
     const [orderId, setOrderId] = useState('')
-    const [sourceBranch, setsourceBranch] = useState('')
-    const [recieversRole, setRecieversRole] = useState('')
     const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', mUnits: '' },])
     const [recievedBy, setrecievedBy] = useState('')
     const [deptData, setDeptData] = useState()
@@ -217,6 +215,11 @@ const RequestRawMaterialsForm = () => {
         let values = [...itemsRequested];
         values[index][event.target.name] = event.target.value;
         setItemsRequested(values)
+    }
+
+    const orderIdInput = event => {
+        event.preventDefault()
+        setOrderId(event.target.value)
     }
 
     const fetchDepartmentData = event => {
@@ -295,8 +298,6 @@ const RequestRawMaterialsForm = () => {
 
 
     const submitRequestHandler = async event => {
-        const OrderId = await `OR-${Math.floor(Math.random() * 1800000)}`
-        setOrderId(OrderId)
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/requestrawmaterials', {
             orderId: orderId,
@@ -327,16 +328,13 @@ const RequestRawMaterialsForm = () => {
                             {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Request was not submitted</span>}
                             <div style={{ marginTop: '20px' }}>
                                 <div className="form-floating mb-3">
-                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={orderId} required readOnly />
-                                    <label for="floatingInput">Request-Id</label>
+                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} onChange={orderIdInput} required />
+                                    <label for="floatingInput">Order-Id</label>
                                 </div><br></br>
                                 <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Request Reciever's Data</h3>
                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={branchRef} onChange={fetchDepartmentData} required>
                                     <option selected>Order To ( Branch )</option>
                                     <option value="masanafu">Masanafu</option>
-                                    <option value="equatorial">Equatorial</option>
-                                    <option value="buwama">Buwama</option>
-                                    <option value="namungoona">Namungoona</option>
                                 </select>
                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={deptRef} onChange={fetchRoleData} required>
                                     <option selected>Select Department</option>
@@ -426,31 +424,6 @@ const RequestRawMaterialsForm = () => {
                                                             <option value="KG">Kilograms</option>
                                                             <option value="MLS">Milliliters</option>
                                                             <option value="Pcs">Pcs</option>
-                                                            <option disabled>---grams packaging sizes---</option>
-                                                            <option value="10grampcs">10 grams Pcs</option>
-                                                            <option value="20grampcs">20 grams Pcs</option>
-                                                            <option value="50grampcs">50 grams Pcs</option>
-                                                            <option value="100grampcs">100 grams Pcs</option>
-                                                            <option value="250grampcs">250 grams Pcs</option>
-                                                            <option value="350grampcs">350 grams Pcs</option>
-                                                            <option value="400grampcs">400 grams Pcs</option>
-                                                            <option value="450grampcs">450 grams Pcs</option>
-                                                            <option value="500grampcs">500 grams Pcs</option>
-                                                            <option value="700grampcs">700 grams Pcs</option>
-                                                            <option value="750grampcs">750 grams Pcs</option>
-                                                            <option disabled>---mls packaging sizes---</option>
-                                                            <option value="10mlpcs">10 mls Pcs</option>
-                                                            <option value="20mlpcs">20 mls Pcs</option>
-                                                            <option value="50mlpcs">50 mls Pcs</option>
-                                                            <option value="100mlpcs">100 mls Pcs</option>
-                                                            <option value="250mlpcs">250 mls Pcs</option>
-                                                            <option value="350mlpcs">350 mls Pcs</option>
-                                                            <option value="500mlpcs">500 mls Pcs</option>
-                                                            <option value="550mlpcs">550 mls Pcs</option>
-                                                            <option value="600mlpcs">600 mls Pcs</option>
-                                                            <option value="650mlpcs">650 mls Pcs</option>
-                                                            <option value="700mlpcs">700 mls Pcs</option>
-                                                            <option value="750mlpcs">750 mls Pcs</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -459,9 +432,7 @@ const RequestRawMaterialsForm = () => {
                                                     <FontAwesomeIcon onClick={addNewInput} icon={faPlusCircle} style={{ color: 'green', fontSize: '30px', cursor: 'pointer' }} />
                                                     <FontAwesomeIcon onClick={() => removeInput(index)} icon={faMinusCircle} style={{ color: 'red', fontSize: '30px', marginLeft: '2px', cursor: 'pointer' }} />
                                                 </td>
-
                                             </tr>
-
                                         ))
                                         }
                                     </tbody>

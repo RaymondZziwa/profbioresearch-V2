@@ -24,6 +24,7 @@ import { useState } from 'react';
 import OrderRecords from './components/Masanafu/Manager/orderRecords';
 import ExhibitionRecords from './components/Masanafu/Custodian/exhibitionrecords';
 import ApprovedOrders from './components/Masanafu/Manager/approvedorders';
+import RawMaterialRequests from './components/Masanafu/Custodian/rawmaterialrequests';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -129,6 +130,10 @@ function App() {
 
           {authCtx.isLoggedIn && (<Route path="/approvedorders">
             <ApprovedOrders />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/rawmaterialrequests">
+            <RawMaterialRequests />
           </Route>)}
         </QueryClientProvider>
       </BrowserRouter>

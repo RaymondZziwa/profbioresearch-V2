@@ -121,11 +121,8 @@ const PlaceOrderForm = () => {
 
 
     const submitRequestHandler = async event => {
-        const OrderId = await `OR-${Math.floor(Math.random() * 1800000)}`
-        setOrderId(OrderId)
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/placeorder', {
-            orderId: orderId,
             sourcebranch: localStorage.getItem('branch'),
             orderedbydepartment: localStorage.getItem('department'),
             orderedbyrole: localStorage.getItem('role'),
@@ -148,14 +145,10 @@ const PlaceOrderForm = () => {
                     <div className="container  d-flex align-items-center" style={{ marginTop: '50px' }}>
 
                         <Form>
-                            <h2 style={{ marginTop: '10px', fontSize: '50px', textAlign: 'center' }}>Place Product Order</h2>
+                            <h2 style={{ marginTop: '10px', fontSize: '50px', textAlign: 'center' }}>Place Product Order Form</h2>
                             {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Order Successfully Placed</span>}
                             {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Transaction was not saved</span>}
                             <div style={{ marginTop: '20px' }}>
-                                <div className="form-floating mb-3">
-                                    <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={orderId} required readOnly />
-                                    <label for="floatingInput">Order-Id</label>
-                                </div><br></br>
                                 <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Reciever's Data</h3>
                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={branchRef} onChange={fetchDepartmentData} required>
                                     <option selected>Order To ( Branch )</option>
