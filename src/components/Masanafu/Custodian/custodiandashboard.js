@@ -9,6 +9,7 @@ const CustodianDashboard = () => {
     const [OrdersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState()
+    const [totalNumberOfPendingRequests, setTotalNumberOfPendingRequests] = useState()
 
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
@@ -24,7 +25,26 @@ const CustodianDashboard = () => {
         fetchOrders()
         const interval = setInterval(() => {
             fetchOrders()
-        }, 5000)
+        }, 3000)
+
+
+        return () => clearInterval(interval)
+    })
+
+    const fetchRawMaterialRequests = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/pendingrawmaterialrequests', {
+            branch: localStorage.getItem("branch"),
+            token: localStorage.getItem("token")
+        })
+        setTotalNumberOfPendingRequests(res.data.length)
+        setisOrdersListLoading(false)
+    }
+
+    useEffect(() => {
+        fetchRawMaterialRequests()
+        const interval = setInterval(() => {
+            fetchRawMaterialRequests()
+        }, 30000)
 
 
         return () => clearInterval(interval)
@@ -43,15 +63,15 @@ const CustodianDashboard = () => {
                             </Link>
                             <Link className="tab_nav" to="/rawmaterialrequests">
                                 <div className="mb-3 mclickable_option">
-                                    Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>99</p>
+                                    Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingRequests}</p>
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="#">
+                            <Link className="tab_nav" to="/rawmaterialrequestsrecords">
                                 <div className="mb-3 mclickable_option">
                                     Raw Material Requests Records
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="#">
+                            <Link className="tab_nav" to="/productionrecords">
                                 <div className="mb-3 mclickable_option">
                                     Production Records
                                 </div>

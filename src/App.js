@@ -25,6 +25,8 @@ import OrderRecords from './components/Masanafu/Manager/orderRecords';
 import ExhibitionRecords from './components/Masanafu/Custodian/exhibitionrecords';
 import ApprovedOrders from './components/Masanafu/Manager/approvedorders';
 import RawMaterialRequests from './components/Masanafu/Custodian/rawmaterialrequests';
+import RawMaterialRequestsRecords from './components/Masanafu/Custodian/rawmaterialrequestsrecords';
+import ProductionRecords from './components/Masanafu/Manager/productionrecords';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -41,6 +43,10 @@ function App() {
           {!authCtx.isLoggedIn && (
             <Redirect to='/Login' />
           )}
+
+          {/* <Route path="*">
+            <Redirect to='/Login' />
+          </Route> */}
 
           {authCtx.isLoggedIn && (
             <Route path="/namungoonadashboard">
@@ -135,6 +141,15 @@ function App() {
           {authCtx.isLoggedIn && (<Route path="/rawmaterialrequests">
             <RawMaterialRequests />
           </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/rawmaterialrequestsrecords">
+            <RawMaterialRequestsRecords />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/productionrecords">
+            <ProductionRecords />
+          </Route>)}
+
+          
         </QueryClientProvider>
       </BrowserRouter>
     </div>

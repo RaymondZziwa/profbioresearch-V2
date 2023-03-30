@@ -3,12 +3,12 @@ import Navbar from "../../side navbar/sidenav";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const ApprovedOrders = () => {
+const ProductionRecords = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
 
     const fetchOrders = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/approvedorders', {
+        const res = await axios.post('http://82.180.136.230:3005/productionrecords', {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
@@ -20,48 +20,32 @@ const ApprovedOrders = () => {
         fetchOrders()
         const interval = setInterval(() => {
             fetchOrders()
-        }, 10000)
+        }, 2000)
 
 
         return () => clearInterval(interval)
     })
-
-    const approveOrder = event => {
-        event.preventDefault()
-        axios.post('http://82.180.136.230:3005/ordercompleted', {
-            orderId: event.currentTarget.id,
-            newStatus: 'completed',
-            branch: localStorage.getItem("branch"),
-            token: localStorage.getItem("token")
-        })
-    }
     return (
         <>
             <div className='container-fluid'>
                 <Row>
                     <Col sm='12' md='2' lg='2' xl='2'></Col>
                     <Col sm='12' md='8' lg='8' xl='8'>
-                        <table className="table table-dark" style={{ marginTop: '100px' }}>
+                        <table className="table table-dark" style={{ marginTop: '100px',textAlign:'center' }}>
                             <thead style={{ textAlign: 'center' }}>
                                 <tr>
-                                    <th scope="col">Order Id</th>
+                                    <th scope="col">Production Id</th>
+                                    <th scope="col">Order Id (Production Completed For Order)</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Order From (Branch)</th>
-                                    <th scope="col">Order By</th>
-                                    <th scope="col">Delivered To</th>
-                                    <th scope="col">Items Ordered</th>
-                                    <th scope="col">Current Order Status</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Items Manufactured</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                                 {!isOrdersListLoading && ordersList.map(item => (
                                     <tr>
+                                        <td>{item.productionid}</td>
                                         <td>{item.orderid}</td>
                                         <td>{item.date}</td>
-                                        <td>{item.sourcebranch}</td>
-                                        <td>{item.orderby}</td>
-                                        <td>{item.deliveredto}</td>
                                         <td>
                                             <table className="table table-dark" style={{ marginTop: '2px' }}>
                                                 <thead>
@@ -82,10 +66,6 @@ const ApprovedOrders = () => {
                                                 </tbody>
                                             </table>
                                         </td>
-                                        <td>{item.status}</td>
-                                        <td>
-                                            <button id={item.orderid} className="btn btn-outline-success" style={{ display: 'inline-block' }} onClick={approveOrder}>Mark As Completed</button>
-                                        </td>
                                     </tr>
                                 ))
                                 }
@@ -101,4 +81,4 @@ const ApprovedOrders = () => {
     )
 }
 
-export default ApprovedOrders
+export default ProductionRecords

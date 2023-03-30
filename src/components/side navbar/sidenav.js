@@ -38,7 +38,7 @@ const Navbar = () => {
                     <Link className="nav-link" to="/stocktaking">Stock Taking</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link "  to='/accountsettings'>Settings</Link>
+                    <Link className="nav-link " to='/accountsettings'>Settings</Link>
                   </li>
                 </>
               }
@@ -73,7 +73,7 @@ const Navbar = () => {
                     <Link className="nav-link" to="/stocktaking">Stock Taking</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link"  to='/accountsettings'>Settings</Link>
+                    <Link className="nav-link" to='/accountsettings'>Settings</Link>
                   </li>
                 </>
               }
@@ -85,6 +85,9 @@ const Navbar = () => {
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link " aria-current="page" to='/rawmaterialrequests'>Raw Material Requests</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/rawmaterialrequestsrecords">Raw Material Requests Records</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/placeproductorder">Order Products</Link>

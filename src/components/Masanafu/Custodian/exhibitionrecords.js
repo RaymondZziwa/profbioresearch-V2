@@ -52,7 +52,7 @@ const ExhibitionRecords = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             fetchExhibitionList()
-        }, 3000)
+        }, 1000)
 
 
         return () => clearInterval(interval)
