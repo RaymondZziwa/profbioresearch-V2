@@ -40,7 +40,7 @@ const ProductionRecords = () => {
                                     <th scope="col">Items Manufactured</th>
                                 </tr>
                             </thead>
-                            <tbody >
+                            <tbody>
                                 {!isOrdersListLoading && ordersList.map(item => (
                                     <tr>
                                         <td>{item.productionid}</td>
