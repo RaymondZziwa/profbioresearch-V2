@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Exhibitionmanagement = () => {
     const [status, setStatus] = useState()
-    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', mUnits: '' },])
+    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '0' ,mUnits: '' },])
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
     const [formType, setFormType] = useState()
@@ -21,7 +21,7 @@ const Exhibitionmanagement = () => {
     const [exhibitionName, setExhibitionName] = useState()
     const [exDate, setExDate] = useState()
 
-    const [exName, setExName] = useState()
+    const [isExDataLoading, setIsExDataLoading] = useState(true)
 
     const [selectedExhibitionName, setSelectedExhibitionName] = useState()
 
@@ -42,6 +42,7 @@ const Exhibitionmanagement = () => {
         values.splice(index, 1);
         setItemsRequested(values)
     }
+
     const addNewInput = () => {
         setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '', mUnits: '' }])
     }
@@ -70,7 +71,10 @@ const Exhibitionmanagement = () => {
         return () => clearInterval(interval)
     }, [])
 
-
+    const testData = event => {
+        event.preventDefault()
+        console.log(itemsRequested)
+    }
 
     const fetchExhibitionList = async () => {
         const res = await axios.post('http://82.180.136.230:3005/exhibitionlist', {
@@ -101,16 +105,18 @@ const Exhibitionmanagement = () => {
 
     const fetchExhibitionData = async event => {
         event.preventDefault()
-        console.log(exhibitionDate.current.value)
         const res = await axios.post('http://82.180.136.230:3005/exhibitiondata', {
             exhibitionName: selectedExhibitionName,
             exhibitionDate: exhibitionDate.current.value,
             token: localStorage.getItem("token")
         })
-        setFetchedData(res.data)
-        console.log(fetchedData)
+        if (typeof res.data === 'string') {
+            setIsExDataLoading(true)
+        } else {
+            setFetchedData(res.data)
+            setIsExDataLoading(false)
+        }
     }
-
 
 
     const submitDataHandler = async event => {
@@ -295,9 +301,10 @@ const Exhibitionmanagement = () => {
                                         </div><br></br>
                                         <div className="form-floating mb-3">
                                             <input type='date' className="form-control" id="floatingInput" placeholder="Exhibition Date" style={{ color: "#8CA6FE" }} ref={exhibitionDate}
-                                                onChange={fetchExhibitionData} required />
+                                                required />
                                             <label for="floatingInput">Exhibition Date</label>
                                         </div><br></br>
+                                        <button className="btn btn-primary" onClick={fetchExhibitionData}>Retrieve Data</button>
 
 
 
@@ -312,8 +319,74 @@ const Exhibitionmanagement = () => {
                                                 </tr>
                                             </thead>
 
-                                            <tbody>
-                                                
+                                            <tbody style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                                            {itemsRequested.map((itemRequested, index) => (
+                                                isExDataLoading ? <tr>There is no Exhibition Data From Database. Please edit the parameters.</tr> :
+                                                fetchedData.map(item => (
+                                                    JSON.parse(item.itemsrecord).map((itemRequested) => (
+                                                        <tr key={index}>
+                                                        <td>
+                                                            <div className="form-floating mb-3">
+                                                                <input class="form-select"
+                                                                    name="itemName"
+                                                                    aria-label="Default select example"
+                                                                    placeholder="Item Name"
+                                                                    onChange={event => handleChangeInput(index, event)}
+                                                                    value={itemRequested.itemName}
+                                                                    readOnly
+                                                                required />
+                                                                <label for="floatingInput">Item Name</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="form-floating mb-3">
+                                                                <input type="text"
+                                                                    className="form-control"
+                                                                    id="floatingInput"
+                                                                    name="itemQuantity"
+                                                                    placeholder="Item Quantity"
+                                                                    style={{ color: "#8CA6FE" }}
+                                                                    value={itemRequested.itemQuantity}
+                                                                    onChange={event => { handleChangeInput(index, event) }}
+                                                                    required />
+                                                                <label for="floatingInput">Item Quantity</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="form-floating mb-3">
+                                                                <input
+                                                                    className="form-control"
+                                                                    id="floatingInput"
+                                                                    name="itemQuantityReturned"
+                                                                    placeholder="Item Quantity"
+                                                                    style={{ color: "#8CA6FE" }}
+                                                                    value={itemRequested.itemQuantityReturned}
+                                                                    onChange={event => { handleChangeInput(index, event) }}
+                                                                    required />
+                                                                <label for="floatingInput">Item Quantity Returned</label>
+                                                            </div>
+                                                        </td>
+    
+                                                        <td>
+    
+                                                            <div className="form-floating mb-3">
+                                                                <input
+                                                                    class="form-select"
+                                                                    aria-label="Default select example"
+                                                                    style={{ height: "60px", color: "#8CA6FE" }}
+                                                                    placeholder="mUnits"
+                                                                    name="mUnits"
+                                                                    value={itemRequested.mUnits}
+                                                                    onChange={event => handleChangeInput(index, event)}
+                                                                    required/>
+                                                                    <label for="floatingInput">Measurement Units</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    ))
+                                                ))
+                                                ))
+                                            }
                                             </tbody>
                                         </table>
                                     </>
@@ -337,6 +410,7 @@ const Exhibitionmanagement = () => {
                                 </div>
                                 <div className="mb-3" style={{ textAlign: 'center' }}>
                                     <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={submitDataHandler}>SAVE DATA</button>
+                                    <button onClick={testData}>Test</button>
                                 </div>
                             </div>
                         </Form>
