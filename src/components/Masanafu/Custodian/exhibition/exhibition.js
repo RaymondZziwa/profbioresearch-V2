@@ -11,6 +11,7 @@ import axios from "axios";
 const Exhibitionmanagement = () => {
     const [status, setStatus] = useState()
     const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '0' ,mUnits: '' },])
+    const [itemsPostRequested, setItemsPostRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '' ,mUnits: '' },])
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
     const [formType, setFormType] = useState()
@@ -44,13 +45,20 @@ const Exhibitionmanagement = () => {
     }
 
     const addNewInput = () => {
-        setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '', mUnits: '' }])
+        setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '', itemQuantityReturned: '-', mUnits: '' }])
     }
 
     const handleChangeInput = (index, event) => {
         let values = [...itemsRequested];
         values[index][event.target.name] = event.target.value;
         setItemsRequested(values)
+    }
+
+    const handlePostInput = (index, event) => {
+        let values = [...itemsPostRequested];
+        values[index][event.target.name] = event.target.value;
+        setItemsPostRequested(values)
+        console.log(index)
     }
 
     const fetchItems = async () => {
@@ -73,7 +81,7 @@ const Exhibitionmanagement = () => {
 
     const testData = event => {
         event.preventDefault()
-        console.log(itemsRequested)
+        console.log(itemsPostRequested)
     }
 
     const fetchExhibitionList = async () => {
@@ -121,6 +129,7 @@ const Exhibitionmanagement = () => {
 
     const submitDataHandler = async event => {
         event.preventDefault()
+        console.log(itemsRequested)
         if (formType === 'preexhibition') {
             let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
                 exhibitionName: exhibitionName,
@@ -320,71 +329,75 @@ const Exhibitionmanagement = () => {
                                             </thead>
 
                                             <tbody style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                                            {itemsRequested.map((itemRequested, index) => (
-                                                isExDataLoading ? <tr>There is no Exhibition Data From Database. Please edit the parameters.</tr> :
+                                            { isExDataLoading ? <tr>There is no Exhibition Data From Database. Please edit the parameters.</tr> :
                                                 fetchedData.map(item => (
-                                                    JSON.parse(item.itemsrecord).map((itemRequested) => (
+                                                    JSON.parse(item.itemsrecord).map((itemRecord) => (
+                                                        itemsPostRequested.map((item, index) => (
                                                         <tr key={index}>
-                                                        <td>
-                                                            <div className="form-floating mb-3">
-                                                                <input class="form-select"
-                                                                    name="itemName"
-                                                                    aria-label="Default select example"
-                                                                    placeholder="Item Name"
-                                                                    onChange={event => handleChangeInput(index, event)}
-                                                                    value={itemRequested.itemName}
-                                                                    readOnly
-                                                                required />
-                                                                <label for="floatingInput">Item Name</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="form-floating mb-3">
-                                                                <input type="text"
-                                                                    className="form-control"
-                                                                    id="floatingInput"
-                                                                    name="itemQuantity"
-                                                                    placeholder="Item Quantity"
-                                                                    style={{ color: "#8CA6FE" }}
-                                                                    value={itemRequested.itemQuantity}
-                                                                    onChange={event => { handleChangeInput(index, event) }}
+                                                            <td>
+                                                                <div className="form-floating mb-3">
+                                                                    <input class="form-select"
+                                                                        name="itemName"
+                                                                        aria-label="Default select example"
+                                                                        placeholder="Item Name"
+                                                                        onChange={event => handlePostInput(index, event)}
+                                                                        value={itemRecord.itemName}
+                                                                        { ...item.itemName = itemRecord.itemName}
+                                                                        readOnly
                                                                     required />
-                                                                <label for="floatingInput">Item Quantity</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="form-floating mb-3">
-                                                                <input
-                                                                    className="form-control"
-                                                                    id="floatingInput"
-                                                                    name="itemQuantityReturned"
-                                                                    placeholder="Item Quantity"
-                                                                    style={{ color: "#8CA6FE" }}
-                                                                    value={itemRequested.itemQuantityReturned}
-                                                                    onChange={event => { handleChangeInput(index, event) }}
-                                                                    required />
-                                                                <label for="floatingInput">Item Quantity Returned</label>
-                                                            </div>
-                                                        </td>
-    
-                                                        <td>
-    
-                                                            <div className="form-floating mb-3">
-                                                                <input
-                                                                    class="form-select"
-                                                                    aria-label="Default select example"
-                                                                    style={{ height: "60px", color: "#8CA6FE" }}
-                                                                    placeholder="mUnits"
-                                                                    name="mUnits"
-                                                                    value={itemRequested.mUnits}
-                                                                    onChange={event => handleChangeInput(index, event)}
-                                                                    required/>
-                                                                    <label for="floatingInput">Measurement Units</label>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                                    <label for="floatingInput">Item Name</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="form-floating mb-3">
+                                                                    <input type="text"
+                                                                        className="form-control"
+                                                                        id="floatingInput"
+                                                                        name="itemQuantity"
+                                                                        placeholder="Item Quantity"
+                                                                        style={{ color: "#8CA6FE" }}
+                                                                        value={itemRecord.itemQuantity}
+                                                                        onChange={event => { handlePostInput(index, event) }}
+                                                                        { ...item.itemQuantity = itemRecord.itemQuantity}
+                                                                        required />
+                                                                    <label for="floatingInput">Item Quantity</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="form-floating mb-3">
+                                                                    <input
+                                                                        className="form-control"
+                                                                        id="floatingInput"
+                                                                        name="itemQuantityReturned"
+                                                                        placeholder="Item Quantity"
+                                                                        style={{ color: "#8CA6FE" }}
+                                                                        defaultValue={itemRecord.itemQuantityReturned}
+                                                                        onChange={event => { handlePostInput(index, event) }}
+                                                                        required />
+                                                                    <label for="floatingInput">Item Quantity Returned</label>
+                                                                </div>
+                                                            </td>
+        
+                                                            <td>
+        
+                                                                <div className="form-floating mb-3">
+                                                                    <input
+                                                                        class="form-select"
+                                                                        aria-label="Default select example"
+                                                                        style={{ height: "60px", color: "#8CA6FE" }}
+                                                                        placeholder="mUnits"
+                                                                        name="mUnits"
+                                                                        value={itemRecord.mUnits}
+                                                                        onChange={event => handlePostInput(index, event)}
+                                                                        { ...item.mUnits = itemRecord.mUnits}
+                                                                        required/>
+                                                                        <label for="floatingInput">Measurement Units</label>
+                                                                </div>
+                                                            </td>      
+                                                        </tr>                                        
+                                                        ))
+                                                   
                                                     ))
-                                                ))
                                                 ))
                                             }
                                             </tbody>
