@@ -124,7 +124,7 @@ const ExhibitionRecords = () => {
                                                             <tr>
                                                                 <td>{itemrecord.itemName}</td>
                                                                 <td>{itemrecord.itemQuantity}</td>
-                                                                <td>-</td>
+                                                                <td>{itemrecord.itemQuantityReturned}</td>
                                                                 <td>{itemrecord.mUnits}</td>
                                                             </tr>
                                                         )}

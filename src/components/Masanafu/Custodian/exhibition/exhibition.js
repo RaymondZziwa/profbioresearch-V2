@@ -10,8 +10,8 @@ import axios from "axios";
 
 const Exhibitionmanagement = () => {
     const [status, setStatus] = useState()
-    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '0' ,mUnits: '' },])
-    const [itemsPostRequested, setItemsPostRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '' ,mUnits: '' },])
+    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '0', mUnits: '' },])
+    const [itemsPostRequested, setItemsPostRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '', mUnits: '' },])
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
     const [formType, setFormType] = useState()
@@ -56,6 +56,7 @@ const Exhibitionmanagement = () => {
 
     const handlePostInput = (index, event) => {
         let values = [...itemsPostRequested];
+        console.log('itemsssss', values[index][event.target.name])
         values[index][event.target.name] = event.target.value;
         setItemsPostRequested(values)
         console.log(index)
@@ -121,8 +122,14 @@ const Exhibitionmanagement = () => {
         if (typeof res.data === 'string') {
             setIsExDataLoading(true)
         } else {
+            const items = res.data.map(item => {
+                const parsed = JSON.parse(item.itemsrecord);
+                return parsed;
+            });
+            setItemsPostRequested(items.flat())
             setFetchedData(res.data)
             setIsExDataLoading(false)
+
         }
     }
 
@@ -130,6 +137,7 @@ const Exhibitionmanagement = () => {
     const submitDataHandler = async event => {
         event.preventDefault()
         console.log(itemsRequested)
+        console.log(itemsPostRequested)
         if (formType === 'preexhibition') {
             let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
                 exhibitionName: exhibitionName,
@@ -139,6 +147,15 @@ const Exhibitionmanagement = () => {
                 filledbydepartment: localStorage.getItem('department'),
                 filledbyrole: localStorage.getItem('role'),
                 filledbyuser: localStorage.getItem('username'),
+                status: formType,
+                token: localStorage.getItem("token")
+            }).then(() => setStatus({ type: 'success' }))
+                .catch((err) => setStatus({ type: 'error', err }))
+        }else if (formType === 'postexhibition'){
+            let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
+                exhibitionName: selectedExhibitionName,
+                date: exhibitionDate.current.value,
+                items: JSON.stringify(itemsPostRequested),
                 status: formType,
                 token: localStorage.getItem("token")
             }).then(() => setStatus({ type: 'success' }))
@@ -329,10 +346,8 @@ const Exhibitionmanagement = () => {
                                             </thead>
 
                                             <tbody style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                                            { isExDataLoading ? <tr>There is no Exhibition Data From Database. Please edit the parameters.</tr> :
-                                                fetchedData.map(item => (
-                                                    JSON.parse(item.itemsrecord).map((itemRecord) => (
-                                                        itemsPostRequested.map((item, index) => (
+                                                {isExDataLoading ? <tr>There is no Exhibition Data From Database. Please edit the parameters.</tr> :
+                                                    itemsPostRequested.map((item, index) => (
                                                         <tr key={index}>
                                                             <td>
                                                                 <div className="form-floating mb-3">
@@ -341,10 +356,10 @@ const Exhibitionmanagement = () => {
                                                                         aria-label="Default select example"
                                                                         placeholder="Item Name"
                                                                         onChange={event => handlePostInput(index, event)}
-                                                                        value={itemRecord.itemName}
-                                                                        { ...item.itemName = itemRecord.itemName}
+                                                                        value={item.itemName}
+                                                                        // {...item.itemName = item.itemName}
                                                                         readOnly
-                                                                    required />
+                                                                        required />
                                                                     <label for="floatingInput">Item Name</label>
                                                                 </div>
                                                             </td>
@@ -356,9 +371,9 @@ const Exhibitionmanagement = () => {
                                                                         name="itemQuantity"
                                                                         placeholder="Item Quantity"
                                                                         style={{ color: "#8CA6FE" }}
-                                                                        value={itemRecord.itemQuantity}
+                                                                        value={item.itemQuantity}
                                                                         onChange={event => { handlePostInput(index, event) }}
-                                                                        { ...item.itemQuantity = itemRecord.itemQuantity}
+                                                                        // {...item.itemQuantity = itemRecord.itemQuantity}
                                                                         required />
                                                                     <label for="floatingInput">Item Quantity</label>
                                                                 </div>
@@ -371,15 +386,15 @@ const Exhibitionmanagement = () => {
                                                                         name="itemQuantityReturned"
                                                                         placeholder="Item Quantity"
                                                                         style={{ color: "#8CA6FE" }}
-                                                                        defaultValue={itemRecord.itemQuantityReturned}
+                                                                        defaultValue={item.itemQuantityReturned}
                                                                         onChange={event => { handlePostInput(index, event) }}
                                                                         required />
                                                                     <label for="floatingInput">Item Quantity Returned</label>
                                                                 </div>
                                                             </td>
-        
+
                                                             <td>
-        
+
                                                                 <div className="form-floating mb-3">
                                                                     <input
                                                                         class="form-select"
@@ -387,19 +402,16 @@ const Exhibitionmanagement = () => {
                                                                         style={{ height: "60px", color: "#8CA6FE" }}
                                                                         placeholder="mUnits"
                                                                         name="mUnits"
-                                                                        value={itemRecord.mUnits}
+                                                                        value={item.mUnits}
                                                                         onChange={event => handlePostInput(index, event)}
-                                                                        { ...item.mUnits = itemRecord.mUnits}
-                                                                        required/>
-                                                                        <label for="floatingInput">Measurement Units</label>
+                                                                        // {...item.mUnits = itemRecord.mUnits}
+                                                                        required />
+                                                                    <label for="floatingInput">Measurement Units</label>
                                                                 </div>
-                                                            </td>      
-                                                        </tr>                                        
-                                                        ))
-                                                   
+                                                            </td>
+                                                        </tr>
                                                     ))
-                                                ))
-                                            }
+                                                }
                                             </tbody>
                                         </table>
                                     </>
@@ -423,7 +435,7 @@ const Exhibitionmanagement = () => {
                                 </div>
                                 <div className="mb-3" style={{ textAlign: 'center' }}>
                                     <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={submitDataHandler}>SAVE DATA</button>
-                                    <button onClick={testData}>Test</button>
+                                    {/* <button onClick={testData}>Test</button> */}
                                 </div>
                             </div>
                         </Form>
