@@ -115,6 +115,8 @@ const ExhibitionRecords = () => {
                                                             <th scope="col">Item Name</th>
                                                             <th scope="col">Quantity Taken</th>
                                                             <th scope="col">Quantity Returned</th>
+                                                            <th scope="col">Quantity Sold</th>
+                                                            <th scope="col">Quantity Unaccounted For</th>
                                                             <th scope="col">Units Of Measurement</th>
 
                                                         </tr>
@@ -125,6 +127,8 @@ const ExhibitionRecords = () => {
                                                                 <td>{itemrecord.itemName}</td>
                                                                 <td>{itemrecord.itemQuantity}</td>
                                                                 <td>{itemrecord.itemQuantityReturned}</td>
+                                                                <td>demo</td>
+                                                                <td>demo</td>
                                                                 <td>{itemrecord.mUnits}</td>
                                                             </tr>
                                                         )}

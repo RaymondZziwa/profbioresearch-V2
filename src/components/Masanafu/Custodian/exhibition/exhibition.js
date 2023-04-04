@@ -80,10 +80,6 @@ const Exhibitionmanagement = () => {
         return () => clearInterval(interval)
     }, [])
 
-    const testData = event => {
-        event.preventDefault()
-        console.log(itemsPostRequested)
-    }
 
     const fetchExhibitionList = async () => {
         const res = await axios.post('http://82.180.136.230:3005/exhibitionlist', {
