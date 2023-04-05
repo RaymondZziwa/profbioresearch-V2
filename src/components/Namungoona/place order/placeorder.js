@@ -11,18 +11,20 @@ const PlaceOrderForm = () => {
     const [status, setStatus] = useState({})
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
-    const [orderId, setOrderId] = useState('')
-    const [sourceBranch, setsourceBranch] = useState('')
-    const [recieversRole, setRecieversRole] = useState('')
     const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', mUnits: '' },])
     const [recievedBy, setrecievedBy] = useState('')
     const [deptData, setDeptData] = useState()
     const [roleData, setRoleData] = useState()
     const [personnelData, setPersonnelData] = useState()
-
+    const [additionalInfo, setAdditionalinfo] = useState('')
     const branchRef = useRef()
     const deptRef = useRef()
     const roleRef = useRef()
+
+    const additionalInfoInput = event => {
+        event.preventDefault()
+        setAdditionalinfo(event.target.value)
+    }
 
     const removeInput = (index) => {
         const values = [...itemsRequested];
@@ -132,6 +134,7 @@ const PlaceOrderForm = () => {
             recieverrole: roleRef.current.value,
             deliveredto: recievedBy,
             itemsrequested: JSON.stringify(itemsRequested),
+            additionalInfo: additionalInfo,
             token: localStorage.getItem("token")
         }).then(() => setStatus({ type: 'success' }))
             .catch((err) => setStatus({ type: 'error', err }))
@@ -285,11 +288,20 @@ const PlaceOrderForm = () => {
                                         }
                                     </tbody>
                                 </table>
+                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Additional Information</h3>
+                                <div className="mb-3">
+                                    <div className="form-floating mb-3">
+                                        <textarea type="text" className="form-control" rows="6" id="floatingInput" placeholder="johndoe" style={{ color: "#8CA6FE;", height: '200px', width: '500px' }} onChange={additionalInfoInput} />
+                                        <label for="floatingInput">Additional Information</label>
+                                    </div>
+                                </div>
+
                                 <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Sender's Data</h3>
                                 <div className="form-floating mb-3">
                                     <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('branch')} required readOnly />
                                     <label for="floatingInput">Order From ( Branch )</label>
                                 </div>
+
                                 <div className="form-floating mb-3">
                                     <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('department')} required readOnly />
                                     <label for="floatingInput">Ordered By ( Department )</label>

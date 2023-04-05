@@ -6,6 +6,12 @@ import axios from "axios";
 const ProductOrders = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
+    const [comment, setComment] = useState('')
+
+    const commentInput = event => {
+        event.preventDefault()
+        setComment(event.target.value)
+    }
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
             branch: localStorage.getItem("branch"),
@@ -31,6 +37,7 @@ const ProductOrders = () => {
             orderId: event.currentTarget.id,
             branch: localStorage.getItem("branch"),
             newStatus: 'rejected',
+            comment: comment,
             token: localStorage.getItem("token")
         })
     }
@@ -41,6 +48,7 @@ const ProductOrders = () => {
             orderId: event.currentTarget.id,
             newStatus: 'sent to the production unit',
             branch: localStorage.getItem("branch"),
+            comment: comment,
             token: localStorage.getItem("token")
         })
     }
@@ -59,8 +67,11 @@ const ProductOrders = () => {
                                     <th scope="col">Order By</th>
                                     <th scope="col">Delivered To</th>
                                     <th scope="col">Items Ordered</th>
+                                    <th scope="col">Additional Info</th>
                                     <th scope="col">Current Order Status</th>
+                                    <th scope="col">Comment</th>
                                     <th scope="col">Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -91,7 +102,16 @@ const ProductOrders = () => {
                                                 </tbody>
                                             </table>
                                         </td>
+                                        <td>Additional Info</td>
                                         <td>{item.status}</td>
+                                        <td>
+                                            <div className="mb-3">
+                                                <div className="form-floating mb-3">
+                                                    <textarea type="text" id={item.orderid} className="form-control" rows="6" placeholder="johndoe" style={{ color: "#8CA6FE;", height: '200px' }} onChange={commentInput}/>
+                                                    <label for="floatingInput">Comment</label>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <button id={item.orderid} className="btn btn-outline-danger" style={{ display: 'inline-block', marginRight: '5px' }} onClick={rejectOrder}>Reject</button>
                                             <button id={item.orderid} className="btn btn-outline-success" style={{ display: 'inline-block' }} onClick={approveOrder}>Approve</button>

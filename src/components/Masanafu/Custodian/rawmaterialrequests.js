@@ -6,6 +6,13 @@ import axios from "axios";
 const RawMaterialRequests = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
+    const [comment, setComment] = useState('')
+
+    const commentInput = event => {
+        event.preventDefault()
+        setComment(event.target.value)
+    }
+    
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingrawmaterialrequests', {
             branch: localStorage.getItem("branch"),
@@ -30,6 +37,7 @@ const RawMaterialRequests = () => {
         axios.post('http://82.180.136.230:3005/rejectrawmaterialrequest', {
             requisitionId: event.currentTarget.id,
             branch: localStorage.getItem("branch"),
+            comment: comment,
             newStatus: 'rejected',
             token: localStorage.getItem("token")
         })
@@ -41,6 +49,7 @@ const RawMaterialRequests = () => {
             requisitionId: event.currentTarget.id,
             newStatus: 'approved',
             branch: localStorage.getItem("branch"),
+            comment: comment,
             token: localStorage.getItem("token")
         })
     }
@@ -48,9 +57,9 @@ const RawMaterialRequests = () => {
         <>
             <div className='container-fluid'>
                 <Row>
-                    <Col sm='12' md='2' lg='2' xl='2'></Col>
-                    <Col sm='12' md='8' lg='8' xl='8'>
-                        <table className="table table-dark" style={{ marginTop: '100px' }}>
+                    <Col sm='12' md='1' lg='1' xl='1'></Col>
+                    <Col sm='12' md='10' lg='10' xl='10'>
+                        <table className="table table-dark" style={{ marginTop: '100px', width: '100%' }}>
                             <thead >
                                 <tr>
                                     <th scope="col">Requisition Id</th>
@@ -59,11 +68,11 @@ const RawMaterialRequests = () => {
                                     <th scope="col">Request From (Department)</th>
                                     <th scope="col">Request From (Role)</th>
                                     <th scope="col">Request From (user)</th>
-                                    {/* <th scope="col">Recieved By (Role)</th>
-                                    <th scope="col">Recieved By (User)</th> */}
                                     <th scope="col">Items Requested</th>
+                                    <th scope="col">Additional Info</th>
                                     <th scope="col">Current Status</th>
                                     <th scope="col">Action</th>
+                                    <th scope="col">Comment</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,9 +84,6 @@ const RawMaterialRequests = () => {
                                         <td>{item.requesterdepartment}</td>
                                         <td>{item.requesterrole}</td>
                                         <td>{item.requestedby}</td>
-{/* 
-                                        <td>{item.recieverrole}</td>
-                                        <td>{item.recievedby}</td> */}
                                         <td>
                                             <table className="table table-dark" style={{ marginTop: '2px' }}>
                                                 <thead>
@@ -98,18 +104,28 @@ const RawMaterialRequests = () => {
                                                 </tbody>
                                             </table>
                                         </td>
+                                        <td>Additional Info</td>
                                         <td>{item.status}</td>
+                                        <td>
+                                            <div className="mb-3">
+                                                <div className="form-floating mb-3">
+                                                    <textarea type="text" className="form-control" rows="6" id="floatingInput" placeholder="johndoe" style={{ color: "#8CA6FE;", boxShadow: '0px 0px 5px 1px rgba(0, 0, 0, 0.25)', height: '200px' }} onChange={commentInput}/>
+                                                    <label for="floatingInput">Comment</label>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <button id={item.requisitionid} className="btn btn-outline-danger" style={{ display: 'inline-block', marginRight: '5px' }} onClick={rejectOrder}>Reject</button>
                                             <button id={item.requisitionid} className="btn btn-outline-success" style={{ display: 'inline-block' }} onClick={approveOrder}>Approve</button>
                                         </td>
+                                        
                                     </tr>
                                 ))
                                 }
                             </tbody>
                         </table>
                     </Col>
-                    <Col sm='12' md='2' lg='2' xl='2'>
+                    <Col sm='12' md='1' lg='1' xl='1'>
                         <Navbar />
                     </Col>
                 </Row>
