@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 const ExhibitionRecords = () => {
-    const [ordersList, setOrdersList] = useState()
     const [isExListLoading, setIsExListListLoading] = useState(true)
 
     const [exList, setExList] = useState()
@@ -127,7 +126,7 @@ const ExhibitionRecords = () => {
                                                                 <td>{itemrecord.itemName}</td>
                                                                 <td>{itemrecord.itemQuantity}</td>
                                                                 <td>{itemrecord.itemQuantityReturned}</td>
-                                                                <td>demo</td>
+                                                                <td>{itemrecord.itemQuantitySold}</td>
                                                                 <td>demo</td>
                                                                 <td>{itemrecord.mUnits}</td>
                                                             </tr>

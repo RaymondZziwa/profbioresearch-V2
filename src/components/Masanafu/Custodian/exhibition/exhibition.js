@@ -45,7 +45,7 @@ const Exhibitionmanagement = () => {
     }
 
     const addNewInput = () => {
-        setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '',itemQuantitySold: '', itemQuantityReturned: '0',Discrepancies:'', mUnits: '' }])
+        setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '0',itemQuantitySold: '0', itemQuantityReturned: '0',Discrepancies:'0', mUnits: '' }])
     }
 
     const handleChangeInput = (index, event) => {
@@ -107,6 +107,14 @@ const Exhibitionmanagement = () => {
         setExDate(event.target.value)
     }
 
+    const calcDecrepancies = (itemQuantity,itemQuantitySold,itemQuantityReturned) => {
+       let decrepancy =  parseFloat(itemQuantity)-(parseFloat(itemQuantitySold)+parseFloat(itemQuantityReturned))
+
+       return decrepancy;
+    }
+
+    
+
     const fetchExhibitionData = async event => {
         event.preventDefault()
         const res = await axios.post('http://82.180.136.230:3005/exhibitiondata', {
@@ -148,12 +156,12 @@ const Exhibitionmanagement = () => {
                 .catch((err) => setStatus({ type: 'error', err }))
         }else if (formType === 'postexhibition'){
             let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
-                exhibitionName: selectedExhibitionName,
-                date: exhibitionDate.current.value,
-                items: JSON.stringify(itemsPostRequested),
-                status: formType,
+                 exhibitionName: selectedExhibitionName,
+                 date: exhibitionDate.current.value,
+                 items: JSON.stringify(itemsPostRequested),
+                 status: formType,
                 token: localStorage.getItem("token")
-            }).then(() => setStatus({ type: 'success' }))
+             }).then(() => setStatus({ type: 'success' }))
                 .catch((err) => setStatus({ type: 'error', err }))
         }
 
@@ -162,8 +170,8 @@ const Exhibitionmanagement = () => {
     return (
         <div className='container-fluid'>
             <Row>
-                <Col sm='2' md='2' lg='2' xl='2'></Col>
-                <Col sm='12' md='8' lg='8' xl='8'>
+                <Col sm='2' md='1' lg='1' xl='1'></Col>
+                <Col sm='12' md='10' lg='10' xl='10'>
                     <div className="container  d-flex align-items-center" style={{ marginTop: '50px' }}>
 
                         <Form>
@@ -406,7 +414,7 @@ const Exhibitionmanagement = () => {
                                                                     <input
                                                                         className="form-control"
                                                                         id="floatingInput"
-                                                                        name="discrepancies"
+                                                                        name="Discrepancies"
                                                                         placeholder="Discrepancies"
                                                                         style={{ color: "#8CA6FE" }}
                                                                         defaultValue={item.Discrepancies}
@@ -461,7 +469,7 @@ const Exhibitionmanagement = () => {
                         </Form>
                     </div>
                 </Col>
-                <Col sm='12' md='2' lg='2' xl='2'>
+                <Col sm='12' md='1' lg='1' xl='1'>
                     <Navbar />
                 </Col>
             </Row>

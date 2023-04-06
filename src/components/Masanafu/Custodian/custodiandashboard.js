@@ -8,24 +8,28 @@ import axios from "axios";
 const CustodianDashboard = () => {
     const [OrdersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
-    const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState()
+    const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
     const [totalNumberOfPendingRequests, setTotalNumberOfPendingRequests] = useState()
-
+    const [isRequestsListLoading, setIsRequestsListLoading] = useState(true)
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setOrdersList(res.data)
-        setTotalNumberOfPendingOrders(OrdersList.length)
-        setisOrdersListLoading(false)
+        if(res.data === 'string'){
+            setTotalNumberOfPendingOrders(0)
+        }else{
+            setisOrdersListLoading(false)
+            setOrdersList(res.data)
+            setTotalNumberOfPendingOrders(OrdersList.length)
+        }        
     }
 
     useEffect(() => {
         fetchOrders()
         const interval = setTimeout(() => {
             fetchOrders()
-        }, 1)
+        }, 100)
 
 
         return () => clearTimeout(interval)
@@ -36,15 +40,19 @@ const CustodianDashboard = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setTotalNumberOfPendingRequests(res.data.length)
-        setisOrdersListLoading(false)
+        if(res.data === 'string'){
+            setTotalNumberOfPendingRequests(0)
+        }else{
+            setTotalNumberOfPendingRequests(res.data.length)
+        }
+        setIsRequestsListLoading(false)
     }
 
     useEffect(() => {
         fetchRawMaterialRequests()
         const interval = setTimeout(() => {
             fetchRawMaterialRequests()
-        }, 1)
+        }, 100)
 
 
         return () => clearTimeout(interval)
