@@ -23,12 +23,12 @@ const CustodianDashboard = () => {
 
     useEffect(() => {
         fetchOrders()
-        const interval = setInterval(() => {
+        const interval = setTimeout(() => {
             fetchOrders()
-        }, 3000)
+        }, 1)
 
 
-        return () => clearInterval(interval)
+        return () => clearTimeout(interval)
     })
 
     const fetchRawMaterialRequests = async () => {
@@ -42,12 +42,12 @@ const CustodianDashboard = () => {
 
     useEffect(() => {
         fetchRawMaterialRequests()
-        const interval = setInterval(() => {
+        const interval = setTimeout(() => {
             fetchRawMaterialRequests()
-        }, 30000)
+        }, 1)
 
 
-        return () => clearInterval(interval)
+        return () => clearTimeout(interval)
     })
     return (
         <div className='container-fluid'>

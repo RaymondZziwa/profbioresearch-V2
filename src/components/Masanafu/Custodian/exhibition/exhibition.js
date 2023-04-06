@@ -10,8 +10,8 @@ import axios from "axios";
 
 const Exhibitionmanagement = () => {
     const [status, setStatus] = useState()
-    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '0', mUnits: '' },])
-    const [itemsPostRequested, setItemsPostRequested] = useState([{ itemName: '', itemQuantity: '', itemQuantityReturned: '', mUnits: '' },])
+    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '',itemQuantitySold:'', itemQuantityReturned: '0',Discrepancies:'', mUnits: '' },])
+    const [itemsPostRequested, setItemsPostRequested] = useState([{ itemName: '', itemQuantity: '',itemQuantitySold: '', itemQuantityReturned: '',Discrepancies:'', mUnits: '' },])
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
     const [formType, setFormType] = useState()
@@ -45,7 +45,7 @@ const Exhibitionmanagement = () => {
     }
 
     const addNewInput = () => {
-        setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '', itemQuantityReturned: '-', mUnits: '' }])
+        setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '',itemQuantitySold: '', itemQuantityReturned: '0',Discrepancies:'', mUnits: '' }])
     }
 
     const handleChangeInput = (index, event) => {
@@ -56,7 +56,6 @@ const Exhibitionmanagement = () => {
 
     const handlePostInput = (index, event) => {
         let values = [...itemsPostRequested];
-        console.log('itemsssss', values[index][event.target.name])
         values[index][event.target.name] = event.target.value;
         setItemsPostRequested(values)
         console.log(index)
@@ -336,7 +335,9 @@ const Exhibitionmanagement = () => {
                                                 <tr style={{ textAlign: 'center' }}>
                                                     <th scope="col">Item Name</th>
                                                     <th scope="col">Quantity Taken</th>
+                                                    <th scope="col">Quantity Sold</th>
                                                     <th scope="col">Quantity Returned</th>
+                                                    <th scope="col">Discrepancies</th>
                                                     <th scope="col">Unit Of Measurement</th>
                                                 </tr>
                                             </thead>
@@ -353,7 +354,6 @@ const Exhibitionmanagement = () => {
                                                                         placeholder="Item Name"
                                                                         onChange={event => handlePostInput(index, event)}
                                                                         value={item.itemName}
-                                                                        // {...item.itemName = item.itemName}
                                                                         readOnly
                                                                         required />
                                                                     <label for="floatingInput">Item Name</label>
@@ -369,9 +369,22 @@ const Exhibitionmanagement = () => {
                                                                         style={{ color: "#8CA6FE" }}
                                                                         value={item.itemQuantity}
                                                                         onChange={event => { handlePostInput(index, event) }}
-                                                                        // {...item.itemQuantity = itemRecord.itemQuantity}
                                                                         required />
                                                                     <label for="floatingInput">Item Quantity</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="form-floating mb-3">
+                                                                    <input
+                                                                        className="form-control"
+                                                                        id="floatingInput"
+                                                                        name="itemQuantitySold"
+                                                                        placeholder="Item Quantity Sold"
+                                                                        style={{ color: "#8CA6FE" }}
+                                                                        defaultValue={item.itemQuantitySold}
+                                                                        onChange={event => { handlePostInput(index, event) }}
+                                                                        required />
+                                                                    <label for="floatingInput">Item Quantity Sold</label>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -388,7 +401,20 @@ const Exhibitionmanagement = () => {
                                                                     <label for="floatingInput">Item Quantity Returned</label>
                                                                 </div>
                                                             </td>
-
+                                                            <td>
+                                                                <div className="form-floating mb-3">
+                                                                    <input
+                                                                        className="form-control"
+                                                                        id="floatingInput"
+                                                                        name="discrepancies"
+                                                                        placeholder="Discrepancies"
+                                                                        style={{ color: "#8CA6FE" }}
+                                                                        defaultValue={item.Discrepancies}
+                                                                        onChange={event => { handlePostInput(index, event) }}
+                                                                        required readOnly/>
+                                                                    <label for="floatingInput">Discrepancies</label>
+                                                                </div>
+                                                            </td>
                                                             <td>
 
                                                                 <div className="form-floating mb-3">
@@ -400,7 +426,6 @@ const Exhibitionmanagement = () => {
                                                                         name="mUnits"
                                                                         value={item.mUnits}
                                                                         onChange={event => handlePostInput(index, event)}
-                                                                        // {...item.mUnits = itemRecord.mUnits}
                                                                         required />
                                                                     <label for="floatingInput">Measurement Units</label>
                                                                 </div>
@@ -431,7 +456,6 @@ const Exhibitionmanagement = () => {
                                 </div>
                                 <div className="mb-3" style={{ textAlign: 'center' }}>
                                     <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={submitDataHandler}>SAVE DATA</button>
-                                    {/* <button onClick={testData}>Test</button> */}
                                 </div>
                             </div>
                         </Form>

@@ -56,8 +56,8 @@ const ProductOrders = () => {
         <>
             <div className='container-fluid'>
                 <Row>
-                    <Col sm='12' md='2' lg='2' xl='2'></Col>
-                    <Col sm='12' md='8' lg='8' xl='8'>
+                    <Col sm='12' md='1' lg='1' xl='1'></Col>
+                    <Col sm='12' md='10' lg='10' xl='10'>
                         <table className="table table-dark" style={{ marginTop: '100px' }}>
                             <thead style={{ textAlign: 'center' }}>
                                 <tr>
@@ -122,7 +122,7 @@ const ProductOrders = () => {
                             </tbody>
                         </table>
                     </Col>
-                    <Col sm='12' md='2' lg='2' xl='2'>
+                    <Col sm='12' md='1' lg='1' xl='1'>
                         <Navbar />
                     </Col>
                 </Row>
