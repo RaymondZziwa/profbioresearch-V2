@@ -104,7 +104,7 @@ const RawMaterialRequests = () => {
                                                 </tbody>
                                             </table>
                                         </td>
-                                        <td>Additional Info</td>
+                                        <td>{item.additionalinfo}</td>
                                         <td>{item.status}</td>
                                         <td>
                                             <div className="mb-3">

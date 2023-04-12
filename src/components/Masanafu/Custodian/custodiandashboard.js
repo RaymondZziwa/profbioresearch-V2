@@ -6,22 +6,21 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const CustodianDashboard = () => {
-    const [OrdersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
     const [totalNumberOfPendingRequests, setTotalNumberOfPendingRequests] = useState()
     const [isRequestsListLoading, setIsRequestsListLoading] = useState(true)
+
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        if(res.data === 'string'){
+        if(typeof res.data === 'string'){
             setTotalNumberOfPendingOrders(0)
         }else{
             setisOrdersListLoading(false)
-            setOrdersList(res.data)
-            setTotalNumberOfPendingOrders(OrdersList.length)
+            setTotalNumberOfPendingOrders(res.data.length)
         }        
     }
 
@@ -40,12 +39,13 @@ const CustodianDashboard = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        if(res.data === 'string'){
+        if(typeof res.data === 'string'){
             setTotalNumberOfPendingRequests(0)
         }else{
+            setIsRequestsListLoading(false)
             setTotalNumberOfPendingRequests(res.data.length)
         }
-        setIsRequestsListLoading(false)
+        
     }
 
     useEffect(() => {
@@ -57,6 +57,7 @@ const CustodianDashboard = () => {
 
         return () => clearTimeout(interval)
     })
+    
     return (
         <div className='container-fluid'>
             <Row>
@@ -94,11 +95,6 @@ const CustodianDashboard = () => {
                                     Orders Records
                                 </div>
                             </Link>
-                            {/* <Link className="tab_nav" to="#">
-                                <div className="mb-3 mclickable_option">
-                                    Production Inventory Records
-                                </div>
-                            </Link> */}
                             <Link className="tab_nav" to="/stocktaking">
                                 <div className="mb-3 mclickable_option">
                                     Stock Taking (General Store)

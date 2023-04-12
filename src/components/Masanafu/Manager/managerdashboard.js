@@ -7,10 +7,9 @@ import axios from "axios";
 import productOrdersContext from '../../../store/productOrders-context';
 
 const Managerdashboard = () => {
-    const [OrdersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
-    const [testTotal, setTestTotal] = useState()
+    
 
 
     const fetchOrders = async () => {
@@ -18,16 +17,21 @@ const Managerdashboard = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setOrdersList(res.data)
-        setTotalNumberOfPendingOrders(OrdersList.length)
-        setisOrdersListLoading(false)
+        if(typeof res.data === 'string'){
+            setTotalNumberOfPendingOrders(0)
+        }else{
+            setisOrdersListLoading(false)
+            setTotalNumberOfPendingOrders(res.data.length)
+        }
+        
+        
     }
 
     useEffect(() => {
         fetchOrders()
         const interval = setInterval(() => {
             fetchOrders()
-        }, 3000)
+        }, 1000)
 
 
         return () => clearInterval(interval)
@@ -64,6 +68,11 @@ const Managerdashboard = () => {
                             <Link className="tab_nav" to="/requestrawmaterials">
                                 <div className="mb-3 mclickable_option">
                                     Request for raw materials
+                                </div>
+                            </Link>
+                            <Link className="tab_nav" to="/rawmaterialrequestsrecords">
+                                <div className="mb-3 mclickable_option">
+                                    Raw Material Requests Records
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="/accountsettings">

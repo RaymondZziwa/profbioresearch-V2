@@ -189,7 +189,7 @@ const Saveinventoryrecords = () => {
                 authorizedBy: localStorage.getItem("username"),
                 token: localStorage.getItem("token")
             }).then(() => setStatus({ type: 'success' }))
-                .catch((err) => setStatus({ type: 'error', err }))
+              .catch((err) => setStatus({ type: 'error', err }))
         }
     }
 
@@ -227,7 +227,6 @@ const Saveinventoryrecords = () => {
                                     <option value="another reason">Another reason</option>
                                 </select>
 
-
                                 <div className="form-floating mb-3">
                                     <input type="text" className="form-control" id="floatingInput" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={notesInput} required />
                                     <label for="floatingInput">Additional Notes</label>
@@ -237,6 +236,7 @@ const Saveinventoryrecords = () => {
 
                                     <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
                                         <option selected>Select Source Branch</option>
+                                        <option value="external-supplier">External Supplier</option>
                                         <option value="masanafu">Masanafu</option>
                                         <option value="equatorial">Equatorial</option>
                                         <option value="buwama">Buwama</option>
@@ -247,10 +247,6 @@ const Saveinventoryrecords = () => {
                                 {tCategory === 'outgoing' &&
 
                                     <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={sourceBranchInput} required>
-                                        {/* <option selected>Select Source Branch</option>
-                                            <option value="masanafu">Masanafu</option>
-                                            <option value="equatorial">Equatorial</option>
-                                            <option value="buwama">Buwama</option> */}
                                         <option value={localStorage.getItem('branch')}>{localStorage.getItem('branch')}</option>
                                     </select>
 
@@ -264,10 +260,7 @@ const Saveinventoryrecords = () => {
                                 {tCategory === 'incoming' &&
 
                                     <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={dbranchInput} required>
-                                        {/*<option selected>Select Destination Branch</option>
-                                             <option value="masanafu">Masanafu</option>
-                                            <option value="equatorial">Equatorial</option>
-                                            <option value="buwama">Buwama</option> */}
+                                        
                                         <option value={localStorage.getItem('branch')}>{localStorage.getItem('branch')}</option>
                                     </select>
 

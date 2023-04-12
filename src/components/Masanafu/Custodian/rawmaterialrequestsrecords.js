@@ -2,7 +2,6 @@ import { Row, Col } from "react-bootstrap";
 import Navbar from "../../side navbar/sidenav";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import RawMaterialRequests from "./rawmaterialrequests";
 
 const RawMaterialRequestsRecords = () => {
     const [ordersList, setOrdersList] = useState()
@@ -13,8 +12,13 @@ const RawMaterialRequestsRecords = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setOrdersList(res.data)
-        setisOrdersListLoading(false)
+        if(typeof res.data === "string"){
+            setOrdersList('No records')
+        }else{
+            setOrdersList(res.data)
+            setisOrdersListLoading(false)
+        }
+        
     }
 
     useEffect(() => {
@@ -41,8 +45,10 @@ const RawMaterialRequestsRecords = () => {
                                     <th scope="col">Request From (Department)</th>
                                     <th scope="col">Request From (Role)</th>
                                     <th scope="col">Request From (user)</th>
+                                    <th scope="col">Additional Info</th>
                                     <th scope="col">Items Requested</th>
                                     <th scope="col">Current Status</th>
+                                    <th scope="col">Custodian's Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,6 +60,7 @@ const RawMaterialRequestsRecords = () => {
                                         <td>{item.requesterdepartment}</td>
                                         <td>{item.requesterrole}</td>
                                         <td>{item.requestedby}</td>
+                                        <td>{item.additionalinfo}</td>
                                         <td>
                                             <table className="table table-dark" style={{ marginTop: '2px' }}>
                                                 <thead>
@@ -75,6 +82,7 @@ const RawMaterialRequestsRecords = () => {
                                             </table>
                                         </td>
                                         <td>{item.status}</td>
+                                        <td>{item.comment}</td>
                                     </tr>
                                 ))
                                 }

@@ -132,7 +132,8 @@ const Exhibitionmanagement = () => {
             setItemsPostRequested(items.flat())
             setFetchedData(res.data)
             setIsExDataLoading(false)
-
+            console.log('items requested', itemsPostRequested)
+            console.log('fetched Data', fetchedData)
         }
     }
 
@@ -154,6 +155,7 @@ const Exhibitionmanagement = () => {
                 token: localStorage.getItem("token")
             }).then(() => setStatus({ type: 'success' }))
                 .catch((err) => setStatus({ type: 'error', err }))
+                console.log(res.data)
         }else if (formType === 'postexhibition'){
             let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
                  exhibitionName: selectedExhibitionName,
