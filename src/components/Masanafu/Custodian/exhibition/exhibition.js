@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Exhibitionmanagement = () => {
     const [status, setStatus] = useState()
-    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '',itemQuantitySold:'', itemQuantityReturned: '0',Discrepancies:'', mUnits: '' },])
+    const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '',itemQuantitySold:'0', itemQuantityReturned: '0',Discrepancies:'0', mUnits: '' },])
     const [itemsPostRequested, setItemsPostRequested] = useState([{ itemName: '', itemQuantity: '',itemQuantitySold: '', itemQuantityReturned: '',Discrepancies:'', mUnits: '' },])
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
@@ -71,12 +71,12 @@ const Exhibitionmanagement = () => {
 
     useEffect(() => {
         fetchItems()
-        const interval = setInterval(() => {
+        const interval = setTimeout(() => {
             fetchItems()
         }, 5000)
 
 
-        return () => clearInterval(interval)
+        return () => clearTimeout(interval)
     }, [])
 
 
@@ -154,19 +154,25 @@ const Exhibitionmanagement = () => {
                 status: formType,
                 token: localStorage.getItem("token")
             }).then(() => setStatus({ type: 'success' }))
-                .catch((err) => setStatus({ type: 'error', err }))
+              .catch((err) => setStatus({ type: 'error', err }))
                 console.log(res.data)
         }else if (formType === 'postexhibition'){
-            let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
-                 exhibitionName: selectedExhibitionName,
-                 date: exhibitionDate.current.value,
-                 items: JSON.stringify(itemsPostRequested),
-                 status: formType,
-                token: localStorage.getItem("token")
-             }).then(() => setStatus({ type: 'success' }))
+            itemsPostRequested.map((item) => {
+               let totalItemsAccountedFor = parseFloat(item.itemQuantitySold) + parseFloat(item.itemQuantityReturned)
+               console.log(`items sold are ${item.itemQuantitySold} and items returned are ${item.itemQuantityReturned} and the 
+               total number of items accounted for is ${totalItemsAccountedFor}`)
+               item.Discrepancies = item.itemQuantity - totalItemsAccountedFor
+            })
+            console.log('checking if discrepancies have been calculated', itemsPostRequested)
+             let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
+                  exhibitionName: selectedExhibitionName,
+                  date: exhibitionDate.current.value,
+                  items: JSON.stringify(itemsPostRequested),
+                  status: formType,
+                 token: localStorage.getItem("token")
+              }).then(() => setStatus({ type: 'success' }))
                 .catch((err) => setStatus({ type: 'error', err }))
         }
-
     }
 
     return (
@@ -347,7 +353,6 @@ const Exhibitionmanagement = () => {
                                                     <th scope="col">Quantity Taken</th>
                                                     <th scope="col">Quantity Sold</th>
                                                     <th scope="col">Quantity Returned</th>
-                                                    <th scope="col">Discrepancies</th>
                                                     <th scope="col">Unit Of Measurement</th>
                                                 </tr>
                                             </thead>
@@ -414,21 +419,6 @@ const Exhibitionmanagement = () => {
                                                             <td>
                                                                 <div className="form-floating mb-3">
                                                                     <input
-                                                                        className="form-control"
-                                                                        id="floatingInput"
-                                                                        name="Discrepancies"
-                                                                        placeholder="Discrepancies"
-                                                                        style={{ color: "#8CA6FE" }}
-                                                                        defaultValue={item.Discrepancies}
-                                                                        onChange={event => { handlePostInput(index, event) }}
-                                                                        required readOnly/>
-                                                                    <label for="floatingInput">Discrepancies</label>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-
-                                                                <div className="form-floating mb-3">
-                                                                    <input
                                                                         class="form-select"
                                                                         aria-label="Default select example"
                                                                         style={{ height: "60px", color: "#8CA6FE" }}
@@ -436,6 +426,7 @@ const Exhibitionmanagement = () => {
                                                                         name="mUnits"
                                                                         value={item.mUnits}
                                                                         onChange={event => handlePostInput(index, event)}
+                                                                        readOnly
                                                                         required />
                                                                     <label for="floatingInput">Measurement Units</label>
                                                                 </div>

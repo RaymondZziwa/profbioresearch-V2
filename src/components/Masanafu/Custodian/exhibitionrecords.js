@@ -127,7 +127,7 @@ const ExhibitionRecords = () => {
                                                                 <td>{itemrecord.itemQuantity}</td>
                                                                 <td>{itemrecord.itemQuantityReturned}</td>
                                                                 <td>{itemrecord.itemQuantitySold}</td>
-                                                                <td>demo</td>
+                                                                <td>{itemrecord.Discrepancies}</td>
                                                                 <td>{itemrecord.mUnits}</td>
                                                             </tr>
                                                         )}
