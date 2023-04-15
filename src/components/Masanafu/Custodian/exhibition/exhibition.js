@@ -84,8 +84,13 @@ const Exhibitionmanagement = () => {
         const res = await axios.post('http://82.180.136.230:3005/exhibitionlist', {
             token: localStorage.getItem("token")
         })
-        setExList(res.data)
-        setIsExListLoading(false)
+        if(typeof res.data === 'string'){
+            setExList('There are no exhibitions saved in the database')
+        }else{
+            setExList(res.data)
+            setIsExListLoading(false)
+        }
+        
     }
 
     useEffect(() => {
@@ -159,11 +164,11 @@ const Exhibitionmanagement = () => {
         }else if (formType === 'postexhibition'){
             itemsPostRequested.map((item) => {
                let totalItemsAccountedFor = parseFloat(item.itemQuantitySold) + parseFloat(item.itemQuantityReturned)
-               console.log(`items sold are ${item.itemQuantitySold} and items returned are ${item.itemQuantityReturned} and the 
-               total number of items accounted for is ${totalItemsAccountedFor}`)
+            //    console.log(`items sold are ${item.itemQuantitySold} and items returned are ${item.itemQuantityReturned} and the 
+            //    total number of items accounted for is ${totalItemsAccountedFor}`)
                item.Discrepancies = item.itemQuantity - totalItemsAccountedFor
             })
-            console.log('checking if discrepancies have been calculated', itemsPostRequested)
+            // console.log('checking if discrepancies have been calculated', itemsPostRequested)
              let res = await axios.post('http://82.180.136.230:3005/saveexhibitiondata', {
                   exhibitionName: selectedExhibitionName,
                   date: exhibitionDate.current.value,
@@ -328,7 +333,7 @@ const Exhibitionmanagement = () => {
                                                 onChange={selectedExibitionInput}
                                                 required>
                                                 <option selected>Filter By Exhibition Name</option>
-                                                {isExListLoading ? <option>Loading Exhibition Data From Database</option> :
+                                                {isExListLoading ? <option>{exList}</option> :
                                                     exList.map(exhibition => (
                                                         <option>
                                                             {exhibition.exhibitionname}
