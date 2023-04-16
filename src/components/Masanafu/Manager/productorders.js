@@ -17,15 +17,19 @@ const ProductOrders = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setOrdersList(res.data)
-        setisOrdersListLoading(false)
+        if(typeof res.data === 'string'){
+            setOrdersList('There are no pending product orders')
+        }else{
+            setOrdersList(res.data)
+            setisOrdersListLoading(false)
+        }   
     }
 
     useEffect(() => {
         fetchOrders()
         const interval = setInterval(() => {
             fetchOrders()
-        }, 50000)
+        }, 1000)
 
 
         return () => clearInterval(interval)
@@ -40,6 +44,7 @@ const ProductOrders = () => {
             comment: comment,
             token: localStorage.getItem("token")
         })
+        setisOrdersListLoading(true) 
     }
 
     const approveOrder = event => {
@@ -51,6 +56,7 @@ const ProductOrders = () => {
             comment: comment,
             token: localStorage.getItem("token")
         })
+        setisOrdersListLoading(true)
     }
     return (
         <>
@@ -75,7 +81,7 @@ const ProductOrders = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!isOrdersListLoading && ordersList.map(item => (
+                                {!isOrdersListLoading ? ordersList.map(item => (
                                     <tr>
                                         <td>{item.orderid}</td>
                                         <td>{item.date}</td>
@@ -118,7 +124,7 @@ const ProductOrders = () => {
                                         </td>
                                     </tr>
                                 ))
-                                }
+                                : <tr><td>{ordersList}</td></tr>}
                             </tbody>
                         </table>
                     </Col>

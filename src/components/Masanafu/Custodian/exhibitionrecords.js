@@ -102,7 +102,7 @@ const ExhibitionRecords = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {isExDataLoading ? <tr>There is no Exhibition Data From Database. Please edit the parameters.</tr> :
+                                {isExDataLoading ? <tr><td>There is no Exhibition Data From Database. Please edit the parameters.</td></tr> :
                                     exData.map(item => (
                                         <tr>
                                             <td>{item.exhibitionname}</td>

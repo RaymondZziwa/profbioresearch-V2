@@ -21,6 +21,7 @@ const Stocktaking = () => {
             stockFilter: stockFilter,
             token: localStorage.getItem("token")
         })
+        console.log(res.data)
         setisLoading(false)
         setData(res.data)
     }
@@ -36,6 +37,7 @@ const Stocktaking = () => {
             stockFilter: stockFilter,
             token: localStorage.getItem("token")
         })
+        console.log(res.data)
         setisLoading(false)
         setData(res.data)
     }
@@ -51,8 +53,11 @@ const Stocktaking = () => {
             stockFilter: stockFilter,
             token: localStorage.getItem("token")
         })
-        setisLoading(false)
-        setData(res.data)
+        if(res.status !== '204'){
+            setisLoading(false)
+            setData(res.data)
+        }
+        
     }
 
     return (
@@ -81,7 +86,7 @@ const Stocktaking = () => {
                         </thead>
                         <tbody>
                             {Array.isArray(Data) ? Data.map((item => (
-                                <tr><td>{item.name}</td><td>{item.quantityinstock}</td><td>{item.measurementunits}</td></tr>))) : 'There are no items matching this criteria'}
+                                <tr><td>{item.name}</td><td>{item.quantityinstock}</td><td>{item.measurementunits}</td></tr>))) : <td><tr>There are no items matching this criteria</tr></td>}
                         </tbody>
                     </table>
                 </Col>

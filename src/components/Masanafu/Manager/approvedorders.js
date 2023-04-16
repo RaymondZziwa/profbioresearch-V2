@@ -12,8 +12,13 @@ const ApprovedOrders = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
+        if(typeof res.data !== 'string'){
+            setOrdersList(res.data)
+            setisOrdersListLoading(false)
+        }
         setOrdersList(res.data)
-        setisOrdersListLoading(false)
+        
+        
     }
 
     useEffect(() => {
@@ -34,6 +39,7 @@ const ApprovedOrders = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
+        setisOrdersListLoading(true)
     }
     return (
         <>
@@ -55,7 +61,7 @@ const ApprovedOrders = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!isOrdersListLoading && ordersList.map(item => (
+                                {!isOrdersListLoading ? ordersList.map(item => (
                                     <tr>
                                         <td>{item.orderid}</td>
                                         <td>{item.date}</td>
@@ -88,7 +94,7 @@ const ApprovedOrders = () => {
                                         </td>
                                     </tr>
                                 ))
-                                }
+                               :  <tr><td>{ordersList}</td></tr>}
                             </tbody>
                         </table>
                     </Col>

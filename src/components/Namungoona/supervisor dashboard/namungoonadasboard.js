@@ -29,6 +29,11 @@ const Namungoonadashboard = () => {
                                     Order Products
                                 </div>
                             </Link>
+                            <Link className="tab_nav" to="/branchorderrecords">
+                                <div className="mb-3 mclickable_option">
+                                    Orders Records
+                                </div>
+                            </Link>
                             <Link className="tab_nav" to="/viewinventoryrecords">
                                 <div className="mb-3 clickable_option">
                                     View Inventory Records

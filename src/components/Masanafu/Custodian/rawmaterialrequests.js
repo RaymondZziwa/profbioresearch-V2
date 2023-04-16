@@ -7,19 +7,25 @@ const RawMaterialRequests = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const [comment, setComment] = useState('')
-
+    const url = 'http://82.180.136.230:3005'
     const commentInput = event => {
         event.preventDefault()
         setComment(event.target.value)
     }
     
     const fetchOrders = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/pendingrawmaterialrequests', {
+        const res = await axios.post(`${url}/pendingrawmaterialrequests`, {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setOrdersList(res.data)
-        setisOrdersListLoading(false)
+        if(typeof res.data === 'string'){
+            console.log(res)
+            setOrdersList('There are no pending raw material requests.')
+        }else{
+            setOrdersList(res.data)
+            setisOrdersListLoading(false)
+        }
+        
     }
 
     useEffect(() => {
@@ -76,7 +82,7 @@ const RawMaterialRequests = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!isOrdersListLoading && ordersList.map(item => (
+                                {!isOrdersListLoading ? ordersList.map(item => (
                                     <tr>
                                         <td>{item.requisitionid}</td>
                                         <td>{item.date}</td>
@@ -121,7 +127,7 @@ const RawMaterialRequests = () => {
                                         
                                     </tr>
                                 ))
-                                }
+                                : <tr><td>{ordersList}</td></tr>}
                             </tbody>
                         </table>
                     </Col>

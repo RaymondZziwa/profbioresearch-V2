@@ -12,8 +12,13 @@ const ProductionRecords = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setOrdersList(res.data)
-        setisOrdersListLoading(false)
+        if(typeof res.data !== 'string'){
+            setOrdersList(res.data)
+            setisOrdersListLoading(false)
+        }else{
+            setOrdersList('There are no production records.')
+        }
+        
     }
 
     useEffect(() => {
@@ -41,7 +46,7 @@ const ProductionRecords = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!isOrdersListLoading && ordersList.map(item => (
+                                {!isOrdersListLoading ? ordersList.map(item => (
                                     <tr>
                                         <td>{item.productionid}</td>
                                         <td>{item.orderid}</td>
@@ -68,7 +73,7 @@ const ProductionRecords = () => {
                                         </td>
                                     </tr>
                                 ))
-                                }
+                                : <tr><td>{ordersList}</td></tr>}
                             </tbody>
                         </table>
                     </Col>

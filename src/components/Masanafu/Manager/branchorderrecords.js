@@ -3,22 +3,17 @@ import Navbar from "../../side navbar/sidenav";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const RawMaterialRequestsRecords = () => {
+const BranchOrderRecords = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
 
     const fetchOrders = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/rawmaterialrequestsrecords', {
+        const res = await axios.post('http://82.180.136.230:3005/branchorderrecords', {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        if(typeof res.data === "string"){
-            setOrdersList('No records found.')
-        }else{
-            setOrdersList(res.data)
-            setisOrdersListLoading(false)
-        }
-        
+        setOrdersList(res.data)
+        setisOrdersListLoading(false)
     }
 
     useEffect(() => {
@@ -37,30 +32,28 @@ const RawMaterialRequestsRecords = () => {
                     <Col sm='12' md='2' lg='2' xl='2'></Col>
                     <Col sm='12' md='8' lg='8' xl='8'>
                         <table className="table table-dark" style={{ marginTop: '100px' }}>
-                            <thead >
+                            <thead style={{ textAlign: 'center' }}>
                                 <tr>
-                                    <th scope="col">Requisition Id</th>
-                                    <th scope="col">Date</th>
                                     <th scope="col">Order Id</th>
-                                    <th scope="col">Request From (Department)</th>
-                                    <th scope="col">Request From (Role)</th>
-                                    <th scope="col">Request From (user)</th>
-                                    <th scope="col">Additional Info</th>
-                                    <th scope="col">Items Requested</th>
-                                    <th scope="col">Current Status</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Ordered By</th>
+                                    <th scope="col">additionalInfo</th>
+                                    <th scope="col">Destination Branch</th>
+                                    <th scope="col">Delivered To</th>
+                                    <th scope="col">Items Ordered</th>
+                                    <th scope="col">Order Status</th>
                                     <th scope="col">Custodian's Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {!isOrdersListLoading ? ordersList.map(item => (
+                                {!isOrdersListLoading && ordersList.map(item => (
                                     <tr>
-                                        <td>{item.requisitionid}</td>
-                                        <td>{item.date}</td>
                                         <td>{item.orderid}</td>
-                                        <td>{item.requesterdepartment}</td>
-                                        <td>{item.requesterrole}</td>
-                                        <td>{item.requestedby}</td>
+                                        <td>{item.date}</td>
+                                        <td>{item.orderby}</td>
                                         <td>{item.additionalinfo}</td>
+                                        <td>{item.destinationbranch}</td>
+                                        <td>{item.deliveredto}</td>
                                         <td>
                                             <table className="table table-dark" style={{ marginTop: '2px' }}>
                                                 <thead>
@@ -71,11 +64,11 @@ const RawMaterialRequestsRecords = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody style={{ textAlign: 'center' }}>
-                                                    {JSON.parse(item.itemsrequested).map(itemrequested =>
+                                                    {JSON.parse(item.itemsordered).map(itemordered =>
                                                         <tr>
-                                                            <td>{itemrequested.itemName}</td>
-                                                            <td>{itemrequested.itemQuantity}</td>
-                                                            <td>{itemrequested.mUnits}</td>
+                                                            <td>{itemordered.itemName}</td>
+                                                            <td>{itemordered.itemQuantity}</td>
+                                                            <td>{itemordered.mUnits}</td>
                                                         </tr>
                                                     )}
                                                 </tbody>
@@ -85,7 +78,7 @@ const RawMaterialRequestsRecords = () => {
                                         <td>{item.comment}</td>
                                     </tr>
                                 ))
-                                : <tr><td>{ordersList}</td></tr>}
+                                }
                             </tbody>
                         </table>
                     </Col>
@@ -98,4 +91,4 @@ const RawMaterialRequestsRecords = () => {
     )
 }
 
-export default RawMaterialRequestsRecords
+export default BranchOrderRecords

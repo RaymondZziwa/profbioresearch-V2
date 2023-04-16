@@ -27,6 +27,7 @@ import ApprovedOrders from './components/Masanafu/Manager/approvedorders';
 import RawMaterialRequests from './components/Masanafu/Custodian/rawmaterialrequests';
 import RawMaterialRequestsRecords from './components/Masanafu/Custodian/rawmaterialrequestsrecords';
 import ProductionRecords from './components/Masanafu/Manager/productionrecords';
+import BranchOrderRecords from './components/Masanafu/Manager/branchorderrecords';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -132,6 +133,10 @@ function App() {
 
           {authCtx.isLoggedIn && (<Route path="/orderrecords">
             <OrderRecords />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/branchorderrecords">
+            <BranchOrderRecords />
           </Route>)}
 
           {authCtx.isLoggedIn && (<Route path="/approvedorders">
