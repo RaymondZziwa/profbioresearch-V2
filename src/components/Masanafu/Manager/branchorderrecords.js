@@ -2,9 +2,13 @@ import { Row, Col } from "react-bootstrap";
 import Navbar from "../../side navbar/sidenav";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ReactPaginate from "react-paginate"
+import '../../Namungoona/inventory crud/pagination.css'
+import arrowLeft from '../../../imgs/arrowleft.svg'
+import arrowRight from '../../../imgs/arrowright.svg'
 
 const BranchOrderRecords = () => {
-    const [ordersList, setOrdersList] = useState()
+    const [ordersList, setOrdersList] = useState([])
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
 
     const fetchOrders = async () => {
@@ -12,19 +16,36 @@ const BranchOrderRecords = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        setOrdersList(res.data)
-        setisOrdersListLoading(false)
+        if(typeof res.data === 'string'){
+            setOrdersList("There are no records.")
+        }else{
+            setOrdersList(res.data)
+            setisOrdersListLoading(false)
+        }
+        
     }
 
     useEffect(() => {
         fetchOrders()
         const interval = setInterval(() => {
             fetchOrders()
-        }, 5000)
+        }, 500)
 
 
         return () => clearInterval(interval)
     })
+
+    const [itemsPerPage] = useState(4)
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const indexOfLastPost = currentPage * itemsPerPage;
+    const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+    const currentRecords = ordersList.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = ({ selected }) => {
+        setCurrentPage(selected + 1);
+     };
+  
     return (
         <>
             <div className='container-fluid'>
@@ -46,7 +67,7 @@ const BranchOrderRecords = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!isOrdersListLoading && ordersList.map(item => (
+                                {!isOrdersListLoading ? currentRecords.map(item => (
                                     <tr>
                                         <td>{item.orderid}</td>
                                         <td>{item.date}</td>
@@ -78,9 +99,21 @@ const BranchOrderRecords = () => {
                                         <td>{item.comment}</td>
                                     </tr>
                                 ))
-                                }
+                                : <tr><td>{ordersList}</td></tr>}
                             </tbody>
                         </table>
+
+                        <ReactPaginate
+                            onPageChange={paginate}
+                            pageCount={Math.ceil(ordersList.length / itemsPerPage)}
+                            previousLabel={<img src={arrowLeft} className = 'previous' alt="arrow-left"/>}
+                            nextLabel={<img src={arrowRight} className = 'next' alt="arrow-right"/>}
+                            containerClassName={'pagination'}
+                            pageLinkClassName={'page-number'}
+                            previousLinkClassName={'page-number'}
+                            nextLinkClassName={'page-number'}
+                            activeLinkClassName={'active'}
+                        />
                     </Col>
                     <Col sm='12' md='2' lg='2' xl='2'>
                         <Navbar />

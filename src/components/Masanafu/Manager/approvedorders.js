@@ -15,10 +15,11 @@ const ApprovedOrders = () => {
         if(typeof res.data !== 'string'){
             setOrdersList(res.data)
             setisOrdersListLoading(false)
+        }else{
+            setOrdersList('No data')
         }
-        setOrdersList(res.data)
         
-        
+        console.log(res.data[0].itemsordered)
     }
 
     useEffect(() => {

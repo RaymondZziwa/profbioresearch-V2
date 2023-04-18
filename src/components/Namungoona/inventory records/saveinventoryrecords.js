@@ -362,6 +362,7 @@ const Saveinventoryrecords = () => {
                                                 <option value="20grampcs">20 grams Pcs</option>
                                                 <option value="50grampcs">50 grams Pcs</option>
                                                 <option value="100grampcs">100 grams Pcs</option>
+                                                <option value="180grampcs">180 grams Pcs</option>
                                                 <option value="250grampcs">250 grams Pcs</option>
                                                 <option value="350grampcs">350 grams Pcs</option>
                                                 <option value="400grampcs">400 grams Pcs</option>

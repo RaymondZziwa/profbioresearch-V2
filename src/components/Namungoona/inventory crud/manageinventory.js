@@ -4,11 +4,49 @@ import '../../side navbar/sidenav'
 import { useState } from "react"
 import axios from "axios"
 import { useEffect } from "react"
+import ReactPaginate from "react-paginate"
+import './pagination.css'
+import arrowLeft from '../../../imgs/arrowleft.svg'
+import arrowRight from '../../../imgs/arrowright.svg'
 
 const Manageinventory = () => {
     const [itemName, setItemName] = useState('')
-    const [itemList, setitemList] = useState()
+    const [itemList, setitemList] = useState([])
     const [isLoading, setisLoading] = useState(true)
+
+    const [itemsPerPage] = useState(12)
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const indexOfLastPost = currentPage * itemsPerPage;
+    const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+    const currentPosts = itemList.slice(indexOfFirstPost, indexOfLastPost);
+    console.log('current items', currentPosts)
+
+    const fetchItems = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/itemlist', {
+            token: localStorage.getItem("token")
+        })  
+        if(typeof res.data === 'string'){
+            console.log("No data")
+        }else{
+            setitemList(res.data)
+            setisLoading(false)
+        }
+
+        
+    }
+
+    useEffect(() => {
+        fetchItems()
+        const interval = setInterval(() => {
+            fetchItems()
+        }, 500)
+
+
+        return () => clearInterval(interval)
+    }, [])
+
+    
 
     const itemInput = event => {
         event.preventDefault()
@@ -31,24 +69,9 @@ const Manageinventory = () => {
         })
     }
 
-    const fetchItems = async () => {
-        const res = await axios.post('http://82.180.136.230:3005/itemlist', {
-            token: localStorage.getItem("token")
-        })
-        setitemList(res.data)
-        setisLoading(false)
-    }
-
-    useEffect(() => {
-        fetchItems()
-        const interval = setInterval(() => {
-            fetchItems()
-        }, 500)
-
-
-        return () => clearInterval(interval)
-    }, [])
-
+    const paginate = ({ selected }) => {
+        setCurrentPage(selected + 1);
+     };
 
     return (
         <div className='container-fluid'>
@@ -65,6 +88,11 @@ const Manageinventory = () => {
                                 <span><button className="btn btn-outline-primary" onClick={addItem}>Add Item</button></span>
                             </div>
                         </Form>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm='12' md='8' lg='8' xl='8'>
                         <table className="table table-dark">
                             <thead>
                                 <tr>
@@ -73,16 +101,28 @@ const Manageinventory = () => {
                             </thead>
                             <tbody>
                                 {isLoading ? <h4>Loading Data From Database</h4> :
-                                    itemList.map(item => (
+                                    currentPosts.map(item => (
                                         <tr>
                                             <td>{item.name}</td>
                                         </tr>
                                     ))}
                             </tbody>
-                        </table>
-                    </div>
+                        </table>  
+
+                        <ReactPaginate
+                            onPageChange={paginate}
+                            pageCount={Math.ceil(itemList.length / itemsPerPage)}
+                            previousLabel={<img src={arrowLeft} className = 'previous' alt="arrow-left"/>}
+                            nextLabel={<img src={arrowRight} className = 'next' alt="arrow-right"/>}
+                            containerClassName={'pagination'}
+                            pageLinkClassName={'page-number'}
+                            previousLinkClassName={'page-number'}
+                            nextLinkClassName={'page-number'}
+                            activeLinkClassName={'active'}
+                        />
                 </Col>
             </Row>
+
         </div>
     )
 }

@@ -45,15 +45,18 @@ function App() {
             <Redirect to='/Login' />
           )}
 
-          {/* <Route path="*">
+          {/* {!authCtx.isLoggedIn ? <Route path="*">
             <Redirect to='/Login' />
-          </Route> */}
+          </Route>  : <Route path="*">
+            <Redirect to=  />
+          </Route>} */}
 
           {authCtx.isLoggedIn && (
             <Route path="/namungoonadashboard">
               <Namungoonadashboard />
             </Route>
           )}
+          
           {authCtx.isLoggedIn && (<Route path="/saveinventoryrecords">
             <Saveinventoryrecords />
           </Route>

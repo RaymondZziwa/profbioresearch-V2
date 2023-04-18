@@ -160,7 +160,6 @@ const Exhibitionmanagement = () => {
                 token: localStorage.getItem("token")
             }).then(() => setStatus({ type: 'success' }))
               .catch((err) => setStatus({ type: 'error', err }))
-                console.log(res.data)
         }else if (formType === 'postexhibition'){
             itemsPostRequested.map((item) => {
                let totalItemsAccountedFor = parseFloat(item.itemQuantitySold) + parseFloat(item.itemQuantityReturned)
@@ -175,8 +174,10 @@ const Exhibitionmanagement = () => {
                   items: JSON.stringify(itemsPostRequested),
                   status: formType,
                  token: localStorage.getItem("token")
-              }).then(() => setStatus({ type: 'success' }))
-                .catch((err) => setStatus({ type: 'error', err }))
+              })
+              if(typeof res.data === 'string'){
+                 setStatus('Post exhibition data has been successfully saved.')
+              }
         }
     }
 

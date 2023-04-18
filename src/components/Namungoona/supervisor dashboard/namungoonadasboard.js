@@ -30,7 +30,7 @@ const Namungoonadashboard = () => {
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="/branchorderrecords">
-                                <div className="mb-3 mclickable_option">
+                                <div className="mb-3 clickable_option">
                                     Orders Records
                                 </div>
                             </Link>
