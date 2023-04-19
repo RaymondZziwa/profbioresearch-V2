@@ -6,7 +6,6 @@ import axios from "axios";
 const ApprovedOrders = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
-
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/approvedorders', {
             branch: localStorage.getItem("branch"),
@@ -18,9 +17,7 @@ const ApprovedOrders = () => {
         }else{
             setOrdersList('No data')
         }
-        
-        console.log(res.data[0].itemsordered)
-    }
+    }   
 
     useEffect(() => {
         fetchOrders()
@@ -33,14 +30,14 @@ const ApprovedOrders = () => {
     })
 
     const approveOrder = event => {
-        event.preventDefault()
-        axios.post('http://82.180.136.230:3005/ordercompleted', {
-            orderId: event.currentTarget.id,
-            newStatus: 'completed',
-            branch: localStorage.getItem("branch"),
-            token: localStorage.getItem("token")
-        })
-        setisOrdersListLoading(true)
+         event.preventDefault()
+    
+          axios.post('http://82.180.136.230:3005/ordercompleted', {
+              orderId: event.currentTarget.id,
+               newStatus: 'completed',
+               branch: localStorage.getItem("branch"),
+               token: localStorage.getItem("token")
+           })
     }
     return (
         <>
