@@ -2,7 +2,7 @@ import { Row, Col } from "react-bootstrap";
 import Navbar from "../../side navbar/sidenav";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+   
 const ApprovedOrders = () => {
     const [ordersList, setOrdersList] = useState()
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
