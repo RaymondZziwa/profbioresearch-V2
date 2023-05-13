@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import Logout from "../authentication/logout"
 import logo from "../../imgs/logo.png";
 import './sidenav.css'
+
 const Navbar = () => {
   return (
     <nav className="navbar navbar-dark bg-primary fixed-top" style={{ marginBottom: '50px' }}>
@@ -126,9 +127,6 @@ const Navbar = () => {
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/batchstatus">Update Batch Status</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/">Monitor Active Batches</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/">View Farm Records</Link>

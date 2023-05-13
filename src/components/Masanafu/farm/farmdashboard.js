@@ -24,11 +24,6 @@ const FarmDashboard = () => {
                 </Link>
                 <Link className="tab_nav" to="/">
                     <div className="mb-3 mclickable_option">
-                        Monitor Active Batches
-                    </div>
-                </Link>
-                <Link className="tab_nav" to="/">
-                    <div className="mb-3 mclickable_option">
                         View Farm Records
                     </div>
                 </Link>

@@ -129,7 +129,7 @@ const RequestSeeds = () => {
     const submitRequestHandler = async event => {
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/requestrawmaterials', {
-            orderId: orderId,
+            orderId: `B-${Math.floor(Math.random() * 1800000)}`,
             sourcebranch: localStorage.getItem('branch'),
             orderedbydepartment: localStorage.getItem('department'),
             orderedbyrole: localStorage.getItem('role'),
@@ -159,10 +159,10 @@ const RequestSeeds = () => {
                             <div style={{ marginTop: '20px' }}>
                                 <Row>
                                     <Col className="col align-self-center">
-                                    <div className="form-floating mb-3">
+                                    {/* <div className="form-floating mb-3">
                                         <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} onChange={orderIdInput} required />
                                         <label for="floatingInput">Requisition-Id</label>
-                                    </div>
+                                    </div> */}
                                     </Col>
                                 </Row>
                                 <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Request Reciever's Data</h3>
@@ -202,7 +202,7 @@ const RequestSeeds = () => {
                                                             <option selected>Filter By Item Name</option>
                                                             {isItemListLoading ? <option>Loading Items From Database</option> :
                                                                 itemList.map(item => (
-                                                                    <option>
+                                                                    <option key={item.name}>
                                                                         {item.name}
                                                                     </option>
                                                                 ))}
