@@ -126,10 +126,10 @@ const Navbar = () => {
                     <Link className="nav-link " aria-current="page" to='/requestseeds'>Request Seeds</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/batchstatus">Update Batch Status</Link>
+                    <Link className="nav-link" to="/managebatch">Manage Batches</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/">View Farm Records</Link>
+                    <Link className="nav-link" to="/viewrecords">View Farm Records</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link " to='/accountsettings'>Settings</Link>

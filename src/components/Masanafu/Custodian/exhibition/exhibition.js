@@ -119,7 +119,6 @@ const Exhibitionmanagement = () => {
     }
 
     
-
     const fetchExhibitionData = async event => {
         event.preventDefault()
         const res = await axios.post('http://82.180.136.230:3005/exhibitiondata', {

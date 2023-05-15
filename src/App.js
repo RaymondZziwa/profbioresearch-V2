@@ -29,8 +29,10 @@ import ProductionRecords from './components/Masanafu/Manager/productionrecords';
 import BranchOrderRecords from './components/Masanafu/Manager/branchorderrecords';
 import FarmDashboard from './components/Masanafu/farm/farmdashboard';
 import RequestSeeds from './components/Masanafu/farm/seed_requisition/request_seeds';
-import UpdateBatchStatus from './components/Masanafu/farm/batch_manager/batch_manager';
-
+import ManageBatch from './components/Masanafu/farm/batch_manager/batch_manager'
+import ViewBatchRecords from './components/Masanafu/farm/batch_manager/view_batch_records';
+import RequisitionStatus from './components/Masanafu/farm/seed_requisition/requistion_status';
+import FarmRequests from './components/Masanafu/Custodian/farm_requests';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -44,7 +46,7 @@ useEffect(() => {
   }
   const autoLogout = () => {
     if (document.visibilityState === 'hidden') {
-      const timeOutId = window.setTimeout(logoutUser, 1 * 60 * 1000);
+      const timeOutId = window.setTimeout(logoutUser, 5 * 60 * 1000);
       logoutTimerIdRef.current = timeOutId;
     } else {
       window.clearTimeout(logoutTimerIdRef.current);
@@ -186,9 +188,18 @@ useEffect(() => {
           {authCtx.isLoggedIn && (<Route path="/requestseeds">
             <RequestSeeds />
           </Route>)}
-          {authCtx.isLoggedIn && (<Route path="/batchstatus">
-            <UpdateBatchStatus />
-          </Route>)}         
+          {authCtx.isLoggedIn && (<Route path="/managebatch">
+            <ManageBatch />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/farmrequests">
+            <FarmRequests />
+          </Route>)}  
+          {authCtx.isLoggedIn && (<Route path="/farmrequisitionstatus">
+            <RequisitionStatus />
+          </Route>)} 
+          {authCtx.isLoggedIn && (<Route path="/viewrecords">
+            <ViewBatchRecords />
+          </Route>)}      
         </QueryClientProvider>
       </BrowserRouter>
     </div>

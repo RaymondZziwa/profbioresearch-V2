@@ -11,7 +11,7 @@ const CustodianDashboard = () => {
     const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
     const [totalNumberOfPendingRequests, setTotalNumberOfPendingRequests] = useState()
     const [isRequestsListLoading, setIsRequestsListLoading] = useState(true)
-
+    const [totalNumberOfPendingFarmRequests, setTotalNumberOfPendingFarmRequests] = useState()
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
             branch: localStorage.getItem("branch"),
@@ -58,6 +58,23 @@ const CustodianDashboard = () => {
 
         return () => clearTimeout(interval)
     })
+
+    const fetchFarmRequests = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/fetchfarmrequisitions', {
+            branch: localStorage.getItem("branch"),
+            token: localStorage.getItem("token")
+        })
+        if(typeof res.data === 'string'){
+            setTotalNumberOfPendingFarmRequests(0)
+        }else{
+            setTotalNumberOfPendingFarmRequests(res.data.length)
+        }
+        
+    }
+
+    useEffect(() => {
+        fetchFarmRequests()
+    },[])
     
     return (
         <div className='container-fluid'>
@@ -74,6 +91,11 @@ const CustodianDashboard = () => {
                             <Link className="tab_nav" to="/rawmaterialrequests">
                                 <div className="mb-3 mclickable_option">
                                     Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingRequests}</p>
+                                </div>
+                            </Link>
+                            <Link className="tab_nav" to="/farmrequests">
+                                <div className="mb-3 mclickable_option">
+                                    Farm Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingFarmRequests}</p>
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="/rawmaterialrequestsrecords">

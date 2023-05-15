@@ -128,8 +128,8 @@ const RequestSeeds = () => {
 
     const submitRequestHandler = async event => {
         event.preventDefault()
-        let res = await axios.post('http://82.180.136.230:3005/requestrawmaterials', {
-            orderId: `B-${Math.floor(Math.random() * 1800000)}`,
+        let res = await axios.post('http://82.180.136.230:3005/requestseeds', {
+            batchNo: `B-${Math.floor(Math.random() * 1800000)}`,
             sourcebranch: localStorage.getItem('branch'),
             orderedbydepartment: localStorage.getItem('department'),
             orderedbyrole: localStorage.getItem('role'),
