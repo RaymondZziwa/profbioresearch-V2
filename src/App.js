@@ -33,6 +33,10 @@ import ManageBatch from './components/Masanafu/farm/batch_manager/batch_manager'
 import ViewBatchRecords from './components/Masanafu/farm/batch_manager/view_batch_records';
 import RequisitionStatus from './components/Masanafu/farm/seed_requisition/requistion_status';
 import FarmRequests from './components/Masanafu/Custodian/farm_requests';
+import ProjectsManagerDashboard from './components/Masanafu/projects/projectsdashboard';
+import MaterialCalculator from './components/Masanafu/projects/material_calculator/material_calculator';
+import PendingProjectOrders from './components/Masanafu/projects/new_orders/pending_orders';
+import OrderStatus from './components/Masanafu/projects/orders_status/order_status';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -199,7 +203,19 @@ useEffect(() => {
           </Route>)} 
           {authCtx.isLoggedIn && (<Route path="/viewrecords">
             <ViewBatchRecords />
-          </Route>)}      
+          </Route>)} 
+          {authCtx.isLoggedIn && (<Route path="/projectsmanagerdashboard">
+            <ProjectsManagerDashboard />
+          </Route>)}  
+          {authCtx.isLoggedIn && (<Route path="/materialcalculator">
+            <MaterialCalculator />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/pendingprojectsorders">
+            <PendingProjectOrders />
+          </Route>)}    
+          {authCtx.isLoggedIn && (<Route path="/ordersstatus">
+            <OrderStatus />
+          </Route>)}   
         </QueryClientProvider>
       </BrowserRouter>
     </div>
