@@ -131,6 +131,7 @@ const Login = () => {
                                         <option selected>Department</option>
                                         <option value="production">Production</option>
                                         <option value="farm">Farm</option>
+                                        <option value="projects">Projects</option>
                                         {/* <option value="namungoona">Namungoona</option>
                                 <option value="masanafu">Masanafu</option> */}
                                     </select>
@@ -143,6 +144,7 @@ const Login = () => {
                                         <option value="custodian">Production Custodian</option>
                                         <option value="manager">Production Manager</option>
                                         <option value="farmmanager">Farm Manager</option>
+                                        <option value="projectsmanager">Projects Manager</option>
                                         {/* <option value="namungoona">Namungoona</option>
                                 <option value="masanafu">Masanafu</option> */}
                                     </select>
