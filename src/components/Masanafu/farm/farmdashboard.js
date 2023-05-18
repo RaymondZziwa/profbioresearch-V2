@@ -2,8 +2,6 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import '../../Namungoona/supervisor dashboard/namungoona.css'
 import Navbar from "../../side navbar/sidenav";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 const FarmDashboard = () => {
     return (
