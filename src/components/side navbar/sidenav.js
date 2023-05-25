@@ -2,12 +2,12 @@ import { Link } from "react-router-dom"
 import Logout from "../authentication/logout"
 import logo from "../../imgs/logo.png";
 import './sidenav.css'
-
+import attention from '../../imgs/attention.png'
 const Navbar = () => {
   return (
     <nav className="navbar navbar-dark bg-primary fixed-top" style={{ marginBottom: '50px' }}>
       <div className="container-fluid">
-        <Link className="navbar-brand" href="#"><img src={logo} alt='logo' style={{ height: '20px' }} />{localStorage.getItem("branch")}</Link>
+        <Link className="navbar-brand" href="#"><img src={logo} alt='logo' style={{ height: '20px' }} />{localStorage.getItem("isUserLoggedIn") ? localStorage.getItem('branch') : <><img src={attention} alt="attention" style={{ height: '20px' }}/><span style={{color:'red'}}>Your session is expired.Log In.</span></>}</Link>
         <button id="open" className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -143,7 +143,7 @@ const Navbar = () => {
                     <Link className="nav-link active" aria-current="page" to='/projectsmanagerdashboard'>Dashboard</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link " aria-current="page" to='/requestmaterial'>Request Materials</Link>
+                    <Link className="nav-link " aria-current="page" to='/requestrawmaterials'>Request Materials</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/materialcalculator">Material Calculator</Link>
@@ -165,7 +165,7 @@ const Navbar = () => {
                 </Link>
                 <ul className="dropdown-menu dropdown-menu-dark">
                   {/* <li><Editprofile /></li> */}
-                  <li><Logout /></li>
+                  <li>{localStorage.getItem("isUserLoggedIn") ? <Logout /> : <Link className="nav-link " to='/Login'>Log In</Link>}</li>
                   <li>
                   </li>
                 </ul>

@@ -1,6 +1,5 @@
 import { Route, BrowserRouter, Redirect } from 'react-router-dom'
 import Login from './components/authentication/login';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Namungoonadashboard from './components/Namungoona/supervisor dashboard/namungoonadasboard';
 import Saveinventoryrecords from './components/Namungoona/inventory records/saveinventoryrecords';
 import Stocktaking from './components/Namungoona/stock taking/sotcktaking';
@@ -19,7 +18,6 @@ import AccountSettings from './components/settings/settings';
 import ProductOrders from './components/Masanafu/Manager/productorders';
 import RequestRawMaterialsForm from './components/Masanafu/Manager/requestrawmaterials';
 import PlaceOrderForm from './components/Namungoona/place order/placeorder';
-import productOrdersContext from './store/productOrders-context';
 import OrderRecords from './components/Masanafu/Manager/orderRecords';
 import ExhibitionRecords from './components/Masanafu/Custodian/exhibitionrecords';
 import ApprovedOrders from './components/Masanafu/Manager/approvedorders';
@@ -37,11 +35,11 @@ import ProjectsManagerDashboard from './components/Masanafu/projects/projectsdas
 import MaterialCalculator from './components/Masanafu/projects/material_calculator/material_calculator';
 import PendingProjectOrders from './components/Masanafu/projects/new_orders/pending_orders';
 import OrderStatus from './components/Masanafu/projects/orders_status/order_status';
+import MakeProjectsOrder from './components/Masanafu/Custodian/make_projects_order';
+import AddmachineryData from './components/Masanafu/projects/machinery/add_machinery_data';
 
 function App() {
   const authCtx = useContext(AuthContext);
-  const client = new QueryClient()
-  const [productOrders, setProductOrders] = useState()
   const logoutTimerIdRef = useRef(null);
 
 useEffect(() => {
@@ -50,7 +48,7 @@ useEffect(() => {
   }
   const autoLogout = () => {
     if (document.visibilityState === 'hidden') {
-      const timeOutId = window.setTimeout(logoutUser, 5 * 60 * 1000);
+      const timeOutId = window.setTimeout(logoutUser, 1 * 60 * 1000);
       logoutTimerIdRef.current = timeOutId;
     } else {
       window.clearTimeout(logoutTimerIdRef.current);
@@ -67,7 +65,6 @@ useEffect(() => {
   return (
     <div className="App">
       <BrowserRouter>
-        <QueryClientProvider client={client}>
           {!authCtx.isLoggedIn && (<Route path="/Login" >
             <Login />
           </Route>
@@ -76,10 +73,10 @@ useEffect(() => {
             <Redirect to='/Login' />
           )}
 
-          {authCtx.isLoggedIn && (<Route path="*">
+          {/* {authCtx.isLoggedIn && (<Route path="*">
             <Redirect to={localStorage.getItem('home')} />
           </Route> )
-          }
+          } */}
 
           {authCtx.isLoggedIn && (
             <Route path="/namungoonadashboard">
@@ -111,7 +108,7 @@ useEffect(() => {
             <Admindashboard />
           </Route>
           )}
-          <productOrdersContext.Provider value={{ productOrders, setProductOrders }}>
+
             {authCtx.isLoggedIn && (
               <Route path="/managerdashboard">
                 <Managerdashboard />
@@ -122,7 +119,6 @@ useEffect(() => {
               <ProductOrders />
             </Route>
             )}
-          </productOrdersContext.Provider>
 
           {authCtx.isLoggedIn && (
             <Route path="/inventorymenu">
@@ -136,7 +132,6 @@ useEffect(() => {
               <CustodianDashboard />
             </Route>
           )}
-
 
           {authCtx.isLoggedIn && (
             <Route path="/exhibtionmanagement">
@@ -153,8 +148,6 @@ useEffect(() => {
           {authCtx.isLoggedIn && (<Route path="/accountsettings">
             <AccountSettings />
           </Route>)}
-
-
 
           {authCtx.isLoggedIn && (<Route path="/requestrawmaterials">
             <RequestRawMaterialsForm />
@@ -215,8 +208,13 @@ useEffect(() => {
           </Route>)}    
           {authCtx.isLoggedIn && (<Route path="/ordersstatus">
             <OrderStatus />
-          </Route>)}   
-        </QueryClientProvider>
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/makeprojectsorder">
+            <MakeProjectsOrder />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/managemachinerydata">
+            <AddmachineryData />
+          </Route>)}    
       </BrowserRouter>
     </div>
   );

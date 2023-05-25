@@ -1,17 +1,56 @@
 import { Row, Col } from 'react-bootstrap'
 import Navbar from '../../side navbar/sidenav'
 import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ProjectsManagerDashboard = () => {
+    const [totalNumberOfPendingOrders, setTotalNumberOfPendingOrders] = useState(0)
+
+    const fetchOrders = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/approvedorders', {
+            branch: localStorage.getItem("branch"),
+            token: localStorage.getItem("token"),
+            dept: localStorage.getItem('department')
+        })
+        if(typeof res.data === 'string'){
+            setTotalNumberOfPendingOrders(0)
+        }else{
+            setTotalNumberOfPendingOrders(res.data.length)
+        }
+        
+        
+    }
+
+    useEffect(() => {
+        fetchOrders()
+        const interval = setInterval(() => {
+            fetchOrders()
+        }, 1000)
+
+
+        return () => clearInterval(interval)
+    })
+
     return (
         <Row>
             <Col sm='12' md='4' lg='4' xl='4'>
                 <Navbar />
             </Col>
             <div className="col align-self-center" style={{marginTop:'20px'}}>
-                <Link className="tab_nav" to="/">
+                <Link className="tab_nav" to="/requestrawmaterials">
                     <div className="mb-3 mclickable_option">
                         Request Materials
+                    </div>
+                </Link>
+                <Link className="tab_nav" to="/rawmaterialrequestsrecords">
+                    <div className="mb-3 mclickable_option">
+                        Material Requests Records
+                    </div>
+                </Link>
+                <Link className="tab_nav" to="/managemachinerydata">
+                    <div className="mb-3 mclickable_option">
+                        Add / Edit Machninery Data
                     </div>
                 </Link>
                 <Link className="tab_nav" to="/materialcalculator">
@@ -19,14 +58,9 @@ const ProjectsManagerDashboard = () => {
                         Material Calculator
                     </div>
                 </Link>
-                <Link className="tab_nav" to="/">
+                <Link className="tab_nav" to="/approvedorders">
                     <div className="mb-3 mclickable_option">
-                        New Orders
-                    </div>
-                </Link>
-                <Link className="tab_nav" to="/ordersstatus">
-                    <div className="mb-3 mclickable_option">
-                        Orders Status
+                        New Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingOrders}</p>
                     </div>
                 </Link>
                 <Link className="tab_nav" to="/accountsettings">

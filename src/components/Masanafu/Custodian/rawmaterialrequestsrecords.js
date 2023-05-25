@@ -10,8 +10,10 @@ const RawMaterialRequestsRecords = () => {
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/rawmaterialrequestsrecords', {
             branch: localStorage.getItem("branch"),
+            dept: localStorage.getItem("department"),
             token: localStorage.getItem("token")
         })
+        console.log(res.data)
         if(typeof res.data === "string"){
             setOrdersList('No records found.')
         }else{

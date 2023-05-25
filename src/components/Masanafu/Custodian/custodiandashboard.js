@@ -113,6 +113,13 @@ const CustodianDashboard = () => {
                                     Production Orders <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingOrders}</p>
                                 </div>
                             </Link>
+
+                            <Link className="tab_nav" to="/makeprojectsorder">
+                                <div className="mb-3 mclickable_option">
+                                    Make Projects Order
+                                </div>
+                            </Link>
+
                             <Link className="tab_nav" to="/orderrecords">
                                 <div className="mb-3 mclickable_option">
                                     Orders Records

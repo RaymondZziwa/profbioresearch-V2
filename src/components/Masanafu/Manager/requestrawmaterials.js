@@ -153,10 +153,8 @@ const RequestRawMaterialsForm = () => {
             <Row>
                 <Col sm='2' md='2' lg='2' xl='2'></Col>
                 <Col sm='12' md='8' lg='8' xl='8'>
-                    <div className="container  d-flex align-items-center" style={{ marginTop: '50px' }}>
-
                         <Form>
-                            <h2 style={{ marginTop: '10px', fontSize: '50px', textAlign: 'center' }}>Request Raw Materials</h2>
+                            <h2 style={{ marginTop: '60px', fontSize: '40px', textAlign: 'center' }}>Request Raw Materials</h2>
                             {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Request successfully submitted</span>}
                             {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Request was not submitted</span>}
                             <div style={{ marginTop: '20px' }}>
@@ -187,23 +185,9 @@ const RequestRawMaterialsForm = () => {
                                         <option key={personnel.username} value={personnel.username}>{personnel.username}</option>
                                     ))}
                                 </select>
-                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Items Being Requested</h3>
-                                <table className="table" style={{ marginTop: '10px' }}>
-                                    <thead>
-                                        <tr style={{ textAlign: 'center' }}>
-                                            <th scope="col">Item Name</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Unit Of Measurement</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-
+                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Items Being Requested</h3>                            
                                         {itemsRequested.map((itemRequested, index) => (
-
-                                            <tr key={index}>
-                                                <td>
+                                            <div key={index} style={{borderBottom:'1px dashed black'}}>
                                                     <div className="form-floating mb-3">
                                                         <select class="form-select"
                                                             name="itemName"
@@ -212,7 +196,7 @@ const RequestRawMaterialsForm = () => {
                                                             onChange={event => handleChangeInput(index, event)}
                                                             value={itemRequested.itemName}
                                                             required>
-                                                            <option selected>Filter By Item Name</option>
+                                                            <option defaultValue>Filter By Item Name</option>
                                                             {isItemListLoading ? <option>Loading Items From Database</option> :
                                                                 itemList.map(item => (
                                                                     <option>
@@ -221,10 +205,7 @@ const RequestRawMaterialsForm = () => {
                                                                 ))}
                                                         </select>
                                                     </div>
-                                                </td>
 
-
-                                                <td>
                                                     <div className="form-floating mb-3">
                                                         <input type="text"
                                                             className="form-control"
@@ -237,9 +218,6 @@ const RequestRawMaterialsForm = () => {
                                                             required />
                                                         <label for="floatingInput">Item Quantity</label>
                                                     </div>
-                                                </td>
-
-                                                <td>
 
                                                     <div className="form-floating mb-3">
                                                         <select
@@ -258,22 +236,19 @@ const RequestRawMaterialsForm = () => {
                                                             <option value="MLS">Milliliters</option>
                                                             <option value="Pcs">Pcs</option>
                                                         </select>
+                                                        <FontAwesomeIcon onClick={() => removeInput(index)} icon={faMinusCircle} style={{ color: 'red', fontSize: '40px', marginLeft: '2px', cursor: 'pointer' , marginTop: '2px'}} /> 
+                                                        <FontAwesomeIcon onClick={addNewInput} icon={faPlusCircle} style={{ color: 'green', fontSize: '40px', cursor: 'pointer' , marginTop: '2px', marginLeft: '2px'}} />
                                                     </div>
-                                                </td>
-
-                                                <td>
-                                                    <FontAwesomeIcon onClick={addNewInput} icon={faPlusCircle} style={{ color: 'green', fontSize: '30px', cursor: 'pointer' }} />
-                                                    <FontAwesomeIcon onClick={() => removeInput(index)} icon={faMinusCircle} style={{ color: 'red', fontSize: '30px', marginLeft: '2px', cursor: 'pointer' }} />
-                                                </td>
-                                            </tr>
+                                                    <span>
+                                                         
+                                                    </span>
+                                            </div>
                                         ))
-                                        }
-                                    </tbody>
-                                </table>
+                                    }
                                 <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Additional Information</h3>
                                 <div className="mb-3">
                                     <div className="form-floating mb-3">
-                                        <textarea type="text" className="form-control" rows="6" id="floatingInput" placeholder="johndoe" style={{ color: "#8CA6FE;", height: '200px', width: '500px' }} onChange={additionalInfoInput} />
+                                        <textarea type="text" className="form-control" rows="6" id="floatingInput" placeholder="johndoe" style={{ color: "#8CA6FE", height: '200px', width: '300px' }} onChange={additionalInfoInput} />
                                         <label for="floatingInput">Additional Information</label>
                                     </div>
                                 </div>
@@ -299,7 +274,6 @@ const RequestRawMaterialsForm = () => {
                                 </div>
                             </div>
                         </Form>
-                    </div>
                 </Col>
                 <Col sm='12' md='2' lg='2' xl='2'>
                     <Navbar />

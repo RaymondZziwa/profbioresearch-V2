@@ -9,7 +9,8 @@ const ApprovedOrders = () => {
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/approvedorders', {
             branch: localStorage.getItem("branch"),
-            token: localStorage.getItem("token")
+            token: localStorage.getItem("token"),
+            dept: localStorage.getItem('department')
         })
         if(typeof res.data !== 'string'){
             setOrdersList(res.data)

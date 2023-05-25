@@ -67,6 +67,7 @@ const Login = () => {
             localStorage.setItem("department", department);
             localStorage.setItem("role", role);
             localStorage.setItem("home", redirectPath)
+            localStorage.setItem("isUserLoggedIn", true)
             history.replace(redirectPath)
         }
     }

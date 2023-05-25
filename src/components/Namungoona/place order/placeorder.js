@@ -137,7 +137,9 @@ const PlaceOrderForm = () => {
             additionalInfo: additionalInfo,
             token: localStorage.getItem("token")
         }).then(() => setStatus({ type: 'success' }))
-            .catch((err) => setStatus({ type: 'error', err }))
+        .catch((err) => setStatus({ type: 'error', err }))
+
+        window.location.reload(false);
     }
 
     return (
@@ -167,7 +169,7 @@ const PlaceOrderForm = () => {
                                     ))}
                                 </select>
                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={roleRef} onChange={fetchPersonnelData} required>
-                                    <option selected>Reciever's Role</option>
+                                    
                                     {roleData != null && roleData.map(role => (
                                         <option key={role.role} value={role.role}>{role.role}</option>
                                     ))}
