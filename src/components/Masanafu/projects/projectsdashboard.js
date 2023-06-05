@@ -48,14 +48,9 @@ const ProjectsManagerDashboard = () => {
                         Material Requests Records
                     </div>
                 </Link>
-                <Link className="tab_nav" to="/managemachinerydata">
+                <Link className="tab_nav" to="/machinerymenu">
                     <div className="mb-3 mclickable_option">
-                        Add / Edit Machninery Data
-                    </div>
-                </Link>
-                <Link className="tab_nav" to="/materialcalculator">
-                    <div className="mb-3 mclickable_option">
-                        Material Calculator
+                        Machninery Menu
                     </div>
                 </Link>
                 <Link className="tab_nav" to="/approvedorders">

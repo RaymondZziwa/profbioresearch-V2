@@ -3,6 +3,8 @@ import Logout from "../authentication/logout"
 import logo from "../../imgs/logo.png";
 import './sidenav.css'
 import attention from '../../imgs/attention.png'
+import LogInBtn from "../authentication/loginbtn";
+
 const Navbar = () => {
   return (
     <nav className="navbar navbar-dark bg-primary fixed-top" style={{ marginBottom: '50px' }}>
@@ -159,13 +161,32 @@ const Navbar = () => {
                   </li>
                 </>
               }
+              {(localStorage.getItem('branch') === 'masanafu' && localStorage.getItem('department') === 'Shop') &&
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link active" aria-current="page" to='/shopmanagerdashboard'>Dashboard</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link " aria-current="page" to='/pointofsale'>Point Of Sale</Link>
+                  </li>
+                  {/* <li className="nav-item">
+                    <Link className="nav-link" to="/pendingprojectsorders">New Orders</Link>
+                  </li> */}
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/stocktaking">Stock Taking</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link " to='/accountsettings'>Settings</Link>
+                  </li>
+                </>
+              }
               <li className="nav-item dropdown">
                 <Link className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {localStorage.getItem("username")}
                 </Link>
                 <ul className="dropdown-menu dropdown-menu-dark">
                   {/* <li><Editprofile /></li> */}
-                  <li>{localStorage.getItem("isUserLoggedIn") ? <Logout /> : <Link className="nav-link " to='/Login'>Log In</Link>}</li>
+                  <li>{localStorage.getItem("isUserLoggedIn") ? <Logout /> : <LogInBtn />}</li>
                   <li>
                   </li>
                 </ul>

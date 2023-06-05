@@ -82,7 +82,7 @@ const Manageinventory = () => {
                         <Form style={{ justifyContent: 'center', marginTop: '20px' }}>
                             <div className="mb-3">
                                 <div className="form-floating mb-3">
-                                    <input type="text" className="form-control" id="floatingInput" min="0" placeholder="Quantity" onChange={itemInput} style={{ color: "#8CA6FE;" }} />
+                                    <input type="text" className="form-control" id="floatingInput" min="0" placeholder="Quantity" onChange={itemInput} style={{ color: "#8CA6FE" }} />
                                     <label for="floatingInput">Item Name</label>
                                 </div>
                                 <span><button className="btn btn-outline-primary" onClick={addItem}>Add Item</button></span>

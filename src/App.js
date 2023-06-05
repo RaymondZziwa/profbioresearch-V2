@@ -9,7 +9,7 @@ import Registerpersonnel from './components/Admin/personnel registration/registe
 import Admindashboard from './components/Admin/admin dashboard/adminDashboard';
 import Managerdashboard from './components/Masanafu/Manager/managerdashboard';
 
-import { useContext, useRef, useState, useEffect } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import AuthContext from './store/auth-context';
 import InventoryMenu from './components/Masanafu/Manager/inventorymenu';
 import CustodianDashboard from './components/Masanafu/Custodian/custodiandashboard';
@@ -33,11 +33,16 @@ import RequisitionStatus from './components/Masanafu/farm/seed_requisition/requi
 import FarmRequests from './components/Masanafu/Custodian/farm_requests';
 import ProjectsManagerDashboard from './components/Masanafu/projects/projectsdashboard';
 import MaterialCalculator from './components/Masanafu/projects/material_calculator/material_calculator';
-import PendingProjectOrders from './components/Masanafu/projects/new_orders/pending_orders';
-import OrderStatus from './components/Masanafu/projects/orders_status/order_status';
+
+
 import MakeProjectsOrder from './components/Masanafu/Custodian/make_projects_order';
 import AddmachineryData from './components/Masanafu/projects/machinery/add_machinery_data';
-
+import MachineryMenu from './components/Masanafu/projects/other_menus/machinery_menu';
+import RegisterMaterial from './components/Masanafu/projects/register_materials/register_equipment';
+import SaveNewProject from './components/Masanafu/projects/machinery/saveNewProject';
+import ShopDashboard from './components/Masanafu/shop/shopDashboard';
+import POS from './components/Masanafu/shop/point_of_sale/pos'
+import RegisterShopInventory from './components/Masanafu/shop/register_shop_inventory/register_shop_inventory';
 function App() {
   const authCtx = useContext(AuthContext);
   const logoutTimerIdRef = useRef(null);
@@ -48,7 +53,7 @@ useEffect(() => {
   }
   const autoLogout = () => {
     if (document.visibilityState === 'hidden') {
-      const timeOutId = window.setTimeout(logoutUser, 1 * 60 * 1000);
+      const timeOutId = window.setTimeout(logoutUser, 100 * 60 * 1000);
       logoutTimerIdRef.current = timeOutId;
     } else {
       window.clearTimeout(logoutTimerIdRef.current);
@@ -203,18 +208,36 @@ useEffect(() => {
           {authCtx.isLoggedIn && (<Route path="/materialcalculator">
             <MaterialCalculator />
           </Route>)}
-          {authCtx.isLoggedIn && (<Route path="/pendingprojectsorders">
+          {/* {authCtx.isLoggedIn && (<Route path="/pendingprojectsorders">
             <PendingProjectOrders />
-          </Route>)}    
-          {authCtx.isLoggedIn && (<Route path="/ordersstatus">
+          </Route>)}     */}
+          {/* {authCtx.isLoggedIn && (<Route path="/ordersstatus">
             <OrderStatus />
-          </Route>)}
+          </Route>)} */}
           {authCtx.isLoggedIn && (<Route path="/makeprojectsorder">
             <MakeProjectsOrder />
           </Route>)}
           {authCtx.isLoggedIn && (<Route path="/managemachinerydata">
             <AddmachineryData />
-          </Route>)}    
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/machinerymenu">
+            <MachineryMenu />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/registerequipment">
+            <RegisterMaterial />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/registerproject">
+            <SaveNewProject />
+          </Route>)}      
+          {authCtx.isLoggedIn && (<Route path="/shopmanagerdashboard">
+            <ShopDashboard />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/pointofsale">
+            <POS />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/registershopinventory">
+            <RegisterShopInventory />
+          </Route>)}
       </BrowserRouter>
     </div>
   );
