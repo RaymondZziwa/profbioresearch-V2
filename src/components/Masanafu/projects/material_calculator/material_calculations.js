@@ -13,6 +13,8 @@ const OrderSummaryTable = ({ materials, orderQuantity }) => {
     return { ...material, totalQuantity, totalCost };
   });
 
+  const grandTotal = totals.reduce((acc, material) => acc + material.totalCost, 0);
+
   return (
     <table className="table table-dark">
       <thead>
@@ -34,6 +36,10 @@ const OrderSummaryTable = ({ materials, orderQuantity }) => {
             <td>{material.totalCost}</td>
           </tr>
         ))}
+        <tr>
+          <td colSpan="4" className="text-end fw-bold">Grand Total:</td>
+          <td>{grandTotal}</td>
+        </tr>
       </tbody>
     </table>
   );

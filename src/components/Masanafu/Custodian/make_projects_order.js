@@ -146,7 +146,7 @@ const MakeProjectsOrder = () => {
         }).then(() => setStatus({ type: 'success' }))
         .catch((err) => setStatus({ type: 'error', err }))
 
-        window.location.reload(false);
+      //  window.location.reload(false);
     }
 
     return(

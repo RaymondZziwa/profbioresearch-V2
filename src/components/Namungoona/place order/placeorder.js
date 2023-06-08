@@ -169,7 +169,7 @@ const PlaceOrderForm = () => {
                                     ))}
                                 </select>
                                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={roleRef} onChange={fetchPersonnelData} required>
-                                    
+                                    <option selected>Select Role</option>
                                     {roleData != null && roleData.map(role => (
                                         <option key={role.role} value={role.role}>{role.role}</option>
                                     ))}

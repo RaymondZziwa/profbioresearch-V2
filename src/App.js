@@ -43,6 +43,13 @@ import SaveNewProject from './components/Masanafu/projects/machinery/saveNewProj
 import ShopDashboard from './components/Masanafu/shop/shopDashboard';
 import POS from './components/Masanafu/shop/point_of_sale/pos'
 import RegisterShopInventory from './components/Masanafu/shop/register_shop_inventory/register_shop_inventory';
+import StartBatchFromMotherGarden from './components/Masanafu/farm/batch_manager/start_batch_from_mother_garden';
+import ProjectsRecords from './components/Masanafu/projects/records/projects_records';
+import RequestEquipment from './components/Masanafu/projects/request_materials/request_equipment';
+import ProjectsEquipmentRequests from './components/Masanafu/Custodian/project_equipment_requests';
+import ProjectsRequestsRecords from './components/Masanafu/Custodian/projects_requests_records';
+import FarmRequestsRecords from './components/Masanafu/Custodian/farm_requests_records';
+import OrderDelivery from './components/Masanafu/projects/order_delivery/order_delivery';
 function App() {
   const authCtx = useContext(AuthContext);
   const logoutTimerIdRef = useRef(null);
@@ -237,6 +244,27 @@ useEffect(() => {
           </Route>)}
           {authCtx.isLoggedIn && (<Route path="/registershopinventory">
             <RegisterShopInventory />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/startbatchfrommothergarden">
+            <StartBatchFromMotherGarden />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/projectsrecords">
+            <ProjectsRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/projectsrequests">
+            <ProjectsEquipmentRequests />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/requestprojectsequipment">
+            <RequestEquipment />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/projectsrequestsrecords">
+            <ProjectsRequestsRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/farmrequestsrecords">
+            <FarmRequestsRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/orderdelivery">
+            <OrderDelivery />
           </Route>)}
       </BrowserRouter>
     </div>

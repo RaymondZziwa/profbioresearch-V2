@@ -32,11 +32,13 @@ const UpdateBatchStatus = () => {
     const fetchBatchData = async event => {
         event.preventDefault()
         console.log('sent')
+        
         let res = await axios.post('http://82.180.136.230:3005/fetchdatafromfarm',{
             token: localStorage.getItem('token'),
             batchNo: batchNo.trim()
         })
-        console.log(res.data)
+        console.log('btc' , res.data)
+
         if(typeof res.data === "string"){
             setFetchErr('No records found.')
         }else{
@@ -110,7 +112,7 @@ const UpdateBatchStatus = () => {
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">Item Name</th>
-                                                            <th scope="col">Current Quantity</th>
+                                                            <th scope="col">Initial Quantity</th>
                                                             <th scope="col">New Quantity</th>
                                                             <th scope="col">Damages</th>
                                                             <th scope="col">Units Of Measurement</th>

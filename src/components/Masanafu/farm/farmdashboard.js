@@ -12,17 +12,27 @@ const FarmDashboard = () => {
             <div className="col align-self-center" style={{marginTop:'20px'}}>
                 <Link className="tab_nav" to="/requestseeds">
                     <div className="mb-3 mclickable_option">
-                        Request Seeds Or Seedlings
+                        Request Planting Seeds
                     </div>
                 </Link>
                 <Link className="tab_nav" to="/farmrequisitionstatus">
                     <div className="mb-3 mclickable_option">
-                        Seeds Or Seedlings Requests Status
+                        Planting Seeds Requests Status
+                    </div>
+                </Link>
+                <Link className="tab_nav" to="/farmrequestsrecords">
+                    <div className="mb-3 mclickable_option">
+                        Farm Requests Records
                     </div>
                 </Link>
                 <Link className="tab_nav" to="/managebatch">
                     <div className="mb-3 mclickable_option">
                         Start / Manage Batches
+                    </div>
+                </Link>
+                <Link className="tab_nav" to="/startbatchfrommothergarden">
+                    <div className="mb-3 mclickable_option">
+                        Start Batch From Mother Garden
                     </div>
                 </Link>
                 <Link className="tab_nav" to="/viewrecords">

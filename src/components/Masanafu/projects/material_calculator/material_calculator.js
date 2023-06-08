@@ -28,10 +28,10 @@ const MaterialCalculator = () => {
         })
 
         console.log('fetchOrderMaterialData', res.data)
-        if(Array.isArray(res.data)){
-            setMaterials(JSON.parse(res.data[0].itemsrequired))
-            setIsCalculating(false)
-        }
+         if(Array.isArray(res.data)){
+             setMaterials(JSON.parse(res.data[0].itemsrequired))
+             setIsCalculating(false)
+         }
     }
 
     const fetchOrderData = async (event) => {
@@ -62,6 +62,9 @@ const MaterialCalculator = () => {
           setItemName(itemName);
           setItemQuantityOrdered(itemsOrdered[0].itemQuantity)
           fetchOrderMaterialData(itemName);
+
+          console.log('m', materials)
+          console.log('i', itemQuantityOrdered)
         }
     }, [itemsOrdered]);
 

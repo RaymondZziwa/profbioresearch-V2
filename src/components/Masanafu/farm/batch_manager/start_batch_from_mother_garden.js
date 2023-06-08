@@ -6,17 +6,13 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const RequestSeeds = () => {
+const StartBatchFromMotherGarden = () => {
     const [status, setStatus] = useState({})
     const [itemList, setitemList] = useState()
     const [isItemListLoading, setisItemListLoading] = useState(true)
     const [orderId, setOrderId] = useState('')
     const [itemsRequested, setItemsRequested] = useState([{ itemName: '', itemQuantity: '', mUnits: '' },])
-    const [recievedBy, setrecievedBy] = useState('')
-    const [deptData, setDeptData] = useState()
-    const [roleData, setRoleData] = useState()
     const [additionalInfo, setAdditionalinfo] = useState('')
-    const [personnelData, setPersonnelData] = useState()
 
     const branchRef = useRef()
     const deptRef = useRef()
@@ -36,77 +32,11 @@ const RequestSeeds = () => {
         setItemsRequested([...itemsRequested, { itemName: '', itemQuantity: '', mUnits: '' }])
     }
 
-
-    const recievedByInput = event => {
-        event.preventDefault()
-        setrecievedBy(event.target.value)
-    }
-
     const handleChangeInput = (index, event) => {
         let values = [...itemsRequested];
         values[index][event.target.name] = event.target.value;
         setItemsRequested(values)
     }
-
-    const orderIdInput = event => {
-        event.preventDefault()
-        setOrderId(event.target.value)
-    }
-
-    const fetchDepartmentData = event => {
-        event.preventDefault()
-        try {
-            axios.post('http://82.180.136.230:3005/departmentData', {
-                branch: branchRef.current.value
-
-            }).then((res) => {
-                if (res.status === 200) {
-                    setDeptData(res.data)
-                } else {
-                    alert('Ooops! Something went wrong.Contact the technical team.')
-                }
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const fetchRoleData = event => {
-        event.preventDefault()
-        try {
-            axios.post('http://82.180.136.230:3005/roleData', {
-                department: deptRef.current.value
-            }).then((res) => {
-                if (res.status === 200) {
-                    setRoleData(res.data)
-                } else {
-                    alert('Ooops! Something went wrong.Contact the technical team.')
-                }
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const fetchPersonnelData = event => {
-        event.preventDefault()
-        console.log(roleRef.current.value)
-        try {
-            axios.post('http://82.180.136.230:3005/personnelData', {
-                role: roleRef.current.value
-            }).then((res) => {
-                if (res.status === 200) {
-                    setPersonnelData(res.data)
-                } else {
-                    alert('Ooops! Something went wrong.Contact the technical team.')
-                }
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
 
     const fetchItems = async () => {
         const res = await axios.post('http://82.180.136.230:3005/itemlist', {
@@ -134,62 +64,26 @@ const RequestSeeds = () => {
             orderedbydepartment: localStorage.getItem('department'),
             orderedbyrole: localStorage.getItem('role'),
             orderedby: localStorage.getItem('username'),
-            destinationbranch: branchRef.current.value,
-            recieverdepartment: deptRef.current.value,
-            recieverrole: roleRef.current.value,
-            deliveredto: recievedBy,
-            initialStatus: "pending",
             itemsrequested: JSON.stringify(itemsRequested),
             additionalInfo: additionalInfo,
+            initialStatus: "approved",
             token: localStorage.getItem("token")
         }).then(() => setStatus({ type: 'success' }))
             .catch((err) => setStatus({ type: 'error', err }))
     }
 
-
     return(
-            <Row>
+        <Row>
                 <Col sm='12' md='2' lg='2' xl='2'>
                     <Navbar />
                 </Col>
                 <Col className="col align-self-center">
-                    <h2 style={{ marginTop: '60px', fontSize: '30px', textAlign: 'center' }}>Request Planting Seeds</h2>
+                    <h2 style={{ marginTop: '60px', fontSize: '30px', textAlign: 'center' }}>Start Batch Form</h2>
                         <Form>    
-                            {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Request successfully submitted</span>}
+                            {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Batch successfully registered</span>}
                             {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Request was not submitted</span>}
                             <div style={{ marginTop: '20px' }}>
-                                <Row>
-                                    <Col className="col align-self-center">
-                                    {/* <div className="form-floating mb-3">
-                                        <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} onChange={orderIdInput} required />
-                                        <label for="floatingInput">Requisition-Id</label>
-                                    </div> */}
-                                    </Col>
-                                </Row>
-                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Request Reciever's Data</h3>
-                                <select className="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={branchRef} onChange={fetchDepartmentData} required>
-                                    <option selected>Order To ( Branch )</option>
-                                    <option value="masanafu">Masanafu</option>
-                                </select>
-                                <select className="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={deptRef} onChange={fetchRoleData} required>
-                                    <option selected>Select Department</option>
-                                    {deptData != null && deptData.map(dept => (
-                                        <option key={dept.department} value={dept.department}>{dept.department}</option>
-                                    ))}
-                                </select>
-                                <select className="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} ref={roleRef} onChange={fetchPersonnelData} required>
-                                    <option selected>Reciever's Role</option>
-                                    {roleData != null && roleData.map(role => (
-                                        <option key={role.role} value={role.role}>{role.role}</option>
-                                    ))}
-                                </select>
-                                <select className="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE" }} onChange={recievedByInput} required>
-                                    <option selected>Recieved By</option>
-                                    {personnelData != null && personnelData.map(personnel => (
-                                        <option key={personnel.username} value={personnel.username}>{personnel.username}</option>
-                                    ))}
-                                </select>
-                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Items Being Requested</h3>
+                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Batch Items</h3>
                                     {itemsRequested.map((itemRequested, index) => (
                                         <div style={{borderBottom:'1px dashed black'}} key={index}>
                                             <div className="form-floating mb-3">
@@ -234,9 +128,6 @@ const RequestSeeds = () => {
                                                             required>
 
                                                             <option selected>Measurement</option>
-                                                            <option value="L">Litres</option>
-                                                            <option value="KG">Kilograms</option>
-                                                            <option value="MLS">Milliliters</option>
                                                             <option value="Pcs">Pcs</option>
                                                         </select>
                                             </div>
@@ -252,7 +143,7 @@ const RequestSeeds = () => {
                                         <label for="floatingInput">Additional Information</label>
                                     </div>
                                 </div>
-                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Sender's Data</h3>
+                                {/* <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Sender's Data</h3>
                                 <div className="form-floating mb-3">
                                     <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('branch')} required readOnly />
                                     <label for="floatingInput">Order From ( Branch )</label>
@@ -268,9 +159,9 @@ const RequestSeeds = () => {
                                 <div className="form-floating mb-3">
                                     <input className="form-control" id="floatingInput" placeholder="Order-Id" style={{ color: "#8CA6FE" }} value={localStorage.getItem('username')} required readOnly />
                                     <label for="floatingInput">Ordered By ( username )</label>
-                                </div>
+                                </div> */}
                                 <div className="mb-3" style={{ textAlign: 'center' }}>
-                                    <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={submitRequestHandler}>SUBMIT REQUEST</button>
+                                    <button style={{ width: "50%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '10px' }} onClick={submitRequestHandler}>REGISTER BATCH</button>
                                 </div>
                             </div>
                         </Form>
@@ -279,4 +170,4 @@ const RequestSeeds = () => {
     )
 }
 
-export default RequestSeeds
+export default StartBatchFromMotherGarden

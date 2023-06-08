@@ -33,10 +33,11 @@ const ApprovedOrders = () => {
     const approveOrder = event => {
          event.preventDefault()
     
-          axios.post('http://82.180.136.230:3005/ordercompleted', {
-              orderId: event.currentTarget.id,
+          axios.post('http://82.180.136.230:3005/markascompleted', {
+               orderId: event.currentTarget.id,
                newStatus: 'completed',
                branch: localStorage.getItem("branch"),
+               dept: localStorage.getItem("department"),
                token: localStorage.getItem("token")
            })
     }

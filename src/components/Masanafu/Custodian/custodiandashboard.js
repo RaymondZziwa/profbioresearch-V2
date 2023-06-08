@@ -12,6 +12,7 @@ const CustodianDashboard = () => {
     const [totalNumberOfPendingRequests, setTotalNumberOfPendingRequests] = useState()
     const [isRequestsListLoading, setIsRequestsListLoading] = useState(true)
     const [totalNumberOfPendingFarmRequests, setTotalNumberOfPendingFarmRequests] = useState()
+    const [totalNumberOfPendingProjectsRequests, setTotalNumberOfPendingProjectsRequests] = useState()
     const fetchOrders = async () => {
         const res = await axios.post('http://82.180.136.230:3005/pendingorders', {
             branch: localStorage.getItem("branch"),
@@ -72,8 +73,22 @@ const CustodianDashboard = () => {
         
     }
 
+    const fetchProjectsRequests = async () => {
+        const res = await axios.post('http://82.180.136.230:3005/fetchprojectsrequisitions', {
+            branch: localStorage.getItem("branch"),
+            token: localStorage.getItem("token")
+        })
+        if(typeof res.data === 'string'){
+            setTotalNumberOfPendingProjectsRequests(0)
+        }else{
+            setTotalNumberOfPendingProjectsRequests(res.data.length)
+        }
+        
+    }
+
     useEffect(() => {
         fetchFarmRequests()
+        fetchProjectsRequests()
     },[])
     
     return (
@@ -90,7 +105,7 @@ const CustodianDashboard = () => {
                             </Link>
                             <Link className="tab_nav" to="/rawmaterialrequests">
                                 <div className="mb-3 mclickable_option">
-                                    Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingRequests}</p>
+                                    Production Dept Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingRequests}</p>
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="/farmrequests">
@@ -98,9 +113,24 @@ const CustodianDashboard = () => {
                                     Farm Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingFarmRequests}</p>
                                 </div>
                             </Link>
+                            <Link className="tab_nav" to="/farmrequestsrecords">
+                                <div className="mb-3 mclickable_option">
+                                    Farm Requests Records
+                                </div>
+                            </Link>
+                            <Link className="tab_nav" to="/projectsrequests">
+                                <div className="mb-3 mclickable_option">
+                                    Projects Dept Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingProjectsRequests}</p>
+                                </div>
+                            </Link>
+                            <Link className="tab_nav" to="/projectsrequestsrecords">
+                                <div className="mb-3 mclickable_option">
+                                    Projects Equipment Requests Records
+                                </div>
+                            </Link>
                             <Link className="tab_nav" to="/rawmaterialrequestsrecords">
                                 <div className="mb-3 mclickable_option">
-                                    Raw Material Requests Records
+                                   Production Raw Material Requests Records
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="/productionrecords">
