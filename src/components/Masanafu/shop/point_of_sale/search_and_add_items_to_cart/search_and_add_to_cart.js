@@ -6,9 +6,11 @@ import Cart from '../ cart/cart'
 import PaymentModule from '../../payments/payments'
 import { Row, Col } from 'react-bootstrap'
 
-const SearchAndAddToCart = ({ onAddToCart, cartItems }) => {
+const SearchAndAddToCart = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [options, setOptions] = useState([]);
+  const [cartItems, setCartItems] = useState([])
+  const [total, setTotal] = useState(0);
 
   const fetchAllMaterials = async () => {
     let res = await axios.post('http://82.180.136.230:3005/fetchallshopinventory', {
@@ -29,43 +31,88 @@ const SearchAndAddToCart = ({ onAddToCart, cartItems }) => {
     fetchAllMaterials();
   }, []);
 
+  useEffect(() => {
+    console.log('ops', options)
+  }, [options]);
+
+
+  useEffect(()=>{
+    console.log('so', selectedOption)
+  },[selectedOption])
+
   const handleSelectChange = (selectedOption) => {
     setSelectedOption(selectedOption);
   };
 
-  const handleAddToCart = () => {
-    if (selectedOption && selectedOption.productData) {
-      const itemToAdd = {
+  const handleAddToCart = (event) => {
+    event.preventDefault();
+    if (selectedOption) {
+      const newItem = {
         id: selectedOption.productData.productId,
-        name: selectedOption.productData.productName,
-        quantity: 1,
+        name: selectedOption.label,
         unitCost: selectedOption.productData.unitPrice,
-        totalCost: selectedOption.productData.unitPrice
+        discount: selectedOption.productData.discount,
+        quantity: 1,
+        totalCost: selectedOption.productData.unitPrice,
       };
-      onAddToCart(itemToAdd);
+  
+      const itemExists = cartItems.find((item) => item.id === newItem.id);
+      if (itemExists) {
+        const updatedItems = cartItems.map((item) => {
+          if (item.id === newItem.id) {
+            const updatedQuantity = item.quantity + 1;
+            const updatedTotalCost =
+              updatedQuantity * item.unitCost * (1 - item.discount / 100);
+            return {
+              ...item,
+              quantity: updatedQuantity,
+              totalCost: updatedTotalCost,
+            };
+          }
+          return item;
+        });
+        setCartItems(updatedItems);
+      } else {
+        setCartItems((prevItems) => [...prevItems, newItem]);
+      }
+      setSelectedOption(null);
     }
+  }
+
+  useEffect(()=>{
+    console.log('cart', cartItems)
+  },[cartItems])
+
+  const handleCheckout = () => {
+    // Perform the checkout logic here, using the cartItems and total
+    console.log("Checkout:", cartItems, total);
+    // Reset the cartItems and total
+    setCartItems([]);
+    setTotal(0);
   };
+
+
   return (
     <>
-        <div>
-          <h2>Search And Add Product To Cart</h2>
-          <Select
-            value={selectedOption}
-            onChange={handleSelectChange}
-            options={options}
-            isSearchable
-            placeholder="Select a product"
-          /> 
-          <span>
-            <AddToCartBtn onClick={onAddToCart}/>
-          </span>
-      </div>
       <Row>
           <Col sm='12' md='9' lg='9' xl='9'>
-              <Cart items={cartItems}/>
+          <div>
+            <h2>Search And Add Product To Cart</h2>
+            <Select
+              value={selectedOption}
+              onChange={handleSelectChange}
+              options={options}
+              isSearchable
+              placeholder="Select a product"
+            /> 
+            <span>
+              <AddToCartBtn addToCart={handleAddToCart}/>
+            </span>
+          </div>
+              <Cart items={cartItems} setCartItems={setCartItems} total={total} setTotal={setTotal}/>
             </Col>
             <Col sm='12' md='3' lg='3' xl='3'>
-               <PaymentModule />  
+               <PaymentModule items={cartItems} total={total} />  
             </Col>
       </Row>  
     </>

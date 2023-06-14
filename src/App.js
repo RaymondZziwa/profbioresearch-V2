@@ -50,6 +50,18 @@ import ProjectsEquipmentRequests from './components/Masanafu/Custodian/project_e
 import ProjectsRequestsRecords from './components/Masanafu/Custodian/projects_requests_records';
 import FarmRequestsRecords from './components/Masanafu/Custodian/farm_requests_records';
 import OrderDelivery from './components/Masanafu/projects/order_delivery/order_delivery';
+import ReportsMenu from './components/Masanafu/shop/other_menus/reports_menu';
+import InventoryManagementMenu from './components/Masanafu/shop/other_menus/inventory_mgt_menu';
+import RecordShopExpenditure from './components/Masanafu/shop/expenditure/record_shop_expenditures';
+import ManageExternalReceipts from './components/Masanafu/shop/external_receipts/manage_external_receipts';
+import ShopStockTaking from './components/Masanafu/shop/shop_stock_taking/stock_taking';
+import ShopInventoryRecords from './components/Masanafu/shop/shop_inventory_records/shop_inventory_records';
+import ShopRestockingForm from './components/Masanafu/shop/shop_restocking/shop_restocking_form';
+import SalesReport from './components/Masanafu/shop/reports/sales_report/sales_report';
+import ExpensesReport from './components/Masanafu/shop/reports/expenses_report/expenses_report';
+import SalesVsExpenditureReport from './components/Masanafu/shop/reports/sales_vs_expenses_report/sales_v_expenditure_report';
+import ShopSalesRecords from './components/Masanafu/shop/records/sales_records';
+import ShopExpensesRecords from './components/Masanafu/shop/records/expenditure_records';
 function App() {
   const authCtx = useContext(AuthContext);
   const logoutTimerIdRef = useRef(null);
@@ -265,6 +277,43 @@ useEffect(() => {
           </Route>)}
           {authCtx.isLoggedIn && (<Route path="/orderdelivery">
             <OrderDelivery />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopinventorymenu">
+            <InventoryManagementMenu />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopreportsmenu">
+            <ReportsMenu />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/recordmasanafushopexpenditure">
+            <RecordShopExpenditure />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/manageexternalreceipts">
+            <ManageExternalReceipts />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/shopstocktaking">
+            <ShopStockTaking />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopinventoryrecords">
+            <ShopInventoryRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushoprestockingform">
+            <ShopRestockingForm />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopsalesreport">
+            <SalesReport />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopexpensesreport">
+            <ExpensesReport />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopsalesvexpenditurereport">
+            <SalesVsExpenditureReport />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopsalesrecords">
+            <ShopSalesRecords />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/masanafushopexpenditurerecords">
+            <ShopExpensesRecords />
           </Route>)}
       </BrowserRouter>
     </div>

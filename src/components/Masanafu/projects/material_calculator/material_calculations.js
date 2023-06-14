@@ -32,8 +32,8 @@ const OrderSummaryTable = ({ materials, orderQuantity }) => {
             <td>{material.itemName}</td>
             <td>{material.itemQuantity}</td>
             <td>{material.unitPrice}</td>
-            <td>{material.totalQuantity}</td>
-            <td>{material.totalCost}</td>
+            <td>{Math.ceil(material.totalQuantity)}</td>
+            <td>{Math.floor(material.totalCost)}</td>
           </tr>
         ))}
         <tr>

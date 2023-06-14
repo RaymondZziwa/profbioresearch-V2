@@ -15,6 +15,7 @@ const OrderDelivery = () => {
     const [originalQuantity, setOriginalQuantity] = useState(0)
     const [orderBalance, setOrderBalance] = useState(0)
     const [status, setStatus] = useState('')
+    
     const orderIdInput = event => {
         event.preventDefault()
         setOrderId(event.target.value)
