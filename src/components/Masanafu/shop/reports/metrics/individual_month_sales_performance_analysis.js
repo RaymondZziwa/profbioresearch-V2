@@ -13,19 +13,34 @@ const IndividualMonthSalesPerformanceAnalysis = ({ salesData }) => {
     
     const filteredSalesData = salesData.filter((sale) => {
         const [day, month, year] = sale.saleDate.split('/');
-        return parseInt(month) === parseInt(selectedMonth);
-    })
+        const saleYear = parseInt(year);
+        const currentYear = new Date().getFullYear();
+        
+        return saleYear === currentYear && parseInt(month) === parseInt(selectedMonth);
+      })
 
     const monthNames = Array.from({ length: 12 }, (_, index) =>
         new Date(0, index).toLocaleString('default', { month: 'long' })
     )
 
+    const uniqueDays = [...new Set(filteredSalesData.map((sale) => {
+        const [day, month, year] = sale.saleDate.split('/');
+        return day;
+      }))];
+
     const chartData = {
-        labels: filteredSalesData.map((sale) => sale.saleId),
+        labels: uniqueDays,
         datasets: [
           {
             label: 'Total Sales',
-            data: filteredSalesData.map((sale) => sale.totalAmount),
+            data: uniqueDays.map((day) => {
+                const salesForDay = filteredSalesData.filter((sale) => {
+                  const [saleDay, month, year] = sale.saleDate.split('/');
+                  return saleDay === day;
+                });
+                const totalAmount = salesForDay.reduce((sum, sale) => sum + sale.totalAmount, 0);
+                return totalAmount;
+              }),
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1,

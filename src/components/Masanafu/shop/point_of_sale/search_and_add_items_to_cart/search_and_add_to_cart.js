@@ -91,6 +91,20 @@ const SearchAndAddToCart = () => {
     setTotal(0);
   };
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+        handleAddToCart(event);
+      }
+    };
+
+    document.addEventListener('keypress', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [cartItems, selectedOption])
+
 
   return (
     <>

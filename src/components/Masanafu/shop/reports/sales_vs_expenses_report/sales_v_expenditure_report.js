@@ -88,27 +88,6 @@ const SalesVsExpenditureReport = () =>  {
             </Row>
             <Row>
             </Row>
-
-
-
-
-
-            {/* <Row style={{marginTop:'150px'}}>
-                <Col sm='12' md='2' lg='2' xl='2'></Col>
-                <Col sm='12' md='8' lg='8' xl='8'>
-                    <h2 style={{textAlign:'center', color:'black',marginTop:'100px'}}>Individual Month Expenditure Analysis</h2>
-                    {!isLoading ? <>test</> : <div style={{ textAlign:'center' }}><img src={Loading} height='60px' alt='loading' /></div>}
-                </Col>
-                <Col sm='12' md='2' lg='2' xl='2'></Col>
-            </Row>
-            <Row style={{marginTop:'100px'}}>
-                <Col sm='12' md='6' lg='6' xl='6'>
-                    
-                </Col>
-                <Col sm='12' md='6' lg='6' xl='6'>
-                    
-                </Col>
-            </Row> */}
         </div>
     )
 }

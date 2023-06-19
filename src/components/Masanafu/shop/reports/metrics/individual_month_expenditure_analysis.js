@@ -14,19 +14,34 @@ const IndividualMonthExpenditureAnalysis = ({ expensesData }) => {
 
     const filteredExpensesData = expensesData.filter((expense) => {
         const [day, month, year] = expense.date.split('/');
-        return parseInt(month) === parseInt(selectedMonth);
-    })
+        const expenseYear = parseInt(year);
+        const currentYear = new Date().getFullYear();
+      
+        return expenseYear === currentYear && parseInt(month) === parseInt(selectedMonth);
+      })
 
     const monthNames = Array.from({ length: 12 }, (_, index) =>
         new Date(0, index).toLocaleString('default', { month: 'long' })
     )
 
+    const uniqueDays = [...new Set(filteredExpensesData.map((expense) => {
+        const [day, month, year] = expense.date.split('/');
+        return day;
+    }))];
+
     const chartData = {
-        labels: filteredExpensesData.map((expense) => expense.expenditureid),
+        labels: uniqueDays,
         datasets: [
           {
             label: 'Total Expenditure',
-            data: filteredExpensesData.map((expense) => expense.expenditurecost),
+            data: uniqueDays.map((day) => {
+                const expensesForDay = filteredExpensesData.filter((expense) => {
+                  const [expensesForDay, month, year] = expense.date.split('/');
+                  return expensesForDay === day;
+                });
+                const totalAmount = expensesForDay.reduce((sum, expense) => sum + expense.expenditurecost, 0);
+                return totalAmount;
+              }),
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1,

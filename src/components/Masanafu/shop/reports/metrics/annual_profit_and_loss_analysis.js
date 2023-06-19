@@ -62,6 +62,7 @@ const AnnualProfitAndLossAnalysis = ({ salesData, expensesData }) => {
     const date = new Date ()
     const currentYear = date.getFullYear()
 
+    
   const options = {
     scales: {
       y: {

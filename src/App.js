@@ -62,6 +62,28 @@ import ExpensesReport from './components/Masanafu/shop/reports/expenses_report/e
 import SalesVsExpenditureReport from './components/Masanafu/shop/reports/sales_vs_expenses_report/sales_v_expenditure_report';
 import ShopSalesRecords from './components/Masanafu/shop/records/sales_records';
 import ShopExpensesRecords from './components/Masanafu/shop/records/expenditure_records';
+import PastShopReports from './components/Masanafu/shop/reports/past_reports/past_performance_report';
+import SalesDataRetrieval from './components/Masanafu/shop/sales_data_retrieval/sales_data_retrieval';
+import ChickenMgtDashboard from './components/Masanafu/farm/chicken_farm_mgt/chicken_mgt_dashboard';
+import FeedsInventoryMenu from './components/Masanafu/farm/chicken_farm_mgt/other_menus/feeds_inventory_menu';
+import MedicineInventoryMenu from './components/Masanafu/farm/chicken_farm_mgt/other_menus/medicine_inventory_menu';
+import RegisterChickenFeeds from './components/Masanafu/farm/chicken_farm_mgt/chicken_feeds_inventory_mgt/chicken_feeds_registration_form';
+import MasanafuChickenFeedsStockTaking from './components/Masanafu/farm/chicken_farm_mgt/chicken_feeds_inventory_mgt/chicken_feeds_stock_taking';
+import ChickenFeedsInventoryRecords from './components/Masanafu/farm/chicken_farm_mgt/chicken_feeds_inventory_mgt/chicken_feeds_inventory_records';
+import ChickenFeedsRestockingForm from './components/Masanafu/farm/chicken_farm_mgt/chicken_feeds_inventory_mgt/chicken_feeds_restock';
+import RegisterChickenMedicine from './components/Masanafu/farm/chicken_farm_mgt/chicken_medicine_inventory_mgt/chicken_medicine_registration';
+import MasanafuChickenMedicineStockTaking from './components/Masanafu/farm/chicken_farm_mgt/chicken_medicine_inventory_mgt/chicken_medicine_stock_taking';
+import ChickenMedicineRestockingForm from './components/Masanafu/farm/chicken_farm_mgt/chicken_medicine_inventory_mgt/chicken_medicine_restock';
+import ChickenMedicineInventoryRecords from './components/Masanafu/farm/chicken_farm_mgt/chicken_medicine_inventory_mgt/chicken_medicine_inventory_records';
+import RegisterNewChickenBatch from './components/Masanafu/farm/chicken_farm_mgt/register_new_chicken_batch/register_new_chicken_batch';
+import RecordChickenMortality from './components/Masanafu/farm/chicken_farm_mgt/chicken_mortality/record_chicken_mortality';
+import ManageChickenVaccination from './components/Masanafu/farm/chicken_farm_mgt/manage_chicken_vaccination/chicken_vaccination';
+import ManageEggProduction from './components/Masanafu/farm/chicken_farm_mgt/manage_egg_production/manage_egg_production';
+import FCRCalculator from './components/Masanafu/farm/chicken_farm_mgt/FCR/FCR_calculator';
+import SaveChickenFeedingRecords from './components/Masanafu/farm/chicken_farm_mgt/chicken_feeding_records/save_chicken_feeding_records';
+import AllFeedingRecords from './components/Masanafu/farm/chicken_farm_mgt/chicken_feeding_records/all_feeding_records';
+import ChickenMgtReport from './components/Masanafu/farm/chicken_farm_mgt/Reports/chicken_mgt_report';
+import ChickenBatchRecords from './components/Masanafu/farm/chicken_farm_mgt/records/records';
 function App() {
   const authCtx = useContext(AuthContext);
   const logoutTimerIdRef = useRef(null);
@@ -314,6 +336,82 @@ useEffect(() => {
 
           {authCtx.isLoggedIn && (<Route path="/masanafushopexpenditurerecords">
             <ShopExpensesRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushoppastreports">
+            <PastShopReports />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/updatesaledata">
+            <SalesDataRetrieval />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/chickenmgtdashboard">
+            <ChickenMgtDashboard />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenfeedsmgt">
+            <FeedsInventoryMenu />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenmedicinemgt">
+            <MedicineInventoryMenu />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/registerchickenfeeds">
+            <RegisterChickenFeeds />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenfeedsstocktaking">
+            <MasanafuChickenFeedsStockTaking />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenfeedsinventoryrecords">
+            <ChickenFeedsInventoryRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenfeedsrestockingform">
+            <ChickenFeedsRestockingForm />
+          </Route>)}
+          
+
+          {authCtx.isLoggedIn && (<Route path="/registerchickenmedicine">
+            <RegisterChickenMedicine />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenmedicinestocktaking">
+            <MasanafuChickenMedicineStockTaking />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenmedicineinventoryrecords">
+            <ChickenMedicineInventoryRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenmedicinerestockingform">
+            <ChickenMedicineRestockingForm />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/masanafuregisternewchickenbatch">
+            <RegisterNewChickenBatch />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafurecordchickendeath">
+            <RecordChickenMortality />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickenhealthmgt">
+            <ManageChickenVaccination />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/masanafuchickeneggproductionmgt">
+            <ManageEggProduction />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/calculatebatchfcr">
+            <FCRCalculator />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/recordbatchfeedingrecord">
+            <SaveChickenFeedingRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/allfeedingrecords">
+            <AllFeedingRecords />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/chickenfarmreport">
+            <ChickenMgtReport />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/chickenbatchrecords">
+            <ChickenBatchRecords />
           </Route>)}
       </BrowserRouter>
     </div>

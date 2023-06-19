@@ -32,7 +32,7 @@ const ShopSalesRecords = () => {
                         <table className="table table-dark" style={{ marginTop: '20px',textAlign:'center' }}>
                             <thead style={{ textAlign: 'center' }}>
                                 <tr>
-                                    <th scope="col">Sale Id</th>
+                                    <th scope="col">Receipt No.</th>
                                     <th scope="col">Sale Date</th>
                                     <th scope="col">Customer Names</th>
                                     <th scope="col">Customer Contact</th>
@@ -46,7 +46,7 @@ const ShopSalesRecords = () => {
                             <tbody>
                                 {!isLoading ? salesData.map(item => (
                                     <tr>
-                                        <td>{item.saleId}</td>
+                                        <td>{item.receiptNumber}</td>
                                         <td>{item.saleDate}</td>
                                         <td>{item.customerNames}</td>
                                         <td>{item.customerContact}</td>

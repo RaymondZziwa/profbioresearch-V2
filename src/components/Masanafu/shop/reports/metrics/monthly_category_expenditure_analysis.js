@@ -12,24 +12,32 @@ const IndividualCategoryMonthlyExpenditureAnalysis = ({ expensesData }) => {
         chartRef.current.destroy();
       }
   
-      // Filter the data based on the selected category
-      const filteredData = expensesData.filter(
-        (item) => item.expenditurecategory === selectedCategory
-      );
+      // Get the current year
+const currentYear = new Date().getFullYear();
+
+// Filter the data based on the selected category and current year
+const filteredData = expensesData.filter((item) => {
+  const [day, month, year] = item.date.split('/');
+  const expenseYear = parseInt(year);
   
-      // Group the data by month and calculate the total expenditure for each month
-      const groupedData = filteredData.reduce((acc, item) => {
-        const date = item.date.split('/')[1]; // Extract month from the date (assuming format: DD/MM/YYYY)
-        const month = parseInt(date, 10);
-  
-        if (acc[month]) {
-          acc[month] += item.expenditurecost;
-        } else {
-          acc[month] = item.expenditurecost;
-        }
-  
-        return acc;
-      }, {});
+  return (
+    item.expenditurecategory === selectedCategory && expenseYear === currentYear
+  );
+});
+
+// Group the data by month and calculate the total expenditure for each month
+const groupedData = filteredData.reduce((acc, item) => {
+  const date = item.date.split('/')[1]; // Extract month from the date (assuming format: DD/MM/YYYY)
+  const month = parseInt(date, 10);
+
+  if (acc[month]) {
+    acc[month] += item.expenditurecost;
+  } else {
+    acc[month] = item.expenditurecost;
+  }
+
+  return acc;
+}, {});
   
       // Prepare the chart data
       const labels = Object.keys(groupedData).map((month) => {

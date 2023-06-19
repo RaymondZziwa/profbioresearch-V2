@@ -6,7 +6,7 @@ import Navbar from "../../side navbar/sidenav";
 const FarmDashboard = () => {
     return (
         <Row>
-            <Col sm='12' md='4' lg='4' xl='4'>
+            <Col sm='12' md='2' lg='2' xl='2'>
                 <Navbar />
             </Col>
             <div className="col align-self-center" style={{marginTop:'20px'}}>
@@ -30,6 +30,11 @@ const FarmDashboard = () => {
                         Start / Manage Batches
                     </div>
                 </Link>
+                <Link className="tab_nav" to="/chickenmgtdashboard">
+                    <div className="mb-3 mclickable_option">
+                        Chicken Farm Management
+                    </div>
+                </Link>
                 <Link className="tab_nav" to="/startbatchfrommothergarden">
                     <div className="mb-3 mclickable_option">
                         Start Batch From Mother Garden
@@ -46,6 +51,8 @@ const FarmDashboard = () => {
                     </div>
                 </Link>
             </div>
+            <Col sm='12' md='2' lg='2' xl='2'>
+            </Col>
         </Row>
     )
 }

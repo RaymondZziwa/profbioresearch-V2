@@ -69,6 +69,9 @@ const SalesReport = () => {
                 </Col>
                 <Col sm='12' md='3' lg='3' xl='3'></Col>
             </Row>
+            <Row style={{marginTop:'120px'}}>
+
+            </Row>
         </div>
     )
 }
