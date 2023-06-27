@@ -12,7 +12,7 @@ const ApprovedOrders = () => {
             token: localStorage.getItem("token"),
             dept: localStorage.getItem('department')
         })
-        if(typeof res.data !== 'string'){
+        if(Array.isArray(res.data)){
             setOrdersList(res.data)
             setisOrdersListLoading(false)
         }else{
@@ -22,17 +22,10 @@ const ApprovedOrders = () => {
 
     useEffect(() => {
         fetchOrders()
-        const interval = setInterval(() => {
-            fetchOrders()
-        }, 10000)
-
-
-        return () => clearInterval(interval)
-    })
+    },[])
 
     const approveOrder = event => {
          event.preventDefault()
-    
           axios.post('http://82.180.136.230:3005/markascompleted', {
                orderId: event.currentTarget.id,
                newStatus: 'completed',
@@ -94,7 +87,7 @@ const ApprovedOrders = () => {
                                         </td>
                                     </tr>
                                 ))
-                               :  <tr><td>{ordersList}</td></tr>}
+                               :  <tr><td>No data</td></tr>}
                             </tbody>
                         </table>
                     </Col>

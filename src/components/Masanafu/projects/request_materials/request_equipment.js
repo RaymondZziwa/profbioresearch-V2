@@ -1,6 +1,7 @@
 import { Row, Col, Form } from "react-bootstrap";
 import '../../../Namungoona/inventory records/forms.css'
 import Navbar from "../../../side navbar/sidenav";
+import OrderSummaryTable from "../material_calculator/material_calculations";
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +19,16 @@ const RequestEquipment = () => {
     const [roleData, setRoleData] = useState()
     const [additionalInfo, setAdditionalinfo] = useState('')
     const [personnelData, setPersonnelData] = useState()
+
+
+    const [isCalculating, setIsCalculating] = useState(true)
+    const [materials, setMaterials] = useState([])
+    const [itemQuantityOrdered, setItemQuantityOrdered] = useState(0)
+    const [areOrderDetailsLoading, setAreOrderDetailsLoading] = useState(true)
+    const [orderDetails, setOrderDetails] = useState([])
+    const [itemsOrdered, setItemsOrdered] = useState()
+    const [itemName, setItemName] = useState('')
+
 
     const branchRef = useRef()
     const deptRef = useRef()
@@ -52,6 +63,7 @@ const RequestEquipment = () => {
     const orderIdInput = event => {
         event.preventDefault()
         setOrderId(event.target.value)
+        fetchOrderData()
     }
 
     const fetchDepartmentData = event => {
@@ -129,6 +141,61 @@ const RequestEquipment = () => {
 
 
 
+
+
+        const fetchOrderMaterialData = async itemName => {
+        let res = await axios.post('http://82.180.136.230:3005/fetchordermaterialdata', {
+            token: localStorage.getItem('token'),
+            machineryName : itemName
+        })
+
+        console.log('fetchOrderMaterialData', res.data)
+         if(Array.isArray(res.data)){
+             setMaterials(JSON.parse(res.data[0].itemsrequired))
+             setIsCalculating(false)
+         }
+    }
+
+    const fetchOrderData = async () => {
+        let res = await axios.post('http://82.180.136.230:3005/fetchprojectsorderdata', {
+            token: localStorage.getItem('token'),
+            orderId: orderId
+        })
+
+        if(Array.isArray(res.data)){
+            setAreOrderDetailsLoading(false)
+            setOrderDetails(res.data) 
+        }
+        console.log(res.data)
+    }
+
+    useEffect(()=>{
+        if(orderDetails && orderDetails.length > 0){
+            setItemsOrdered(JSON.parse(orderDetails[0].itemsordered))
+        }
+    }, [orderDetails])
+
+    useEffect(() => {
+        if (itemsOrdered && itemsOrdered.length > 0) {
+          const itemName = itemsOrdered[0].itemName;
+          setItemName(itemName);
+          setItemQuantityOrdered(itemsOrdered[0].itemQuantity)
+          fetchOrderMaterialData(itemName);
+        }
+    }, [itemsOrdered]);
+
+
+
+
+
+
+
+
+
+
+
+
+
     const submitRequestHandler = async event => {
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/requestprojectsequipment', {
@@ -148,13 +215,18 @@ const RequestEquipment = () => {
             .catch((err) => setStatus({ type: 'error', err }))
     }
 
+
+
+
+
+
     return (
         <div className='container-fluid'>
             <Row>
                 <Col sm='2' md='2' lg='2' xl='2'></Col>
                 <Col sm='12' md='8' lg='8' xl='8'>
                         <Form>
-                            <h2 style={{ marginTop: '60px', fontSize: '40px', textAlign: 'center' }}>Request Raw Materials</h2>
+                            <h2 style={{ marginTop: '60px', fontSize: '40px', textAlign: 'center' }}>Request Project Materials</h2>
                             {status?.type === 'success' && <span style={{ margin: '20px' }} class="alert alert-success" role="alert">Request successfully submitted</span>}
                             {status?.type === 'error' && <span style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error! Request was not submitted</span>}
                             <div style={{ marginTop: '20px' }}>
@@ -185,7 +257,8 @@ const RequestEquipment = () => {
                                         <option key={personnel.username} value={personnel.username}>{personnel.username}</option>
                                     ))}
                                 </select>
-                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Items Being Requested</h3>                            
+                                <h3 style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center' }}>Items Being Requested</h3>          
+                                {!isCalculating ? <OrderSummaryTable materials={materials} orderQuantity={itemQuantityOrdered} /> : <p style={{textAlign:'center'}}>Loading....</p>}                  
                                         {itemsRequested.map((itemRequested, index) => (
                                             <div key={index} style={{borderBottom:'1px dashed black'}}>
                                                     <div className="form-floating mb-3">

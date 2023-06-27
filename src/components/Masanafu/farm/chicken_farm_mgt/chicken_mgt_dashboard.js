@@ -52,7 +52,17 @@ const ChickenMgtDashboard = () => {
                 </Link>
                 <Link className="tab_nav" to="/chickenfarmreport">
                     <div className="mb-3 mclickable_option">
-                        Reports
+                       Graphical Report Analysis
+                    </div>
+                </Link>
+                <Link className="tab_nav" to="/chickenfarmstatementreport">
+                    <div className="mb-3 mclickable_option">
+                       Statemental Report
+                    </div>
+                </Link>
+                <Link className="tab_nav" to="/accountsettings">
+                    <div className="mb-3 mclickable_option">
+                        Settings
                     </div>
                 </Link>
             </div>

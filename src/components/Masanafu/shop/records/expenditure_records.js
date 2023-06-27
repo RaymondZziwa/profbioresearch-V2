@@ -29,7 +29,7 @@ const ShopExpensesRecords = () => {
                     <Col sm='12' md='2' lg='2' xl='2'></Col>
                     <Col sm='12' md='8' lg='8' xl='8'>
                     <h2 style={{textAlign:'center', marginTop:'60px'}}>Expenditure Records</h2>
-                        <table className="table table-dark" style={{ marginTop: '20px',textAlign:'center' }}>
+                        <table className="table table-light" style={{ marginTop: '20px',textAlign:'center' }}>
                             <thead style={{ textAlign: 'center' }}>
                                 <tr>
                                     <th scope="col">Expenditure Id</th>

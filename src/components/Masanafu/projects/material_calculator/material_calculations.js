@@ -16,7 +16,7 @@ const OrderSummaryTable = ({ materials, orderQuantity }) => {
   const grandTotal = totals.reduce((acc, material) => acc + material.totalCost, 0);
 
   return (
-    <table className="table table-dark">
+    <table className="table table-light">
       <thead>
         <tr>
           <th>Material</th>

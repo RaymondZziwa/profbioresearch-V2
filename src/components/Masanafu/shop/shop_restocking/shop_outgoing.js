@@ -3,8 +3,7 @@ import Navbar from '../../../side navbar/sidenav'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-
-const ShopRestockingForm = () => {
+const MasanafuShopOutgoingRecord = () => {
     const [expenditureDate, setExpenditureDate] = useState()
     const [isItemListLoading, setIsItemLoading] = useState(true)
     const [itemList, setitemList] = useState('')
@@ -64,7 +63,7 @@ const ShopRestockingForm = () => {
              date: expenditureDate,
              itemid: itemName,
              quantity: quantity,
-             category:'incoming',
+             category: 'outgoing',
              unit: 'Pcs',
              source: restockSource,
              externalSourceDetails: moreInfo,
@@ -82,7 +81,7 @@ const ShopRestockingForm = () => {
                 <Navbar />
             </Col>
             <div className="col align-self-center" style={{marginTop:'60px'}}>
-                <h1 style={{textAlign:'center'}}>Masanafu Shop Restocking Form</h1>
+                <h1 style={{textAlign:'center'}}>Masanafu Shop Inventory Outgoing Form</h1>
                 {status?.type === 'success' && <p style={{ margin: '20px' }} class="alert alert-success" role="alert">Success</p>}
                 {status?.type === 'error' && <p style={{ margin: '20px' }} class="alert alert-danger" role="alert">Error!</p>}
                 <div className="form-floating mb-3">
@@ -101,20 +100,23 @@ const ShopRestockingForm = () => {
                 </select>
                 <div className="form-floating mb-3">
                     <input type='number' className="form-control" id="floatingInput" min="0" placeholder="Quantity" style={{ color: "#8CA6FE" }} onChange={quantityInput} required />
-                    <label for="floatingInput">Quantity In</label>
+                    <label for="floatingInput">Quantity Out</label>
                 </div>
                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} required>
                     <option selected>Select Unit Of Measurement</option> 
                     <option value='Pcs'>Pcs</option>    
                 </select>
                 <select class="form-select" aria-label="Default select example" style={{ height: "60px", color: "#8CA6FE;" }} onChange={sourceInput} required>
-                    <option selected>Select Restock Source</option>
-                    <option value='custodian'>From Custodian</option>    
-                    <option value='external'>From External Sources</option>  
+                    <option selected>Select Destination</option>
+                    <option value='Buwama'>From Custodian</option>   
+                    <option value='Namungoona'>Namungoona</option> 
+                    <option value='Equatorial'>Equatorial</option>    
+                    <option value='external'>External Destinations</option>  
+                    <option value='other'>Other</option>  
                 </select>
                 {restockSource === 'external' && 
                     <div className="mb-3">
-                    <textarea type="text" className="form-control" rows="6" id="floatingInput" placeholder="External Source Information" style={{ color: "#8CA6FE", height: '130px', width: '300px' , marginTop:'10px'}} onChange={externalSourceInfoInput} />
+                    <textarea type="text" className="form-control" rows="6" id="floatingInput" placeholder="Additional Notes" style={{ color: "#8CA6FE", height: '130px', width: '300px' , marginTop:'10px'}} onChange={externalSourceInfoInput} />
                         {/* <label for="floatingInput">Expenditure Description</label> */}
                     </div>
                 }
@@ -123,7 +125,7 @@ const ShopRestockingForm = () => {
                     <label for="floatingInput">Notes</label>
                 </div>
                 <button style={{ width: "86%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3", marginTop: '5px' }} onClick={saveRestockData}>
-                    Save Restock Data
+                    Save  Data
                 </button>
             </div>
             <Col sm='12' md='2' lg='2' xl='2'></Col>
@@ -131,4 +133,4 @@ const ShopRestockingForm = () => {
     )
 }
 
-export default ShopRestockingForm
+export default MasanafuShopOutgoingRecord

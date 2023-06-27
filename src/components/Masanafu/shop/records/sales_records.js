@@ -28,8 +28,8 @@ const ShopSalesRecords = () => {
                 <Row>
                     <Col sm='12' md='2' lg='2' xl='2'></Col>
                     <Col sm='12' md='8' lg='8' xl='8'>
-                    <h2 style={{textAlign:'center', marginTop:'60px'}}>Expenditure Records</h2>
-                        <table className="table table-dark" style={{ marginTop: '20px',textAlign:'center' }}>
+                    <h2 style={{textAlign:'center', marginTop:'60px'}}>Sales Records</h2>
+                        <table className="table table-light" style={{ marginTop: '20px',textAlign:'center' }}>
                             <thead style={{ textAlign: 'center' }}>
                                 <tr>
                                     <th scope="col">Receipt No.</th>
@@ -51,18 +51,24 @@ const ShopSalesRecords = () => {
                                         <td>{item.customerNames}</td>
                                         <td>{item.customerContact}</td>
                                         <td>
-                                        <table className="table table-dark" style={{ marginTop: '2px' }}>
+                                        <table className="table table-light" style={{ marginTop: '2px' }}>
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Item Name</th>
                                                         <th scope="col">Quantity</th>
+                                                        <th scope="col">Unit Price (UGX)</th>
+                                                        <th scope="col">Discount</th>
+                                                        <th scope="col">Total Cost (UGX)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style={{ textAlign: 'center' }}>
                                                     {JSON.parse(item.itemsSold).map(itemordered =>
                                                         <tr>
-                                                            <td>{itemordered.name}</td>
-                                                            <td>{itemordered.quantity}</td>
+                                                                <td>{itemordered.name}</td>
+                                                                <td>{itemordered.quantity}</td>
+                                                                <td>{itemordered.unitCost}</td>
+                                                                <td>{itemordered.discount}</td>
+                                                                <td>{itemordered.totalCost}</td>
                                                         </tr>
                                                     )}
                                                 </tbody>

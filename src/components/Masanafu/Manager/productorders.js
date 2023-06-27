@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const ProductOrders = () => {
-    const [ordersList, setOrdersList] = useState()
+    const [ordersList, setOrdersList] = useState([])
     const [isOrdersListLoading, setisOrdersListLoading] = useState(true)
     const [comment, setComment] = useState('')
 
@@ -17,11 +17,12 @@ const ProductOrders = () => {
             branch: localStorage.getItem("branch"),
             token: localStorage.getItem("token")
         })
-        if(typeof res.data === 'string'){
-            setOrdersList('There are no pending product orders')
-        }else{
+        console.log(res.data)
+        if(Array.isArray(res.data)){
             setOrdersList(res.data)
             setisOrdersListLoading(false)
+        }else{
+            setOrdersList('There are no pending product orders')
         }   
     }
 
@@ -81,7 +82,7 @@ const ProductOrders = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!isOrdersListLoading ? ordersList.map(item => (
+                                {(!isOrdersListLoading && Array.isArray(ordersList)) ? ordersList.map(item => (
                                     <tr>
                                         <td>{item.orderid}</td>
                                         <td>{item.date}</td>
@@ -124,7 +125,7 @@ const ProductOrders = () => {
                                         </td>
                                     </tr>
                                 ))
-                                : <tr><td>{ordersList}</td></tr>}
+                                : <tr><td>There are no pending orders</td></tr>}
                             </tbody>
                         </table>
                     </Col>

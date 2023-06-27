@@ -71,14 +71,12 @@ const RecordShopExpenditure = () => {
         }
     }, [balance])
 
-    const handlePaymentStatusChange = (event) => {
-        setPaymentStatus(event.target.value);
-    };
-
+    
     useEffect(()=>{
         let date = new Date().toLocaleDateString()
         setExpenditureDate(date)
     },[])
+
 
     const saveExpenseData = async event => {
         event.preventDefault()
@@ -96,7 +94,6 @@ const RecordShopExpenditure = () => {
          })
         .then(() => setStatus({ type: 'success' }))
         .catch((err) => setStatus({ type: 'error', err }))
-       // console.log(expenditureDate, expenditureName, expenditureCategory, desc, cost, amountPaid, balance, paymentMethod,  paymentStatus)
     }
 
     const fetchExpenseData = async () => {
@@ -134,7 +131,6 @@ const RecordShopExpenditure = () => {
          })
         .then(() => setUpdateStatus({ type: 'success' }))
         .catch((err) => setUpdateStatus({ type: 'error', err }))
-       // console.log(expenditureDate, expenditureName, expenditureCategory, desc, cost, amountPaid, balance, paymentMethod,  paymentStatus)
     }
 
     return(

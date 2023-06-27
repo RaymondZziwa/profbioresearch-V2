@@ -84,6 +84,16 @@ import SaveChickenFeedingRecords from './components/Masanafu/farm/chicken_farm_m
 import AllFeedingRecords from './components/Masanafu/farm/chicken_farm_mgt/chicken_feeding_records/all_feeding_records';
 import ChickenMgtReport from './components/Masanafu/farm/chicken_farm_mgt/Reports/chicken_mgt_report';
 import ChickenBatchRecords from './components/Masanafu/farm/chicken_farm_mgt/records/records';
+import StatementReportsMenu from './components/Masanafu/shop/other_menus/statement_reports_menu';
+import MasanafuDailySalesReport from './components/Masanafu/shop/statement_reports/daily_sales_report';
+import MasanafuWeeklySalesReport from './components/Masanafu/shop/statement_reports/weekly_report';
+import MasanafuMonthlySalesReport from './components/Masanafu/shop/statement_reports/monthly_reports';
+import ExternalReceiptsRecords from './components/Masanafu/shop/external_receipts/external_receipts_records';
+import MasanafuShopOutgoingRecord from './components/Masanafu/shop/shop_restocking/shop_outgoing';
+import ChickenFarmStatementReport from './components/Masanafu/farm/chicken_farm_mgt/Reports/chicken_farm_statment_report';
+import SaveShopExpenditureReceipts from './components/Masanafu/shop/save_shop_expenditure_receipts/save_shop_expenditure_receipts';
+import MasanafuExpenseReceiptViewer from './components/Masanafu/shop/expenditure/view_expenses_receipts';
+import CustodianRecordsMenu from './components/Masanafu/Custodian/other_menus.js/records_menu';
 function App() {
   const authCtx = useContext(AuthContext);
   const logoutTimerIdRef = useRef(null);
@@ -303,7 +313,7 @@ useEffect(() => {
           {authCtx.isLoggedIn && (<Route path="/masanafushopinventorymenu">
             <InventoryManagementMenu />
           </Route>)}
-          {authCtx.isLoggedIn && (<Route path="/masanafushopreportsmenu">
+          {authCtx.isLoggedIn && (<Route path="/masanafushopgraphicsreportsmenu">
             <ReportsMenu />
           </Route>)}
           {authCtx.isLoggedIn && (<Route path="/recordmasanafushopexpenditure">
@@ -344,7 +354,7 @@ useEffect(() => {
             <SalesDataRetrieval />
           </Route>)}
 
-          {authCtx.isLoggedIn && (<Route path="/chickenmgtdashboard">
+          {authCtx.isLoggedIn && (<Route path="/chickenfarmmanagerdashboard">
             <ChickenMgtDashboard />
           </Route>)}
 
@@ -412,6 +422,42 @@ useEffect(() => {
 
           {authCtx.isLoggedIn && (<Route path="/chickenbatchrecords">
             <ChickenBatchRecords />
+          </Route>)}
+
+
+          {authCtx.isLoggedIn && (<Route path="/masanafushopstatementreportsmenu">
+            <StatementReportsMenu />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopdailysalesreport">
+            <MasanafuDailySalesReport />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopweeklysalesreport">
+            <MasanafuWeeklySalesReport />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafushopmonthlysalesreport">
+            <MasanafuMonthlySalesReport />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafuexternalreceiptsrecords">
+            <ExternalReceiptsRecords />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/recordmasanafushopoutgoing">
+            <MasanafuShopOutgoingRecord />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/chickenfarmstatementreport">
+            <ChickenFarmStatementReport />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/savemasanafuexpenditurereceipts">
+            <SaveShopExpenditureReceipts />
+          </Route>)}
+
+          {authCtx.isLoggedIn && (<Route path="/viewmasanafushopexpensesreceipts">
+            <MasanafuExpenseReceiptViewer />
+          </Route>)}
+          {authCtx.isLoggedIn && (<Route path="/masanafucustodianrecordsmenu">
+            <CustodianRecordsMenu />
           </Route>)}
       </BrowserRouter>
     </div>

@@ -3,6 +3,9 @@ import axios from "axios";
 import './receipt.css';
 import ReactToPrint from "react-to-print";
 import Logo from '../../../../imgs/logo.png'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 class PrintableContent extends React.Component {
     render() {
@@ -10,7 +13,11 @@ class PrintableContent extends React.Component {
       return (
         <div style={{color:'black',padding:'20px'}}>
           <h1> <img src={Logo} alt="receipt-logo" style={{margin:'auto'}}  height='80px'/>Prof-bioresearch {localStorage.getItem('branch')} shop receipt</h1>
-          <p>Receipt Number: {receiptNumber}</p>
+          <h5 style={{textAlign:'center'}}>Sales Points: Equatorial near bank of Africa, Masanafu near padre pio vocational school</h5>
+          <h5 style={{textAlign:'center'}}>Website: https://www.profbioresearch.net</h5>
+          <h5 style={{textAlign:'center'}}>Email: profbioresearch@gmail.com</h5>
+          <h5 style={{textAlign:'center',borderBottom:'1px dashed black'}}>Contact us on: 0702061652 / 0779519652</h5>
+          <p style={{marginTop:'40px'}}>Receipt Number: {receiptNumber}</p>
           <p>Client First Name: {firstName}</p>
           <p>Client Last Name: {lastName}</p>
           <p>Client Contact: {clientcontact}</p>
@@ -71,7 +78,7 @@ const PaymentModule = ({ items, total }) => {
     const [amount, setAmountPaid] = useState(0)
     const  [balance, setBalance] = useState(0)
     const [status, setStatus] = useState('')
-    const [isPrinting, setIsPrinting] = useState(false);
+    //const [isPrinting, setIsPrinting] = useState(false);
     const [receiptNo, setReceiptNo] = useState(0)
 
     const componentRef = useRef();
@@ -107,8 +114,22 @@ const PaymentModule = ({ items, total }) => {
         setPaymentMethod(event.target.value)
     }
 
+    useEffect(() => {
+        if (status) {
+          const timer = setTimeout(() => {
+            setStatus(null);
+          }, 2000);
+    
+          return () => clearTimeout(timer);
+        }
+      }, [status]);
+
     useEffect(()=>{
-        setReceiptNo(Math.floor(Math.random() * 1800000))
+        const timestamp = new Date().getTime().toString(); // Example timestamp: "1647824898645"
+        const reducedTimestamp = timestamp.substring(9, 14); // Extract 5 digits from index 9 to 13
+        const random = Math.floor(Math.random() * 100000); // Example random number: 74530
+        const receiptNumber = `${reducedTimestamp}-${random}`
+        setReceiptNo(receiptNumber)
         if(paymentStatus === 'fullypaid'){
             setBalance(0)
         }else if(paymentStatus === 'partiallypaid'){
@@ -119,30 +140,73 @@ const PaymentModule = ({ items, total }) => {
     }, [paymentStatus, amount])
 
     const handleSubmit = async (event) => {
-      event.preventDefault();
-      let res = await axios.post('http://82.180.136.230:3005/cartcheckout',{
-        token: localStorage.getItem('token'),
-        branch: localStorage.getItem('branch'),
-        items: JSON.stringify(items),
-        receiptNo: receiptNo,
-        total: total,
-        additionalInfo: additionalInfo,
-        paymentMethod: paymentMethod,
-        paymentStatus: paymentStatus,
-        balance: balance,
-        customerNames: `${firstName} ${lastName}`,
-        customerContact: phoneNumber,
-        date: new Date().toLocaleDateString()
-      })
-    .then(() => 
-    setStatus({ type: 'success' }),
-    componentRef.current && componentRef.current.handlePrint(),
-    console.log(res.data)
-    )
+        event.preventDefault()
+        console.log('eee')
+        console.log('items', items)
+        let res = await axios.post('http://82.180.136.230:3005/cartcheckout',{
+         token: localStorage.getItem('token'),
+         branch: localStorage.getItem('branch'),
+         items: JSON.stringify(items),
+         receiptNo: receiptNo,
+         total: total,
+         additionalInfo: additionalInfo,
+         paymentMethod: paymentMethod,
+         paymentStatus: paymentStatus,
+         balance: balance,
+         customerNames: `${firstName} ${lastName}`,
+         customerContact: phoneNumber,
+         date: new Date().toLocaleDateString()
+       })
+       console.log('resp', res.data)
+       if(res.data.status === '200'){
+         setStatus({ type: 'success' })
+        const timestamp = new Date().getTime().toString(); // Example timestamp: "1647824898645"
+        const reducedTimestamp = timestamp.substring(9, 14); // Extract 5 digits from index 9 to 13
+        const random = Math.floor(Math.random() * 100000); // Example random number: 74530
+        const receiptNumber = `${reducedTimestamp}-${random}`
+        setReceiptNo(receiptNumber)
+        if (componentRef.current) {
+            console.log('printable')
+            componentRef.current.handlePrint()
+        }
+    
+       }
+    }
+    // const handleSubmit = async (event) => {
+    //   event.preventDefault();
+    //   let res = await axios.post('http://82.180.136.230:3005/cartcheckout',{
+    //     token: localStorage.getItem('token'),
+    //     branch: localStorage.getItem('branch'),
+    //     items: JSON.stringify(items),
+    //     receiptNo: receiptNo,
+    //     total: total,
+    //     additionalInfo: additionalInfo,
+    //     paymentMethod: paymentMethod,
+    //     paymentStatus: paymentStatus,
+    //     balance: balance,
+    //     customerNames: `${firstName} ${lastName}`,
+    //     customerContact: phoneNumber,
+    //     date: new Date().toLocaleDateString()
+    //   })
+    //   if(res.data.status === 200){
+    //     setStatus({ type: 'success' })
+    //   }
+    // // .then((res) =>{
+    // //      setStatus({ type: 'success' })
+    // //      if (componentRef.current) {
+    // //          componentRef.current.handlePrint()
+    // //          const timestamp = new Date().getTime().toString(); // Example timestamp: "1647824898645"
+    // //          const reducedTimestamp = timestamp.substring(9, 14); // Extract 5 digits from index 9 to 13
+    // //          const random = Math.floor(Math.random() * 100000); // Example random number: 74530
+    // //          const receiptNumber = `${reducedTimestamp}-${random}`
+    // //          setReceiptNo(receiptNumber)
+    // //          console.log('resp', res.data)
+    // //      }
+    // //  })
+    
 
-    .catch((err) => setStatus({ type: 'error', err }))
-      console.log(firstName, lastName, phoneNumber, paymentMethod, amount, additionalInfo, items, total)
-    };
+    // //  .catch((err) => setStatus({ type: 'error', err }))
+    // }
   
     return(
         <>  
@@ -253,13 +317,34 @@ const PaymentModule = ({ items, total }) => {
                             <textarea type="text" className="form-control" rows="6" id="floatingInput" placeholder="johndoe" style={{ color: "#8CA6FE", height: '130px', width: '300px' }} onChange={additionalInfoInput} />
                             <label for="floatingInput">Notes</label>
                         </div>
-                    </div>
-                               
+                    </div>             
                 </div>
-                <ReactToPrint
+                <button
+                    type="submit"
+                    style={{
+                    width: "100%",
+                    border: "none",
+                    color: "white",
+                    height: "45px",
+                    backgroundColor: "#3452A3"
+                    }}
+                >
+                    Checkout
+                </button>
+            </form>
+            <ReactToPrint
                     trigger={() => (
-                        <button type="submit" style={{ width: "100%", border: "none", color: "white", height: "45px", backgroundColor: "#3452A3"}}>
-                            Checkout
+                        <button
+                            style={{
+                            width: "100%",
+                            border: "none",
+                            color: "white",
+                            height: "45px",
+                            backgroundColor: "#3452A3",
+                            marginTop:'5px'
+                            }}
+                        >
+                            Print Receipt 
                         </button>
                     )}
                     content={() => componentRef.current}
@@ -275,7 +360,6 @@ const PaymentModule = ({ items, total }) => {
                     }
                     `}
                 </style>
-            </form>
        </> 
     )
 }

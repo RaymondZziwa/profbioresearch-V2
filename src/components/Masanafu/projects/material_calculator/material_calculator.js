@@ -50,21 +50,16 @@ const MaterialCalculator = () => {
 
     useEffect(()=>{
         if(orderDetails && orderDetails.length > 0){
-            console.log('order details: ', orderDetails)
             setItemsOrdered(JSON.parse(orderDetails[0].itemsordered))
         }
     }, [orderDetails])
 
     useEffect(() => {
         if (itemsOrdered && itemsOrdered.length > 0) {
-          console.log('items ordered: ', itemsOrdered)
           const itemName = itemsOrdered[0].itemName;
           setItemName(itemName);
           setItemQuantityOrdered(itemsOrdered[0].itemQuantity)
           fetchOrderMaterialData(itemName);
-
-          console.log('m', materials)
-          console.log('i', itemQuantityOrdered)
         }
     }, [itemsOrdered]);
 

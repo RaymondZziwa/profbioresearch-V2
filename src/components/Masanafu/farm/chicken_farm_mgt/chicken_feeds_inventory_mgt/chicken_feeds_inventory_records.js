@@ -29,7 +29,7 @@ const ChickenFeedsInventoryRecords = () => {
                 <Navbar />
             </Col>
             <div className="col align-self-center" style={{marginTop:'60px'}}>
-                <h1 style={{textAlign:'center'}}>Masanafu Shop Inventory Restocking Records</h1>
+                <h1 style={{textAlign:'center'}}>Chicken Feeds Store Restocking Records</h1>
                 <table className="table table-dark">
                         <thead>
                             <tr>
@@ -43,7 +43,8 @@ const ChickenFeedsInventoryRecords = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {areInventoryRecordsLoading ? <tr><td colSpan="7" style={{textAlign:'center'}}>Loading.....</td></tr> :
+                            {
+                                areInventoryRecordsLoading ? <tr><td colSpan="7" style={{textAlign:'center'}}>Loading.....</td></tr> :
                                 inventoryRecords.map(item => (
                                     <tr>
                                         <td>{item.date}</td>
@@ -54,7 +55,7 @@ const ChickenFeedsInventoryRecords = () => {
                                         <td>{item.externalsourcedetails}</td>
                                         <td>{item.notes}</td>
                                     </tr>
-                                ))}
+                            ))}
                         </tbody>
                     </table>
             </div>

@@ -95,7 +95,7 @@ const CustodianDashboard = () => {
         <div className='container-fluid'>
             <Row>
                 <Col sm='12' md='1' lg='1' xl='1'></Col>
-                <Col sm='12' md='7' lg='7' xl='7'>
+                <Col sm='12' md='10' lg='10' xl='10'>
                     <div>
                         <div style={{ padding: "30px", borderRadius: "10px" }}>
                             <Link className="tab_nav" to="/inventorymenu">
@@ -105,7 +105,7 @@ const CustodianDashboard = () => {
                             </Link>
                             <Link className="tab_nav" to="/rawmaterialrequests">
                                 <div className="mb-3 mclickable_option">
-                                    Production Dept Raw Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingRequests}</p>
+                                    Production Material Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingRequests}</p>
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="/farmrequests">
@@ -113,29 +113,15 @@ const CustodianDashboard = () => {
                                     Farm Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingFarmRequests}</p>
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="/farmrequestsrecords">
-                                <div className="mb-3 mclickable_option">
-                                    Farm Requests Records
-                                </div>
-                            </Link>
+
                             <Link className="tab_nav" to="/projectsrequests">
                                 <div className="mb-3 mclickable_option">
                                     Projects Dept Requests <p style={{ borderRadius: '80%', backgroundColor: 'red', textAlign: 'center', display: 'inline-block', width: '22px', color: 'white' }}>{totalNumberOfPendingProjectsRequests}</p>
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="/projectsrequestsrecords">
+                            <Link className="tab_nav" to="/masanafucustodianrecordsmenu">
                                 <div className="mb-3 mclickable_option">
-                                    Projects Equipment Requests Records
-                                </div>
-                            </Link>
-                            <Link className="tab_nav" to="/rawmaterialrequestsrecords">
-                                <div className="mb-3 mclickable_option">
-                                   Production Raw Material Requests Records
-                                </div>
-                            </Link>
-                            <Link className="tab_nav" to="/productionrecords">
-                                <div className="mb-3 mclickable_option">
-                                    Production Records
+                                    Records Menu
                                 </div>
                             </Link>
                             <Link className="tab_nav" to="/productorders">
@@ -150,11 +136,6 @@ const CustodianDashboard = () => {
                                 </div>
                             </Link>
 
-                            <Link className="tab_nav" to="/orderrecords">
-                                <div className="mb-3 mclickable_option">
-                                    Orders Records
-                                </div>
-                            </Link>
                             <Link className="tab_nav" to="/stocktaking">
                                 <div className="mb-3 mclickable_option">
                                     Stock Taking (General Store)
@@ -166,11 +147,6 @@ const CustodianDashboard = () => {
                                     Exhibition Management
                                 </div>
                             </Link>
-                            <Link className="tab_nav" to="/exhibtionrecords">
-                                <div className="mb-3 mclickable_option">
-                                    Exhibition Records
-                                </div>
-                            </Link>
                             <Link className="tab_nav" to="/accountsettings">
                                 <div className="mb-3 mclickable_option">
                                     Settings
@@ -179,7 +155,7 @@ const CustodianDashboard = () => {
                         </div>
                     </div>
                 </Col>
-                <Col sm='12' md='4' lg='4' xl='4'>
+                <Col sm='12' md='1' lg='1' xl='1'>
                     <Navbar />
                 </Col>
             </Row>

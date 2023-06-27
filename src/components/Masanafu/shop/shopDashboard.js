@@ -35,11 +35,31 @@ return(
                 Record Shop Expenditures
             </div>
         </Link>
-        <Link className="tab_nav" to="/masanafushopreportsmenu">
+        <Link className="tab_nav" to="/savemasanafuexpenditurereceipts">
             <div className="mb-3 mclickable_option">
-                Shop Reports
+                Save Shop Expenditure Receipts
             </div>
         </Link>
+        <Link className="tab_nav" to="/viewmasanafushopexpensesreceipts">
+            <div className="mb-3 mclickable_option">
+                View Shop Expenditure Receipts
+            </div>
+        </Link>
+        <Link className="tab_nav" to="/masanafushopstatementreportsmenu">
+            <div className="mb-3 mclickable_option">
+                Statemental Shop Reports
+            </div>
+        </Link>
+        <Link className="tab_nav" to="/masanafuexternalreceiptsrecords">
+            <div className="mb-3 mclickable_option">
+                External Receipts Records
+            </div>
+        </Link>
+        {/* <Link className="tab_nav" to="/masanafushopgraphicsreportsmenu">
+            <div className="mb-3 mclickable_option">
+                Graphical Shop Reports
+            </div>
+        </Link> */}
         <Link className="tab_nav" to="/masanafushopsalesrecords">
             <div className="mb-3 mclickable_option">
                 Sales Records

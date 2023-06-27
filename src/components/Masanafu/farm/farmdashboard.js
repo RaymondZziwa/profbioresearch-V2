@@ -30,11 +30,11 @@ const FarmDashboard = () => {
                         Start / Manage Batches
                     </div>
                 </Link>
-                <Link className="tab_nav" to="/chickenmgtdashboard">
+                {/* <Link className="tab_nav" to="/chickenmgtdashboard">
                     <div className="mb-3 mclickable_option">
                         Chicken Farm Management
                     </div>
-                </Link>
+                </Link> */}
                 <Link className="tab_nav" to="/startbatchfrommothergarden">
                     <div className="mb-3 mclickable_option">
                         Start Batch From Mother Garden

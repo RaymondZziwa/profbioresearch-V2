@@ -19,6 +19,11 @@ return(
                 Restock
             </div>
         </Link>
+        <Link className="tab_nav" to="/recordmasanafushopoutgoing">
+            <div className="mb-3 mclickable_option">
+                Record Outgoing inventory records
+            </div>
+        </Link>
         <Link className="tab_nav" to="/shopstocktaking">
             <div className="mb-3 mclickable_option">
                 Stock Taking

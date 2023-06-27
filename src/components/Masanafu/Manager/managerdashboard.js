@@ -41,7 +41,7 @@ const Managerdashboard = () => {
         <div className='container-fluid'>
             <Row>
                 <Col sm='1' md='1' lg='1' xl='1'></Col>
-                <Col sm='12' md='7' lg='7' xl='7'>
+                <Col sm='12' md='10' lg='10' xl='10'>
                     <div>
                         <div style={{ padding: "30px", borderRadius: "10px" }}>
                             <Link className="tab_nav" to="/inventorymenu">
@@ -82,7 +82,7 @@ const Managerdashboard = () => {
                         </div>
                     </div>
                 </Col>
-                <Col sm='12' md='4' lg='4' xl='4'>
+                <Col sm='12' md='1' lg='1' xl='1'>
                     <Navbar />
                 </Col>
             </Row>

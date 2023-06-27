@@ -6,7 +6,7 @@ import AdminNavbar from '../../Admin/admin dashboard/adminDashboard'
 const Viewinventoryrecords = () => {
     const [isLoading, setisLoading] = useState(true)
     const [Filter, setFilter] = useState('')
-    const [Data, setData] = useState('')
+    const [Data, setData] = useState([])
     const [sourceBranch, setsourceBranch] = useState('')
     const [destBranch, setdestBranch] = useState('')
     const [date, setdate] = useState('')
@@ -31,12 +31,6 @@ const Viewinventoryrecords = () => {
 
     useEffect(() => {
         fetchItems()
-        const interval = setInterval(() => {
-            fetchItems()
-        }, 2000)
-
-
-        return () => clearInterval(interval)
     }, [])
 
     useEffect(() => {
@@ -52,7 +46,7 @@ const Viewinventoryrecords = () => {
         return () => clearInterval(interval)
     }, [Filter])
 
-    const fetchData = async event => {
+    const filterData = async event => {
         event.preventDefault()
         let res = await axios.post('http://82.180.136.230:3005/inventoryrecords', {
             branch: localStorage.getItem('branch'),
@@ -65,10 +59,35 @@ const Viewinventoryrecords = () => {
             date: date,
             token: localStorage.getItem("token")
         })
-
-        setData(res.data)
-        setisLoading(false)
+        if(Array.isArray(res.data)){
+            setData(res.data)
+            setisLoading(false)
+        }else{
+            console.log('np data')
+        }
     }
+
+    const fetchData = async () => {
+        let res = await axios.post('http://82.180.136.230:3005/inventoryrecords', {
+            branch: localStorage.getItem('branch'),
+            role: localStorage.getItem('role'),
+            department: localStorage.getItem('department'),
+            itemName: itemName,
+            filter: Filter,
+            sourceBranch: sourceBranch,
+            destBranch: destBranch,
+            date: date,
+            token: localStorage.getItem("token")
+        })
+        if(Array.isArray(res.data)){
+            setData(res.data)
+            setisLoading(false)
+        }
+    }
+
+    // useEffect(()=> {
+    //     fetchData()
+    // },[])
 
     const itemNameInput = event => {
         event.preventDefault()
@@ -126,7 +145,7 @@ const Viewinventoryrecords = () => {
                             <option value="equatorial">Equatorial Branch</option>
                         </select>
                         <input class="form-control" id='fil' type='date' placeholder='Filter by date' onChange={dateInput} />
-                        <button class='btn btn-primary' style={{ cursor: 'pointer' }} onClick={fetchData}>Filter</button>
+                        <button class='btn btn-primary' style={{ cursor: 'pointer' }} onClick={ filterData }>Filter</button>
                     </Form>
                     <table className="table table-dark">
                         <thead>
@@ -149,7 +168,7 @@ const Viewinventoryrecords = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {isLoading ? <tr><td>Apply filters to load data</td></tr> :
+                            {(!isLoading && Data.length > 0) ? <tr><td>Apply filters to load data</td></tr> :
                                 Data.map(item => (
                                     <tr>
                                         <td>{item.date}</td>
